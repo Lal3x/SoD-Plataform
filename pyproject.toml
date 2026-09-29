@@ -57,7 +57,7 @@ docs = [
 [tool.taskipy.tasks]
 lint = "ruff check --select I . && ruff format --check . && black --check ."
 format = "ruff format . && ruff check --select I --fix . && black ."
-tests = "pytest tests -v --cov=sod_platform --cov-report=term-missing --cov-report=xml --cov-fail-under=70"
+tests = "pytest tests -v --cov=sod_platform  --cov-fail-under=70"
 
 [tool.black]
 force-exclude = '''
