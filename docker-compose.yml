@@ -1,0 +1,59 @@
+services:
+  streamlit:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      SOD_WAREHOUSE: ${PWD}/data/warehouse
+      PYTHONPATH: /opt/sod-platform
+      SPARK_MASTER: local[1]
+      SPARK_LOCAL_IP: 127.0.0.1
+      AIRFLOW_ADMIN_USERNAME: admin
+      AIRFLOW_ADMIN_PASSWORD: sod-local-2026
+    ports:
+      - "8501:8501"
+    volumes:
+      - ${PWD}/data/warehouse:${PWD}/data/warehouse
+      - runtime_artifacts:/opt/sod-platform/artifacts:ro
+      - ./configs:/opt/sod-platform/configs:ro
+
+  airflow:
+    build:
+      context: .
+      dockerfile: orchestration/airflow/Dockerfile
+    command: standalone
+    environment:
+      AIRFLOW__CORE__DAGS_FOLDER: /opt/airflow/dags
+      AIRFLOW__CORE__SIMPLE_AUTH_MANAGER_USERS: admin:admin
+      AIRFLOW__CORE__SIMPLE_AUTH_MANAGER_PASSWORDS_FILE: /opt/airflow/simple_auth_manager_passwords.json
+      AIRFLOW__CORE__LOAD_EXAMPLES: "False"
+      AIRFLOW__CORE__PARALLELISM: "1"
+      AIRFLOW__CORE__MAX_ACTIVE_TASKS_PER_DAG: "1"
+      AIRFLOW__CORE__MAX_ACTIVE_RUNS_PER_DAG: "1"
+      AIRFLOW__DAG_PROCESSOR__PARSING_PROCESSES: "1"
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: sqlite:////opt/airflow/airflow.db
+      SOD_ENV: local
+      SOD_WAREHOUSE: ${PWD}/data/warehouse
+      SPARK_MASTER: local[1]
+      SPARK_LOCAL_IP: 127.0.0.1
+      AIRFLOW_ADMIN_USERNAME: admin
+      AIRFLOW_ADMIN_PASSWORD: sod-local-2026
+    env_file: orchestration/airflow/.env
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./orchestration/airflow/dags:/opt/airflow/dags:ro
+      - airflow_logs:/opt/airflow/logs
+      - ./data/raw:/opt/sod-platform/data/raw:ro
+      - ${PWD}/data/warehouse:${PWD}/data/warehouse
+      - ./configs:/opt/sod-platform/configs:ro
+      - ./scripts:/opt/sod-platform/scripts:ro
+      - ./tests/fixtures/v2:/opt/sod-platform/tests/fixtures/v2:ro
+      - application_logs:/opt/sod-platform/logs
+      - runtime_artifacts:/opt/sod-platform/artifacts
+    mem_limit: ${AIRFLOW_MEMORY_LIMIT:-3g}
+
+volumes:
+  airflow_logs:
+  application_logs:
+  runtime_artifacts:

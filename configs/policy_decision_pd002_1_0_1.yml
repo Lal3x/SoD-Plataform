@@ -1,0 +1,20 @@
+policy_id: PD002
+version: 1.0.1
+evidence_method_id: EV001
+evidence_version: 1.3.1
+request_source_coverage: AUTHORITATIVE_FOR_V2
+rules:
+  - {id: R010, reason: R010_DATA_QUALITY_BLOCKING, decision: REVISAO}
+  - {id: R025, reason: R025_APPROVAL_CERTIFICATION_CONFLICT, decision: REVISAO}
+  - {id: R020, reason: R020_CROSS_APPROVED, decision: LEGITIMO}
+  - {id: R030, reason: R030_CROSS_REQUIRED_APPROVAL_NOT_FOUND, decision: INDEVIDO}
+  - {id: R040, reason: R040_CERTIFICATION_CONTRADICTION, decision: REVISAO}
+  - {id: R140, reason: R140_AUTHORIZATION_AMBIGUOUS, decision: REVISAO}
+  - {id: R050, reason: R050_TRUSTED_BIRTHRIGHT, decision: PADRAO}
+  - {id: R060, reason: R060_OBSERVED_FUNCTIONAL_PATTERN, decision: PADRAO}
+  - {id: R070, reason: R070_APPROVED_OPTIONAL_ACCESS, decision: LEGITIMO}
+  - {id: R080, reason: R080_PUBLIC_ACCESS, decision: LEGITIMO}
+  - {id: R130, reason: R130_AUTHORIZATION_COVERAGE_INSUFFICIENT, decision: REVISAO}
+  - {id: R110, reason: R110_UNEXPECTED_WITHOUT_POLICY_VIOLATION, decision: REVISAO}
+  - {id: R120, reason: R120_INSUFFICIENT_EXPECTEDNESS, decision: REVISAO}
+  - {id: R999, reason: R999_UNRESOLVED, decision: REVISAO}

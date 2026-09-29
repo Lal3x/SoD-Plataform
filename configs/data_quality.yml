@@ -1,0 +1,21 @@
+domains:
+  tipo_identidade: [employee, contractor]
+  tipo_atribuicao: [detectado, atribuido]
+  status_identidade: [active, inactive, terminated]
+  status_conta: [active, disabled, locked]
+  tipo_conta: [employee, contractor, service]
+  status_solicitacao: [APPROVED, REJECTED, PENDING]
+  decisao: [MAINTAIN, REVOKE, PENDING]
+  status_concessao: [active, revoked, expired]
+  criticidade: [LOW, MEDIUM, HIGH, CRITICAL]
+  classificacao_dado: [PUBLIC, INTERNAL, CONFIDENTIAL, RESTRICTED]
+  regulatory_scope: [NONE, SOX, PCI, BACEN, OTHER]
+date_formats: ["yyyy-MM-dd", "dd/MM/yyyy", "yyyy-MM-dd HH:mm:ss", "dd/MM/yyyy HH:mm:ss"]
+tables:
+  identity_master: sod.bronze.identity_master
+  identity_directory: sod.bronze.identity_directory
+  iga_entitlements: sod.bronze.entitlements
+  application_catalog: sod.bronze.application_catalog
+  iga_access_assignments: sod.bronze.access_assignments
+  iga_access_requests: sod.bronze.access_requests
+  access_certifications: sod.bronze.access_certifications

@@ -1,0 +1,101 @@
+# Technical, calibratable POC parameters.  These are not institutional access
+# policy and are deliberately independent from the validation gabarito.
+hierarchical_fallback:
+  version: "2.0.0"
+  baseline_version: "2.0.0"
+  minimum_population_size: 2
+  minimum_support_count: 2
+
+# Analytical expectation bands for the POC. These are not institutional
+# policy and were not calibrated from the validation gabarito.
+expected_access:
+  method_id: "EA001"
+  version: "1.0.0"
+  expected_prevalence_threshold: 0.80
+  unexpected_prevalence_threshold: 0.20
+  supported_baseline_version: "2.0.0"
+  supported_fallback_version: "2.0.0"
+
+# Shadow-only behavioural discovery.  These parameters are deliberately
+# independent of the validation fixture and of policy decisioning.
+peer_discovery:
+  enabled: true
+  mode: shadow
+  method_id: "PDISC001"
+  version: "1.1.0"
+  features:
+    # Explicit birthright anchors are retained in runtime outputs, but excluded
+    # from LDA's behavioural representation so they cannot dominate latent roles.
+    exclude_birthright: true
+  lda:
+    seed: 42
+    topics_candidates: [4, 6, 8]
+    max_iter: 20
+    optimizer: "online"
+  membership:
+    min_primary_weight: 0.55
+    min_top1_top2_gap: 0.10
+    max_entropy: 0.85
+  fp_growth:
+    min_support: 0.05
+    min_confidence: 0.60
+    min_context_population: 20
+  peer_baseline:
+    baseline_version: "PEERBASE001-1.0.0"
+    min_population: 10
+    min_support: 3
+    min_peer_confidence: "MEDIUM_CONFIDENCE"
+    expected_prevalence_threshold: 0.80
+
+# PDISC002 is a separate, global and shadow-only POC experiment.  It does not
+# participate in EA001, Evidence, policy, Gold or runtime ground-truth use.
+nmf_hdbscan_peer_discovery:
+  enabled: true
+  mode: shadow
+  method_id: "PDISC002"
+  version: "1.0.0"
+  safety:
+    max_sparse_bytes: 268435456
+  nmf:
+    seed: 42
+    components_candidates: [5, 8, 10, 12]
+    max_iter: 300
+  normalization:
+    # L2 compares latent-factor direction rather than access-count magnitude.
+    l2: true
+  hdbscan:
+    min_cluster_size: 10
+    min_samples: 5
+    metric: "euclidean"
+    cluster_selection_method: "eom"
+    cluster_selection_epsilon: 0.0
+  peer_baseline:
+    min_peer_population: 10
+    min_support_count: 3
+    expected_prevalence_threshold: 0.80
+
+# Orthogonal, graph-based peer-discovery experiment. This remains entirely
+# shadow-only and is selected without access to the validation fixture.
+graph_peer_discovery:
+  enabled: true
+  mode: shadow
+  method_id: "GPDISC001"
+  version: "1.0.0"
+  seed: 42
+  boundary: ["comunidade", "tipo_identidade"]
+  minhash:
+    num_hash_tables: 8
+    min_jaccard: 0.40
+    top_k_neighbors_per_identity: 25
+  leiden:
+    objective: "CPM"
+    resolution_candidates: [0.25, 0.50, 0.75]
+    iterations: -1
+  safety:
+    max_graph_vertices: 20000
+    max_graph_edges: 250000
+  peer_baseline:
+    baseline_version: "GRAPHPEERBASE001-1.0.0"
+    min_peer_population: 10
+    min_support_count: 3
+    expected_prevalence_threshold: 0.80

@@ -1,0 +1,2 @@
+# Pinned for the local POC image. Provider packages are intentionally absent.
+apache-airflow==3.0.6

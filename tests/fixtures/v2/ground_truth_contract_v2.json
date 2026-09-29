@@ -1,0 +1,157 @@
+{
+  "generator_version": "SOD_GENERATOR_V2",
+  "access_requests_authoritative": true,
+  "access_requests_complete": true,
+  "scope": "Todas as aprovações válidas de cross-community non-public neste universo sintético",
+  "production_caveat": "Em produção, validar cobertura das fontes antes de inferir ausência de autorização.",
+  "scenarios": {
+    "normal": {
+      "scenario": "normal",
+      "expected_class": "PADRAO",
+      "business_semantics": "Core funcional observável",
+      "required_observable_evidence": "prevalência de pares funcionais >= 0.90",
+      "optional_modifiers": [
+        "never_used",
+        "small_community",
+        "privileged",
+        "criticality",
+        "regulatory_scope"
+      ],
+      "source_completeness_assumptions": []
+    },
+    "birthright": {
+      "scenario": "birthright",
+      "expected_class": "PADRAO",
+      "business_semantics": "Acesso nato da comunidade",
+      "required_observable_evidence": "birthright e comunidade proprietária",
+      "optional_modifiers": [
+        "never_used",
+        "small_community",
+        "privileged",
+        "criticality",
+        "regulatory_scope"
+      ],
+      "source_completeness_assumptions": []
+    },
+    "optional_approved": {
+      "scenario": "optional_approved",
+      "expected_class": "LEGITIMO",
+      "business_semantics": "Exceção interna aprovada",
+      "required_observable_evidence": "request aprovada antes da concessão",
+      "optional_modifiers": [
+        "never_used",
+        "small_community",
+        "privileged",
+        "criticality",
+        "regulatory_scope"
+      ],
+      "source_completeness_assumptions": []
+    },
+    "entitlement_publico": {
+      "scenario": "entitlement_publico",
+      "expected_class": "LEGITIMO",
+      "business_semantics": "Fronteira pública",
+      "required_observable_evidence": "sigla_publica; acesso não core",
+      "optional_modifiers": [
+        "never_used",
+        "small_community",
+        "privileged",
+        "criticality",
+        "regulatory_scope"
+      ],
+      "source_completeness_assumptions": []
+    },
+    "cross_legitimo": {
+      "scenario": "cross_legitimo",
+      "expected_class": "LEGITIMO",
+      "business_semantics": "Exceção cross autorizada",
+      "required_observable_evidence": "request aprovada antes da concessão",
+      "optional_modifiers": [
+        "never_used",
+        "small_community",
+        "privileged",
+        "criticality",
+        "regulatory_scope"
+      ],
+      "source_completeness_assumptions": [
+        "access_requests_authoritative",
+        "access_requests_complete"
+      ]
+    },
+    "acesso_herdado": {
+      "scenario": "acesso_herdado",
+      "expected_class": "LEGITIMO",
+      "business_semantics": "Necessidade mantida após transferência",
+      "required_observable_evidence": "concessão anterior à entrada; request aprovada",
+      "optional_modifiers": [
+        "never_used",
+        "small_community",
+        "privileged",
+        "criticality",
+        "regulatory_scope"
+      ],
+      "source_completeness_assumptions": [
+        "access_requests_authoritative",
+        "access_requests_complete"
+      ]
+    },
+    "cross_sem_aprovacao": {
+      "scenario": "cross_sem_aprovacao",
+      "expected_class": "INDEVIDO",
+      "business_semantics": "Violação de fronteira",
+      "required_observable_evidence": "cross non-public sem request válida",
+      "optional_modifiers": [
+        "never_used",
+        "small_community",
+        "privileged",
+        "criticality",
+        "regulatory_scope"
+      ],
+      "source_completeness_assumptions": [
+        "access_requests_authoritative",
+        "access_requests_complete"
+      ]
+    },
+    "contractor_fora_escopo": {
+      "scenario": "contractor_fora_escopo",
+      "expected_class": "INDEVIDO",
+      "business_semantics": "Violação de fronteira por contractor",
+      "required_observable_evidence": "cross non-public sem request válida",
+      "optional_modifiers": [
+        "never_used",
+        "small_community",
+        "privileged",
+        "criticality",
+        "regulatory_scope"
+      ],
+      "source_completeness_assumptions": [
+        "access_requests_authoritative",
+        "access_requests_complete"
+      ]
+    },
+    "tecnologia_acesso_negocio": {
+      "scenario": "tecnologia_acesso_negocio",
+      "expected_class": "INDEVIDO",
+      "business_semantics": "Violação de fronteira Tecnologia para negócio",
+      "required_observable_evidence": "cross non-public sem request válida",
+      "optional_modifiers": [
+        "never_used",
+        "small_community",
+        "privileged",
+        "criticality",
+        "regulatory_scope"
+      ],
+      "source_completeness_assumptions": [
+        "access_requests_authoritative",
+        "access_requests_complete"
+      ]
+    }
+  },
+  "optional_modifiers": [
+    "never_used",
+    "small_community",
+    "privileged",
+    "criticality",
+    "regulatory_scope"
+  ]
+}

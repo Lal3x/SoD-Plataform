@@ -1,0 +1,52 @@
+[project]
+name = "sod-platform"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Lucas Alexandre",email = "174282100+Lal3x@users.noreply.github.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12.10,<3.13"
+dependencies = [
+    "pandas (>=3.0.6,<4.0.0)",
+    "pyarrow (>=25.0.1,<26.0.0)",
+    "duckdb (>=1.5.5,<2.0.0)",
+    "pyyaml (>=6.0.3,<7.0.0)",
+    "faker (>=40.39.0,<41.0.0)",
+    "scikit-learn (>=1.9.1,<2.0.0)",
+    "openpyxl (>=3.1.5,<4.0.0)",
+    "pyspark (==4.1.3)",
+    "streamlit (>=1.64.0,<2.0.0)",
+    "pyiceberg[pyarrow] (>=0.12.0,<0.13.0)",
+    "fsspec (>=2023.1.0,<2027.0.0)",
+    "great-expectations[spark] (>=1.23.1,<2.0.0)",
+    "python-dotenv (>=1.1.1,<2.0.0)"
+    ,"igraph (>=0.11.8,<0.12.0)"
+    ,"leidenalg (>=0.10.2,<0.12.0)"
+]
+
+[tool.poetry]
+packages = [{include = "sod_platform", from = "src"}]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[project.scripts]
+sod-bronze = "sod_platform.cli:main"
+sod-silver = "sod_platform.silver.cli:main"
+sod-access-intelligence = "sod_platform.access_intelligence.cli:main"
+sod-evidence = "sod_platform.access_intelligence.evidence.cli:main"
+sod-policy-decision = "sod_platform.access_intelligence.policy.cli:main"
+
+[dependency-groups]
+dev = [
+    "pytest (>=9.1.1,<10.0.0)",
+    "ruff (>=0.16.9,<0.17.0)",
+    "pre-commit (>=4.6.2,<5.0.0)",
+    "ipykernel (>=7.3.0,<8.0.0)",
+    "mkdocs-material (>=9.7.7,<10.0.0)"
+]
+docs = [
+    "mkdocs-material (>=9,<10)"
+]

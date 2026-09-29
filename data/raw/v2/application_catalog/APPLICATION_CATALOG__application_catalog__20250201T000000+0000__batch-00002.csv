@@ -1,0 +1,907 @@
+sigla_id,nome_sistema,owner,comunidade,criticidade,classificacao_dado,privileged,regulatory_scope
+SIG-TEC-49,Administracao de infraestrutura 49,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-50,Administracao de infraestrutura 50,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-51,Administracao de infraestrutura 51,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-52,Administracao de infraestrutura 52,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-53,Administracao de infraestrutura 53,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-54,Administracao de infraestrutura 54,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-55,Administracao de infraestrutura 55,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-56,Administracao de infraestrutura 56,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-57,Administracao de infraestrutura 57,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-58,Administracao de infraestrutura 58,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-59,Administracao de infraestrutura 59,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-60,Administracao de infraestrutura 60,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-61,Administracao de infraestrutura 61,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-62,Administracao de infraestrutura 62,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-63,Administracao de infraestrutura 63,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-64,Administracao de infraestrutura 64,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-65,Administracao de infraestrutura 65,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-66,Administracao de infraestrutura 66,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-67,Administracao de infraestrutura 67,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-68,Administracao de infraestrutura 68,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-69,Administracao de infraestrutura 69,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-70,Administracao de infraestrutura 70,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-71,Administracao de infraestrutura 71,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-72,Administracao de infraestrutura 72,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-73,Administracao de infraestrutura 73,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-74,Administracao de infraestrutura 74,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-75,Administracao de infraestrutura 75,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-76,Administracao de infraestrutura 76,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-77,Administracao de infraestrutura 77,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-78,Administracao de infraestrutura 78,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-79,Administracao de infraestrutura 79,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-80,Administracao de infraestrutura 80,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-81,Administracao de infraestrutura 81,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-82,Administracao de infraestrutura 82,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-83,Administracao de infraestrutura 83,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-84,Administracao de infraestrutura 84,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-85,Administracao de infraestrutura 85,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-86,Administracao de infraestrutura 86,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-87,Administracao de infraestrutura 87,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-88,Administracao de infraestrutura 88,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-89,Administracao de infraestrutura 89,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-90,Administracao de infraestrutura 90,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-91,Administracao de infraestrutura 91,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-92,Administracao de infraestrutura 92,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-93,Administracao de infraestrutura 93,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-94,Administracao de infraestrutura 94,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-95,Administracao de infraestrutura 95,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-96,Administracao de infraestrutura 96,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-97,Administracao de infraestrutura 97,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-98,Administracao de infraestrutura 98,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-99,Administracao de infraestrutura 99,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-100,Administracao de infraestrutura 100,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-101,Administracao de infraestrutura 101,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-102,Administracao de infraestrutura 102,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-103,Administracao de infraestrutura 103,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-104,Administracao de infraestrutura 104,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-105,Administracao de infraestrutura 105,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-106,Administracao de infraestrutura 106,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-107,Administracao de infraestrutura 107,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-108,Administracao de infraestrutura 108,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-109,Administracao de infraestrutura 109,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-110,Administracao de infraestrutura 110,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-111,Administracao de infraestrutura 111,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-112,Administracao de infraestrutura 112,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-113,Administracao de infraestrutura 113,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-114,Administracao de infraestrutura 114,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-115,Administracao de infraestrutura 115,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-116,Administracao de infraestrutura 116,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-117,Administracao de infraestrutura 117,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-118,Administracao de infraestrutura 118,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-119,Administracao de infraestrutura 119,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-120,Administracao de infraestrutura 120,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-121,Administracao de infraestrutura 121,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-122,Administracao de infraestrutura 122,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-123,Administracao de infraestrutura 123,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-124,Administracao de infraestrutura 124,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-125,Administracao de infraestrutura 125,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-126,Administracao de infraestrutura 126,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-127,Administracao de infraestrutura 127,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-128,Administracao de infraestrutura 128,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-129,Administracao de infraestrutura 129,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-130,Administracao de infraestrutura 130,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-131,Administracao de infraestrutura 131,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-132,Administracao de infraestrutura 132,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-133,Administracao de infraestrutura 133,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-134,Administracao de infraestrutura 134,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-135,Administracao de infraestrutura 135,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-136,Administracao de infraestrutura 136,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-137,Administracao de infraestrutura 137,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-138,Administracao de infraestrutura 138,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-139,Administracao de infraestrutura 139,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-140,Administracao de infraestrutura 140,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-141,Administracao de infraestrutura 141,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-142,Administracao de infraestrutura 142,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-143,Administracao de infraestrutura 143,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-144,Administracao de infraestrutura 144,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-145,Administracao de infraestrutura 145,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-146,Administracao de infraestrutura 146,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-147,Administracao de infraestrutura 147,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-148,Administracao de infraestrutura 148,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-149,Administracao de infraestrutura 149,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-150,Administracao de infraestrutura 150,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-151,Administracao de infraestrutura 151,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-152,Administracao de infraestrutura 152,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-153,Administracao de infraestrutura 153,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-154,Administracao de infraestrutura 154,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-155,Administracao de infraestrutura 155,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-156,Administracao de infraestrutura 156,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-157,Administracao de infraestrutura 157,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-158,Administracao de infraestrutura 158,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-159,Administracao de infraestrutura 159,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-160,Administracao de infraestrutura 160,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-161,Administracao de infraestrutura 161,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-162,Administracao de infraestrutura 162,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-163,Administracao de infraestrutura 163,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-164,Administracao de infraestrutura 164,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-165,Administracao de infraestrutura 165,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-166,Administracao de infraestrutura 166,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-167,Administracao de infraestrutura 167,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-168,Administracao de infraestrutura 168,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-169,Administracao de infraestrutura 169,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-170,Administracao de infraestrutura 170,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-171,Administracao de infraestrutura 171,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-172,Administracao de infraestrutura 172,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-173,Administracao de infraestrutura 173,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-174,Administracao de infraestrutura 174,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-175,Administracao de infraestrutura 175,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-176,Administracao de infraestrutura 176,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-177,Administracao de infraestrutura 177,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-178,Administracao de infraestrutura 178,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-179,Administracao de infraestrutura 179,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-180,Administracao de infraestrutura 180,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-181,Administracao de infraestrutura 181,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-182,Administracao de infraestrutura 182,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-183,Administracao de infraestrutura 183,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-184,Administracao de infraestrutura 184,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-185,Administracao de infraestrutura 185,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-186,Administracao de infraestrutura 186,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-187,Administracao de infraestrutura 187,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-188,Administracao de infraestrutura 188,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-189,Administracao de infraestrutura 189,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-190,Administracao de infraestrutura 190,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-191,Administracao de infraestrutura 191,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-192,Administracao de infraestrutura 192,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-193,Administracao de infraestrutura 193,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-194,Administracao de infraestrutura 194,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-195,Administracao de infraestrutura 195,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-196,Administracao de infraestrutura 196,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-197,Administracao de infraestrutura 197,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-198,Administracao de infraestrutura 198,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-199,Administracao de infraestrutura 199,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-200,Administracao de infraestrutura 200,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-201,Administracao de infraestrutura 201,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-202,Administracao de infraestrutura 202,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-203,Administracao de infraestrutura 203,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-204,Administracao de infraestrutura 204,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-205,Administracao de infraestrutura 205,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-206,Administracao de infraestrutura 206,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-207,Administracao de infraestrutura 207,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-208,Administracao de infraestrutura 208,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-209,Administracao de infraestrutura 209,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-210,Administracao de infraestrutura 210,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-211,Administracao de infraestrutura 211,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-212,Administracao de infraestrutura 212,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-213,Administracao de infraestrutura 213,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-214,Administracao de infraestrutura 214,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-215,Administracao de infraestrutura 215,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-216,Administracao de infraestrutura 216,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-217,Administracao de infraestrutura 217,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-218,Administracao de infraestrutura 218,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-219,Administracao de infraestrutura 219,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-220,Administracao de infraestrutura 220,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-221,Administracao de infraestrutura 221,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-222,Administracao de infraestrutura 222,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-223,Administracao de infraestrutura 223,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-224,Administracao de infraestrutura 224,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-225,Administracao de infraestrutura 225,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-226,Administracao de infraestrutura 226,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-227,Administracao de infraestrutura 227,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-228,Administracao de infraestrutura 228,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-229,Administracao de infraestrutura 229,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-230,Administracao de infraestrutura 230,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-231,Administracao de infraestrutura 231,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-232,Administracao de infraestrutura 232,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-233,Administracao de infraestrutura 233,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-234,Administracao de infraestrutura 234,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-235,Administracao de infraestrutura 235,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-236,Administracao de infraestrutura 236,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-237,Administracao de infraestrutura 237,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-238,Administracao de infraestrutura 238,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-239,Administracao de infraestrutura 239,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-240,Administracao de infraestrutura 240,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-241,Administracao de infraestrutura 241,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-242,Administracao de infraestrutura 242,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-243,Administracao de infraestrutura 243,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-244,Administracao de infraestrutura 244,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-245,Administracao de infraestrutura 245,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-246,Administracao de infraestrutura 246,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-247,Administracao de infraestrutura 247,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-248,Administracao de infraestrutura 248,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-249,Administracao de infraestrutura 249,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-250,Administracao de infraestrutura 250,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-251,Administracao de infraestrutura 251,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-252,Administracao de infraestrutura 252,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-253,Administracao de infraestrutura 253,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-254,Administracao de infraestrutura 254,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-255,Administracao de infraestrutura 255,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-256,Administracao de infraestrutura 256,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-257,Administracao de infraestrutura 257,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-258,Administracao de infraestrutura 258,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-259,Administracao de infraestrutura 259,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-260,Administracao de infraestrutura 260,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-261,Administracao de infraestrutura 261,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-262,Administracao de infraestrutura 262,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-263,Administracao de infraestrutura 263,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-264,Administracao de infraestrutura 264,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-265,Administracao de infraestrutura 265,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-266,Administracao de infraestrutura 266,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-267,Administracao de infraestrutura 267,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-268,Administracao de infraestrutura 268,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-269,Administracao de infraestrutura 269,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-270,Administracao de infraestrutura 270,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-271,Administracao de infraestrutura 271,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-272,Administracao de infraestrutura 272,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-273,Administracao de infraestrutura 273,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-274,Administracao de infraestrutura 274,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-275,Administracao de infraestrutura 275,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-276,Administracao de infraestrutura 276,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-277,Administracao de infraestrutura 277,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-278,Administracao de infraestrutura 278,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-279,Administracao de infraestrutura 279,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-280,Administracao de infraestrutura 280,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-281,Administracao de infraestrutura 281,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-282,Administracao de infraestrutura 282,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-283,Administracao de infraestrutura 283,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-284,Administracao de infraestrutura 284,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-285,Administracao de infraestrutura 285,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-286,Administracao de infraestrutura 286,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-287,Administracao de infraestrutura 287,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-288,Administracao de infraestrutura 288,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-289,Administracao de infraestrutura 289,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-290,Administracao de infraestrutura 290,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-291,Administracao de infraestrutura 291,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-292,Administracao de infraestrutura 292,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-293,Administracao de infraestrutura 293,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-294,Administracao de infraestrutura 294,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-295,Administracao de infraestrutura 295,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-296,Administracao de infraestrutura 296,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-297,Administracao de infraestrutura 297,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-298,Administracao de infraestrutura 298,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-299,Administracao de infraestrutura 299,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-300,Administracao de infraestrutura 300,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-301,Administracao de infraestrutura 301,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-302,Administracao de infraestrutura 302,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-303,Administracao de infraestrutura 303,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-304,Administracao de infraestrutura 304,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-305,Administracao de infraestrutura 305,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-306,Administracao de infraestrutura 306,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-307,Administracao de infraestrutura 307,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-308,Administracao de infraestrutura 308,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-309,Administracao de infraestrutura 309,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-310,Administracao de infraestrutura 310,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-311,Administracao de infraestrutura 311,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-312,Administracao de infraestrutura 312,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-313,Administracao de infraestrutura 313,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-314,Administracao de infraestrutura 314,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-315,Administracao de infraestrutura 315,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-316,Administracao de infraestrutura 316,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-317,Administracao de infraestrutura 317,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-318,Administracao de infraestrutura 318,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-319,Administracao de infraestrutura 319,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-320,Administracao de infraestrutura 320,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-321,Administracao de infraestrutura 321,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-322,Administracao de infraestrutura 322,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-323,Administracao de infraestrutura 323,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-324,Administracao de infraestrutura 324,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-325,Administracao de infraestrutura 325,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-326,Administracao de infraestrutura 326,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-327,Administracao de infraestrutura 327,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-328,Administracao de infraestrutura 328,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-329,Administracao de infraestrutura 329,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-330,Administracao de infraestrutura 330,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-331,Administracao de infraestrutura 331,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-332,Administracao de infraestrutura 332,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-333,Administracao de infraestrutura 333,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-334,Administracao de infraestrutura 334,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-335,Administracao de infraestrutura 335,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-336,Administracao de infraestrutura 336,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-337,Administracao de infraestrutura 337,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-338,Administracao de infraestrutura 338,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-339,Administracao de infraestrutura 339,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-340,Administracao de infraestrutura 340,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-341,Administracao de infraestrutura 341,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-342,Administracao de infraestrutura 342,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-343,Administracao de infraestrutura 343,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-344,Administracao de infraestrutura 344,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-345,Administracao de infraestrutura 345,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-346,Administracao de infraestrutura 346,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-347,Administracao de infraestrutura 347,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-348,Administracao de infraestrutura 348,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-349,Administracao de infraestrutura 349,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-350,Administracao de infraestrutura 350,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-351,Administracao de infraestrutura 351,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-352,Administracao de infraestrutura 352,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-353,Administracao de infraestrutura 353,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-354,Administracao de infraestrutura 354,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-355,Administracao de infraestrutura 355,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-356,Administracao de infraestrutura 356,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-357,Administracao de infraestrutura 357,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-358,Administracao de infraestrutura 358,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-359,Administracao de infraestrutura 359,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-360,Administracao de infraestrutura 360,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-361,Administracao de infraestrutura 361,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-362,Administracao de infraestrutura 362,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-363,Administracao de infraestrutura 363,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-364,Administracao de infraestrutura 364,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-365,Administracao de infraestrutura 365,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-366,Administracao de infraestrutura 366,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-367,Administracao de infraestrutura 367,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-368,Administracao de infraestrutura 368,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-369,Administracao de infraestrutura 369,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-370,Administracao de infraestrutura 370,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-371,Administracao de infraestrutura 371,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-372,Administracao de infraestrutura 372,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-373,Administracao de infraestrutura 373,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-374,Administracao de infraestrutura 374,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-375,Administracao de infraestrutura 375,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-376,Administracao de infraestrutura 376,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-377,Administracao de infraestrutura 377,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-378,Administracao de infraestrutura 378,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-379,Administracao de infraestrutura 379,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-380,Administracao de infraestrutura 380,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-381,Administracao de infraestrutura 381,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-382,Administracao de infraestrutura 382,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-383,Administracao de infraestrutura 383,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-384,Administracao de infraestrutura 384,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-385,Administracao de infraestrutura 385,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-386,Administracao de infraestrutura 386,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-387,Administracao de infraestrutura 387,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-388,Administracao de infraestrutura 388,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-389,Administracao de infraestrutura 389,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-390,Administracao de infraestrutura 390,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-391,Administracao de infraestrutura 391,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-392,Administracao de infraestrutura 392,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-393,Administracao de infraestrutura 393,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-394,Administracao de infraestrutura 394,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-395,Administracao de infraestrutura 395,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-396,Administracao de infraestrutura 396,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-397,Administracao de infraestrutura 397,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-398,Administracao de infraestrutura 398,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-399,Administracao de infraestrutura 399,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-400,Administracao de infraestrutura 400,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-401,Administracao de infraestrutura 401,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-402,Administracao de infraestrutura 402,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-403,Administracao de infraestrutura 403,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-404,Administracao de infraestrutura 404,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-405,Administracao de infraestrutura 405,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-406,Administracao de infraestrutura 406,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-407,Administracao de infraestrutura 407,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-408,Administracao de infraestrutura 408,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-409,Administracao de infraestrutura 409,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-410,Administracao de infraestrutura 410,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-411,Administracao de infraestrutura 411,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-412,Administracao de infraestrutura 412,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-413,Administracao de infraestrutura 413,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-414,Administracao de infraestrutura 414,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-415,Administracao de infraestrutura 415,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-416,Administracao de infraestrutura 416,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-417,Administracao de infraestrutura 417,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-418,Administracao de infraestrutura 418,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-419,Administracao de infraestrutura 419,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-420,Administracao de infraestrutura 420,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-421,Administracao de infraestrutura 421,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-422,Administracao de infraestrutura 422,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-423,Administracao de infraestrutura 423,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-424,Administracao de infraestrutura 424,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-425,Administracao de infraestrutura 425,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-426,Administracao de infraestrutura 426,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-427,Administracao de infraestrutura 427,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-428,Administracao de infraestrutura 428,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-429,Administracao de infraestrutura 429,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-430,Administracao de infraestrutura 430,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-431,Administracao de infraestrutura 431,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-432,Administracao de infraestrutura 432,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-433,Administracao de infraestrutura 433,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-434,Administracao de infraestrutura 434,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-435,Administracao de infraestrutura 435,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-436,Administracao de infraestrutura 436,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-437,Administracao de infraestrutura 437,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-438,Administracao de infraestrutura 438,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-439,Administracao de infraestrutura 439,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-440,Administracao de infraestrutura 440,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-441,Administracao de infraestrutura 441,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-442,Administracao de infraestrutura 442,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-443,Administracao de infraestrutura 443,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-444,Administracao de infraestrutura 444,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-445,Administracao de infraestrutura 445,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-446,Administracao de infraestrutura 446,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-447,Administracao de infraestrutura 447,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-448,Administracao de infraestrutura 448,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-449,Administracao de infraestrutura 449,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-450,Administracao de infraestrutura 450,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-451,Administracao de infraestrutura 451,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-452,Administracao de infraestrutura 452,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-453,Administracao de infraestrutura 453,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-454,Administracao de infraestrutura 454,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-455,Administracao de infraestrutura 455,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-456,Administracao de infraestrutura 456,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-457,Administracao de infraestrutura 457,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-458,Administracao de infraestrutura 458,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-459,Administracao de infraestrutura 459,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-460,Administracao de infraestrutura 460,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-461,Administracao de infraestrutura 461,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-462,Administracao de infraestrutura 462,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-463,Administracao de infraestrutura 463,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-464,Administracao de infraestrutura 464,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-465,Administracao de infraestrutura 465,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-466,Administracao de infraestrutura 466,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-467,Administracao de infraestrutura 467,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-468,Administracao de infraestrutura 468,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-469,Administracao de infraestrutura 469,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-470,Administracao de infraestrutura 470,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-471,Administracao de infraestrutura 471,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-472,Administracao de infraestrutura 472,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-473,Administracao de infraestrutura 473,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-474,Administracao de infraestrutura 474,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-475,Administracao de infraestrutura 475,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-476,Administracao de infraestrutura 476,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-477,Administracao de infraestrutura 477,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-478,Administracao de infraestrutura 478,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-479,Administracao de infraestrutura 479,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-480,Administracao de infraestrutura 480,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-481,Administracao de infraestrutura 481,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-482,Administracao de infraestrutura 482,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-483,Administracao de infraestrutura 483,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-484,Administracao de infraestrutura 484,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-485,Administracao de infraestrutura 485,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-486,Administracao de infraestrutura 486,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-487,Administracao de infraestrutura 487,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-488,Administracao de infraestrutura 488,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-489,Administracao de infraestrutura 489,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-490,Administracao de infraestrutura 490,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-491,Administracao de infraestrutura 491,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-492,Administracao de infraestrutura 492,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-493,Administracao de infraestrutura 493,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-494,Administracao de infraestrutura 494,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-495,Administracao de infraestrutura 495,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-496,Administracao de infraestrutura 496,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-497,Administracao de infraestrutura 497,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-498,Administracao de infraestrutura 498,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-499,Administracao de infraestrutura 499,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-500,Administracao de infraestrutura 500,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-501,Administracao de infraestrutura 501,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-502,Administracao de infraestrutura 502,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-503,Administracao de infraestrutura 503,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-504,Administracao de infraestrutura 504,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-505,Administracao de infraestrutura 505,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-506,Administracao de infraestrutura 506,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-507,Administracao de infraestrutura 507,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-508,Administracao de infraestrutura 508,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-509,Administracao de infraestrutura 509,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-510,Administracao de infraestrutura 510,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-511,Administracao de infraestrutura 511,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-512,Administracao de infraestrutura 512,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-513,Administracao de infraestrutura 513,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-514,Administracao de infraestrutura 514,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-515,Administracao de infraestrutura 515,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-516,Administracao de infraestrutura 516,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-517,Administracao de infraestrutura 517,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-518,Administracao de infraestrutura 518,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-519,Administracao de infraestrutura 519,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-520,Administracao de infraestrutura 520,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-521,Administracao de infraestrutura 521,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-522,Administracao de infraestrutura 522,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-523,Administracao de infraestrutura 523,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-524,Administracao de infraestrutura 524,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-525,Administracao de infraestrutura 525,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-526,Administracao de infraestrutura 526,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-527,Administracao de infraestrutura 527,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-528,Administracao de infraestrutura 528,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-529,Administracao de infraestrutura 529,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-530,Administracao de infraestrutura 530,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-531,Administracao de infraestrutura 531,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-532,Administracao de infraestrutura 532,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-533,Administracao de infraestrutura 533,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-534,Administracao de infraestrutura 534,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-535,Administracao de infraestrutura 535,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-536,Administracao de infraestrutura 536,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-537,Administracao de infraestrutura 537,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-538,Administracao de infraestrutura 538,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-539,Administracao de infraestrutura 539,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-540,Administracao de infraestrutura 540,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-541,Administracao de infraestrutura 541,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-542,Administracao de infraestrutura 542,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-543,Administracao de infraestrutura 543,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-544,Administracao de infraestrutura 544,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-545,Administracao de infraestrutura 545,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-546,Administracao de infraestrutura 546,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-547,Administracao de infraestrutura 547,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-548,Administracao de infraestrutura 548,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-549,Administracao de infraestrutura 549,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-550,Administracao de infraestrutura 550,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-551,Administracao de infraestrutura 551,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-552,Administracao de infraestrutura 552,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-553,Administracao de infraestrutura 553,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-554,Administracao de infraestrutura 554,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-555,Administracao de infraestrutura 555,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-556,Administracao de infraestrutura 556,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-557,Administracao de infraestrutura 557,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-558,Administracao de infraestrutura 558,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-559,Administracao de infraestrutura 559,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-560,Administracao de infraestrutura 560,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-561,Administracao de infraestrutura 561,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-562,Administracao de infraestrutura 562,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-563,Administracao de infraestrutura 563,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-564,Administracao de infraestrutura 564,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-565,Administracao de infraestrutura 565,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-566,Administracao de infraestrutura 566,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-567,Administracao de infraestrutura 567,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-568,Administracao de infraestrutura 568,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-569,Administracao de infraestrutura 569,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-570,Administracao de infraestrutura 570,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-571,Administracao de infraestrutura 571,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-572,Administracao de infraestrutura 572,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-573,Administracao de infraestrutura 573,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-574,Administracao de infraestrutura 574,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-575,Administracao de infraestrutura 575,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-576,Administracao de infraestrutura 576,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-577,Administracao de infraestrutura 577,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-578,Administracao de infraestrutura 578,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-579,Administracao de infraestrutura 579,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-580,Administracao de infraestrutura 580,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-581,Administracao de infraestrutura 581,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-582,Administracao de infraestrutura 582,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-583,Administracao de infraestrutura 583,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-584,Administracao de infraestrutura 584,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-585,Administracao de infraestrutura 585,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-586,Administracao de infraestrutura 586,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-587,Administracao de infraestrutura 587,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-588,Administracao de infraestrutura 588,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-589,Administracao de infraestrutura 589,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-590,Administracao de infraestrutura 590,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-591,Administracao de infraestrutura 591,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-592,Administracao de infraestrutura 592,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-593,Administracao de infraestrutura 593,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-594,Administracao de infraestrutura 594,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-595,Administracao de infraestrutura 595,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-596,Administracao de infraestrutura 596,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-597,Administracao de infraestrutura 597,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-598,Administracao de infraestrutura 598,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-599,Administracao de infraestrutura 599,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-600,Administracao de infraestrutura 600,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-601,Administracao de infraestrutura 601,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-602,Administracao de infraestrutura 602,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-603,Administracao de infraestrutura 603,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-604,Administracao de infraestrutura 604,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-605,Administracao de infraestrutura 605,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-606,Administracao de infraestrutura 606,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-607,Administracao de infraestrutura 607,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-608,Administracao de infraestrutura 608,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-609,Administracao de infraestrutura 609,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-610,Administracao de infraestrutura 610,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-611,Administracao de infraestrutura 611,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-612,Administracao de infraestrutura 612,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-613,Administracao de infraestrutura 613,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-614,Administracao de infraestrutura 614,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-615,Administracao de infraestrutura 615,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-616,Administracao de infraestrutura 616,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-617,Administracao de infraestrutura 617,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-618,Administracao de infraestrutura 618,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-619,Administracao de infraestrutura 619,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-620,Administracao de infraestrutura 620,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-621,Administracao de infraestrutura 621,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-622,Administracao de infraestrutura 622,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-623,Administracao de infraestrutura 623,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-624,Administracao de infraestrutura 624,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-625,Administracao de infraestrutura 625,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-626,Administracao de infraestrutura 626,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-627,Administracao de infraestrutura 627,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-628,Administracao de infraestrutura 628,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-629,Administracao de infraestrutura 629,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-630,Administracao de infraestrutura 630,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-631,Administracao de infraestrutura 631,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-632,Administracao de infraestrutura 632,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-633,Administracao de infraestrutura 633,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-634,Administracao de infraestrutura 634,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-635,Administracao de infraestrutura 635,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-636,Administracao de infraestrutura 636,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-637,Administracao de infraestrutura 637,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-638,Administracao de infraestrutura 638,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-639,Administracao de infraestrutura 639,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-640,Administracao de infraestrutura 640,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-641,Administracao de infraestrutura 641,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-642,Administracao de infraestrutura 642,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-643,Administracao de infraestrutura 643,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-644,Administracao de infraestrutura 644,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-645,Administracao de infraestrutura 645,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-646,Administracao de infraestrutura 646,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-647,Administracao de infraestrutura 647,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-648,Administracao de infraestrutura 648,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-649,Administracao de infraestrutura 649,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-650,Administracao de infraestrutura 650,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-651,Administracao de infraestrutura 651,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-652,Administracao de infraestrutura 652,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-653,Administracao de infraestrutura 653,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-654,Administracao de infraestrutura 654,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-655,Administracao de infraestrutura 655,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-656,Administracao de infraestrutura 656,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-657,Administracao de infraestrutura 657,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-658,Administracao de infraestrutura 658,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-659,Administracao de infraestrutura 659,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-660,Administracao de infraestrutura 660,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-661,Administracao de infraestrutura 661,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-662,Administracao de infraestrutura 662,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-663,Administracao de infraestrutura 663,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-664,Administracao de infraestrutura 664,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-665,Administracao de infraestrutura 665,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-666,Administracao de infraestrutura 666,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-667,Administracao de infraestrutura 667,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-668,Administracao de infraestrutura 668,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-669,Administracao de infraestrutura 669,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-670,Administracao de infraestrutura 670,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-671,Administracao de infraestrutura 671,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-672,Administracao de infraestrutura 672,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-673,Administracao de infraestrutura 673,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-674,Administracao de infraestrutura 674,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-675,Administracao de infraestrutura 675,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-676,Administracao de infraestrutura 676,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-677,Administracao de infraestrutura 677,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-678,Administracao de infraestrutura 678,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-679,Administracao de infraestrutura 679,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-TEC-680,Administracao de infraestrutura 680,OWNER-TECNOLOGIA,Tecnologia,HIGH,INTERNAL,True,NONE
+SIG-INO-01,Laboratorio de prototipos 1,OWNER-INOVACAO,Inovacao,LOW,INTERNAL,False,NONE
+SIG-INO-02,Laboratorio de prototipos 2,OWNER-INOVACAO,Inovacao,LOW,INTERNAL,False,NONE
+SIG-COM-01,Portal de politicas publicas 1,OWNER-COMPLIANCE,Compliance,LOW,PUBLIC,False,NONE
+SIG-COM-02,Evidencias regulatorias 2,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-03,Evidencias regulatorias 3,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-04,Evidencias regulatorias 4,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-05,Evidencias regulatorias 5,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-06,Evidencias regulatorias 6,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-07,Evidencias regulatorias 7,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-08,Evidencias regulatorias 8,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-09,Evidencias regulatorias 9,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-10,Evidencias regulatorias 10,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-11,Evidencias regulatorias 11,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-12,Evidencias regulatorias 12,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-13,Evidencias regulatorias 13,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-14,Evidencias regulatorias 14,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-15,Evidencias regulatorias 15,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-16,Evidencias regulatorias 16,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-17,Evidencias regulatorias 17,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-18,Evidencias regulatorias 18,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-19,Evidencias regulatorias 19,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-20,Evidencias regulatorias 20,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-21,Evidencias regulatorias 21,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-22,Evidencias regulatorias 22,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-23,Evidencias regulatorias 23,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-24,Evidencias regulatorias 24,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-25,Evidencias regulatorias 25,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-26,Evidencias regulatorias 26,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-27,Evidencias regulatorias 27,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-28,Evidencias regulatorias 28,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-29,Evidencias regulatorias 29,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-30,Evidencias regulatorias 30,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-31,Evidencias regulatorias 31,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-32,Evidencias regulatorias 32,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-33,Evidencias regulatorias 33,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-34,Evidencias regulatorias 34,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-35,Evidencias regulatorias 35,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-36,Evidencias regulatorias 36,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-37,Evidencias regulatorias 37,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-38,Evidencias regulatorias 38,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-39,Evidencias regulatorias 39,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-40,Evidencias regulatorias 40,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-41,Evidencias regulatorias 41,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-42,Evidencias regulatorias 42,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-43,Evidencias regulatorias 43,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-44,Evidencias regulatorias 44,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-45,Evidencias regulatorias 45,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-46,Evidencias regulatorias 46,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-47,Evidencias regulatorias 47,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-48,Evidencias regulatorias 48,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-49,Evidencias regulatorias 49,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-50,Evidencias regulatorias 50,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-51,Evidencias regulatorias 51,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-52,Evidencias regulatorias 52,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-53,Evidencias regulatorias 53,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-54,Evidencias regulatorias 54,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-55,Evidencias regulatorias 55,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-56,Evidencias regulatorias 56,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-57,Evidencias regulatorias 57,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-58,Evidencias regulatorias 58,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-59,Evidencias regulatorias 59,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-60,Evidencias regulatorias 60,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-61,Evidencias regulatorias 61,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-62,Evidencias regulatorias 62,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-63,Evidencias regulatorias 63,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-64,Evidencias regulatorias 64,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-65,Evidencias regulatorias 65,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-66,Evidencias regulatorias 66,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-67,Evidencias regulatorias 67,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-68,Evidencias regulatorias 68,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-69,Evidencias regulatorias 69,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-70,Evidencias regulatorias 70,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-71,Evidencias regulatorias 71,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-72,Evidencias regulatorias 72,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-73,Evidencias regulatorias 73,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-74,Evidencias regulatorias 74,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-75,Evidencias regulatorias 75,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-76,Evidencias regulatorias 76,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-77,Evidencias regulatorias 77,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-78,Evidencias regulatorias 78,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-79,Evidencias regulatorias 79,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-80,Evidencias regulatorias 80,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-81,Evidencias regulatorias 81,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-82,Evidencias regulatorias 82,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-83,Evidencias regulatorias 83,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-84,Evidencias regulatorias 84,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-85,Evidencias regulatorias 85,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-86,Evidencias regulatorias 86,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-87,Evidencias regulatorias 87,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-88,Evidencias regulatorias 88,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-89,Evidencias regulatorias 89,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-90,Evidencias regulatorias 90,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-91,Evidencias regulatorias 91,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-92,Evidencias regulatorias 92,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-93,Evidencias regulatorias 93,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-94,Evidencias regulatorias 94,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-95,Evidencias regulatorias 95,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-96,Evidencias regulatorias 96,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-97,Evidencias regulatorias 97,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-98,Evidencias regulatorias 98,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-99,Evidencias regulatorias 99,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-100,Evidencias regulatorias 100,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-101,Evidencias regulatorias 101,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-102,Evidencias regulatorias 102,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-103,Evidencias regulatorias 103,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-104,Evidencias regulatorias 104,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-105,Evidencias regulatorias 105,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-106,Evidencias regulatorias 106,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-107,Evidencias regulatorias 107,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-108,Evidencias regulatorias 108,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-109,Evidencias regulatorias 109,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-110,Evidencias regulatorias 110,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-111,Evidencias regulatorias 111,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-112,Evidencias regulatorias 112,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-113,Evidencias regulatorias 113,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-114,Evidencias regulatorias 114,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-115,Evidencias regulatorias 115,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-116,Evidencias regulatorias 116,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-117,Evidencias regulatorias 117,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-118,Evidencias regulatorias 118,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-119,Evidencias regulatorias 119,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-120,Evidencias regulatorias 120,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-121,Evidencias regulatorias 121,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-122,Evidencias regulatorias 122,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-123,Evidencias regulatorias 123,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-124,Evidencias regulatorias 124,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-125,Evidencias regulatorias 125,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-126,Evidencias regulatorias 126,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-127,Evidencias regulatorias 127,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-128,Evidencias regulatorias 128,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-129,Evidencias regulatorias 129,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-130,Evidencias regulatorias 130,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-131,Evidencias regulatorias 131,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-132,Evidencias regulatorias 132,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-133,Evidencias regulatorias 133,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-134,Evidencias regulatorias 134,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-135,Evidencias regulatorias 135,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-136,Evidencias regulatorias 136,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-137,Evidencias regulatorias 137,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-138,Evidencias regulatorias 138,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-139,Evidencias regulatorias 139,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-140,Evidencias regulatorias 140,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-141,Evidencias regulatorias 141,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-142,Evidencias regulatorias 142,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-143,Evidencias regulatorias 143,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-144,Evidencias regulatorias 144,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-145,Evidencias regulatorias 145,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-146,Evidencias regulatorias 146,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-147,Evidencias regulatorias 147,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-148,Evidencias regulatorias 148,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-149,Evidencias regulatorias 149,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-150,Evidencias regulatorias 150,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-151,Evidencias regulatorias 151,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-152,Evidencias regulatorias 152,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-153,Evidencias regulatorias 153,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-154,Evidencias regulatorias 154,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-155,Evidencias regulatorias 155,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-156,Evidencias regulatorias 156,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-157,Evidencias regulatorias 157,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-158,Evidencias regulatorias 158,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-159,Evidencias regulatorias 159,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-160,Evidencias regulatorias 160,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-161,Evidencias regulatorias 161,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-162,Evidencias regulatorias 162,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-163,Evidencias regulatorias 163,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-164,Evidencias regulatorias 164,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-165,Evidencias regulatorias 165,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-166,Evidencias regulatorias 166,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-167,Evidencias regulatorias 167,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-168,Evidencias regulatorias 168,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-169,Evidencias regulatorias 169,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-170,Evidencias regulatorias 170,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-171,Evidencias regulatorias 171,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-172,Evidencias regulatorias 172,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-173,Evidencias regulatorias 173,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-174,Evidencias regulatorias 174,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-175,Evidencias regulatorias 175,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-176,Evidencias regulatorias 176,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-177,Evidencias regulatorias 177,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-178,Evidencias regulatorias 178,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-179,Evidencias regulatorias 179,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-180,Evidencias regulatorias 180,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-181,Evidencias regulatorias 181,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-182,Evidencias regulatorias 182,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-183,Evidencias regulatorias 183,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-184,Evidencias regulatorias 184,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-185,Evidencias regulatorias 185,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-186,Evidencias regulatorias 186,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-187,Evidencias regulatorias 187,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-188,Evidencias regulatorias 188,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-189,Evidencias regulatorias 189,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-190,Evidencias regulatorias 190,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-191,Evidencias regulatorias 191,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-192,Evidencias regulatorias 192,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-193,Evidencias regulatorias 193,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-194,Evidencias regulatorias 194,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-195,Evidencias regulatorias 195,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-196,Evidencias regulatorias 196,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-197,Evidencias regulatorias 197,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-198,Evidencias regulatorias 198,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-199,Evidencias regulatorias 199,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-200,Evidencias regulatorias 200,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-201,Evidencias regulatorias 201,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-202,Evidencias regulatorias 202,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-203,Evidencias regulatorias 203,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-204,Evidencias regulatorias 204,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-205,Evidencias regulatorias 205,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-206,Evidencias regulatorias 206,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-207,Evidencias regulatorias 207,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-208,Evidencias regulatorias 208,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-209,Evidencias regulatorias 209,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-210,Evidencias regulatorias 210,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-211,Evidencias regulatorias 211,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-212,Evidencias regulatorias 212,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-213,Evidencias regulatorias 213,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-214,Evidencias regulatorias 214,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-215,Evidencias regulatorias 215,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-216,Evidencias regulatorias 216,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-217,Evidencias regulatorias 217,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-218,Evidencias regulatorias 218,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-219,Evidencias regulatorias 219,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-220,Evidencias regulatorias 220,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-221,Evidencias regulatorias 221,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-222,Evidencias regulatorias 222,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-223,Evidencias regulatorias 223,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-224,Evidencias regulatorias 224,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-225,Evidencias regulatorias 225,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-226,Evidencias regulatorias 226,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-227,Evidencias regulatorias 227,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-228,Evidencias regulatorias 228,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-229,Evidencias regulatorias 229,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-230,Evidencias regulatorias 230,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-231,Evidencias regulatorias 231,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-232,Evidencias regulatorias 232,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-233,Evidencias regulatorias 233,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-234,Evidencias regulatorias 234,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-235,Evidencias regulatorias 235,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-236,Evidencias regulatorias 236,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-237,Evidencias regulatorias 237,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-238,Evidencias regulatorias 238,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-239,Evidencias regulatorias 239,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-240,Evidencias regulatorias 240,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-241,Evidencias regulatorias 241,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-242,Evidencias regulatorias 242,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-243,Evidencias regulatorias 243,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-244,Evidencias regulatorias 244,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-245,Evidencias regulatorias 245,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-246,Evidencias regulatorias 246,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-247,Evidencias regulatorias 247,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-248,Evidencias regulatorias 248,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-249,Evidencias regulatorias 249,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-250,Evidencias regulatorias 250,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-251,Evidencias regulatorias 251,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-252,Evidencias regulatorias 252,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-253,Evidencias regulatorias 253,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-254,Evidencias regulatorias 254,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-255,Evidencias regulatorias 255,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-256,Evidencias regulatorias 256,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-257,Evidencias regulatorias 257,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-258,Evidencias regulatorias 258,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-259,Evidencias regulatorias 259,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-260,Evidencias regulatorias 260,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-261,Evidencias regulatorias 261,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-262,Evidencias regulatorias 262,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-263,Evidencias regulatorias 263,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-264,Evidencias regulatorias 264,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-265,Evidencias regulatorias 265,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-266,Evidencias regulatorias 266,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-267,Evidencias regulatorias 267,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-268,Evidencias regulatorias 268,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-269,Evidencias regulatorias 269,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-270,Evidencias regulatorias 270,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-271,Evidencias regulatorias 271,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
+SIG-COM-272,Evidencias regulatorias 272,OWNER-COMPLIANCE,Compliance,HIGH,RESTRICTED,False,BACEN
