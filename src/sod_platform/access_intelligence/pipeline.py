@@ -139,9 +139,9 @@ def _expected_access_metrics(frame: DataFrame) -> dict:
         "UNEXPECTED_count": unexpected_count,
         "UNEXPECTED_rate": unexpected_count / evaluated if evaluated else 0.0,
         "INSUFFICIENT_EVIDENCE_count": insufficient_count,
-        "INSUFFICIENT_EVIDENCE_rate": insufficient_count / evaluated
-        if evaluated
-        else 0.0,
+        "INSUFFICIENT_EVIDENCE_rate": (
+            insufficient_count / evaluated if evaluated else 0.0
+        ),
         "status_by_baseline_level": by_level,
         "reason_distribution": distribution(frame, "expected_access_reason"),
         "evidence_strength_distribution": distribution(

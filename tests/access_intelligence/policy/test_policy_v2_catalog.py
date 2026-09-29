@@ -14,8 +14,20 @@ def test_pd002_precedence_is_explicit_and_complete():
     catalog = load_catalog(CATALOG)
     assert catalog["policy_id"] == "PD002"
     assert [r["id"] for r in catalog["rules"]] == [
-        "R010", "R025", "R020", "R030", "R040", "R140", "R050",
-        "R060", "R070", "R080", "R110", "R120", "R130", "R999",
+        "R010",
+        "R025",
+        "R020",
+        "R030",
+        "R040",
+        "R140",
+        "R050",
+        "R060",
+        "R070",
+        "R080",
+        "R110",
+        "R120",
+        "R130",
+        "R999",
     ]
 
 

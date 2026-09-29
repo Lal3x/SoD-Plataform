@@ -30,7 +30,9 @@ class SparkSource:
         frame = self.spark.table(name)
         missing = (required or set()) - set(frame.columns)
         if missing:
-            raise ContractError(f"Contrato incompleto em {name}: {', '.join(sorted(missing))}")
+            raise ContractError(
+                f"Contrato incompleto em {name}: {', '.join(sorted(missing))}"
+            )
         return frame
 
     @staticmethod

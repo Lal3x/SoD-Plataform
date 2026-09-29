@@ -56,9 +56,22 @@ def build_evidence(
     if requests is not None:
         access_context = _match_requests(access_context, requests)
     else:
-        access_context = access_context.withColumn("approval_candidate_count", F.lit(None).cast("long"))
-        access_context = access_context.withColumn("approval_evidence_status", F.when(F.col("approval_linkage_quality") == "STRONG_INFERRED", "UNIQUE_MATCH").when(F.col("approval_linkage_quality") == "AMBIGUOUS", "MULTIPLE_CANDIDATES").otherwise("NOT_FOUND"))
-    access_context = access_context.withColumn("request_source_coverage", F.lit(request_source_coverage).cast("string"))
+        access_context = access_context.withColumn(
+            "approval_candidate_count", F.lit(None).cast("long")
+        )
+        access_context = access_context.withColumn(
+            "approval_evidence_status",
+            F.when(
+                F.col("approval_linkage_quality") == "STRONG_INFERRED", "UNIQUE_MATCH"
+            )
+            .when(
+                F.col("approval_linkage_quality") == "AMBIGUOUS", "MULTIPLE_CANDIDATES"
+            )
+            .otherwise("NOT_FOUND"),
+        )
+    access_context = access_context.withColumn(
+        "request_source_coverage", F.lit(request_source_coverage).cast("string")
+    )
     access_context = access_context.withColumn(
         "certification_status",
         F.coalesce(
@@ -114,7 +127,17 @@ def _join_inputs(context: DataFrame, expected: DataFrame) -> DataFrame:
     context_columns = [
         F.col(f"c.{name}")
         for name in sorted(
-            (ACCESS_CONTEXT_REQUIRED | set(ACCESS_CONTEXT_OPTIONAL) | {"approval_candidate_count", "approval_evidence_status", "request_source_coverage", "certification_status"}) - set(KEYS)
+            (
+                ACCESS_CONTEXT_REQUIRED
+                | set(ACCESS_CONTEXT_OPTIONAL)
+                | {
+                    "approval_candidate_count",
+                    "approval_evidence_status",
+                    "request_source_coverage",
+                    "certification_status",
+                }
+            )
+            - set(KEYS)
         )
     ]
     expected_columns = [
@@ -123,48 +146,77 @@ def _join_inputs(context: DataFrame, expected: DataFrame) -> DataFrame:
         )
         for name in sorted(EXPECTED_ACCESS_REQUIRED - set(KEYS))
     ]
-    return context.alias("c").join(expected.alias("e"), KEYS, "inner").select(
-        *[F.col(name) for name in KEYS], *context_columns, *expected_columns
+    return (
+        context.alias("c")
+        .join(expected.alias("e"), KEYS, "inner")
+        .select(*[F.col(name) for name in KEYS], *context_columns, *expected_columns)
     )
 
 
 def _match_requests(context: DataFrame, requests: DataFrame) -> DataFrame:
     """Describe observable request candidates without asserting a causal FK."""
-    required = {"identidade_id", "entitlement_id", "request_id", "status_solicitacao",
-                "data_solicitacao", "data_aprovacao", "aprovador"}
+    required = {
+        "identidade_id",
+        "entitlement_id",
+        "request_id",
+        "status_solicitacao",
+        "data_solicitacao",
+        "data_aprovacao",
+        "aprovador",
+    }
     _require_columns(requests, frozenset(required), "Requests")
     pair = ["identidade_id", "entitlement_id"]
     relevant = requests.where(F.col("status_solicitacao") == "APPROVED")
-    relevant = relevant.select(*pair, "request_id", "data_solicitacao", "data_aprovacao", "aprovador")
+    relevant = relevant.select(
+        *pair, "request_id", "data_solicitacao", "data_aprovacao", "aprovador"
+    )
     joined = context.select(*KEYS, *pair, "data_concessao").join(relevant, pair, "left")
     observed = F.col("request_id").isNotNull()
-    coherent = (observed & F.col("data_solicitacao").isNotNull()
-                & F.col("data_aprovacao").isNotNull() & F.col("aprovador").isNotNull()
-                & (F.col("data_solicitacao") <= F.col("data_aprovacao"))
-                & (F.col("data_aprovacao") <= F.col("data_concessao"))
-                & (F.col("data_aprovacao") <= F.col("assessment_date")))
+    coherent = (
+        observed
+        & F.col("data_solicitacao").isNotNull()
+        & F.col("data_aprovacao").isNotNull()
+        & F.col("aprovador").isNotNull()
+        & (F.col("data_solicitacao") <= F.col("data_aprovacao"))
+        & (F.col("data_aprovacao") <= F.col("data_concessao"))
+        & (F.col("data_aprovacao") <= F.col("assessment_date"))
+    )
     stats = joined.groupBy(*KEYS).agg(
         F.count("request_id").alias("_request_count"),
         F.sum(F.when(coherent, 1).otherwise(0)).alias("approval_candidate_count"),
     )
-    status = (F.when(F.col("_request_count") == 0, "NOT_FOUND")
-              .when(F.col("approval_candidate_count") > 1, "MULTIPLE_CANDIDATES")
-              .when(F.col("_request_count") > F.col("approval_candidate_count"), "TEMPORAL_CONFLICT")
-              .when(F.col("approval_candidate_count") == 1, "UNIQUE_MATCH")
-              .otherwise("INVALID_REQUEST_DATA"))
+    status = (
+        F.when(F.col("_request_count") == 0, "NOT_FOUND")
+        .when(F.col("approval_candidate_count") > 1, "MULTIPLE_CANDIDATES")
+        .when(
+            F.col("_request_count") > F.col("approval_candidate_count"),
+            "TEMPORAL_CONFLICT",
+        )
+        .when(F.col("approval_candidate_count") == 1, "UNIQUE_MATCH")
+        .otherwise("INVALID_REQUEST_DATA")
+    )
     stats = stats.withColumn("approval_evidence_status", status).drop("_request_count")
     result = context.join(stats, KEYS, "left")
-    return (result.withColumn("approval_linkage_quality",
-            F.when(F.col("approval_evidence_status") == "UNIQUE_MATCH", "STRONG_INFERRED")
-             .when(F.col("approval_evidence_status") == "MULTIPLE_CANDIDATES", "AMBIGUOUS")
-             .otherwise("UNKNOWN"))
-        .withColumn("approval_relevance",
-            F.when(F.col("approval_evidence_status").isin("UNIQUE_MATCH", "MULTIPLE_CANDIDATES", "TEMPORAL_CONFLICT"), "UNCERTAIN")
-             .otherwise("NOT_FOUND")))
+    return result.withColumn(
+        "approval_linkage_quality",
+        F.when(F.col("approval_evidence_status") == "UNIQUE_MATCH", "STRONG_INFERRED")
+        .when(F.col("approval_evidence_status") == "MULTIPLE_CANDIDATES", "AMBIGUOUS")
+        .otherwise("UNKNOWN"),
+    ).withColumn(
+        "approval_relevance",
+        F.when(
+            F.col("approval_evidence_status").isin(
+                "UNIQUE_MATCH", "MULTIPLE_CANDIDATES", "TEMPORAL_CONFLICT"
+            ),
+            "UNCERTAIN",
+        ).otherwise("NOT_FOUND"),
+    )
 
 
 def _build_facts(frame: DataFrame, config: EvidenceEngineConfig) -> DataFrame:
-    boolean = lambda name: _boolean_value(F.col(name))
+    def boolean(name: str):
+        return _boolean_value(F.col(name))
+
     facts = [
         _fact(
             frame,
@@ -179,12 +231,19 @@ def _build_facts(frame: DataFrame, config: EvidenceEngineConfig) -> DataFrame:
             source_record_id=F.col("entitlement_id"),
             effective_at=F.col("assessment_date").cast("timestamp"),
         ),
-        _fact(frame, config, category="EXPLICIT_CONTEXT", evidence_type="TRUSTED_BIRTHRIGHT",
-              value=boolean("explicit_anchor_flag"), value_type="BOOLEAN",
-              reliability=direct_reliability(F.col("explicit_anchor_flag")),
-              reliability_reason=F.col("explicit_anchor_reason"),
-              source_table="sod.access_intelligence.expected_access", source_record_id=F.col("grant_id"),
-              effective_at=F.col("assessment_date").cast("timestamp")),
+        _fact(
+            frame,
+            config,
+            category="EXPLICIT_CONTEXT",
+            evidence_type="TRUSTED_BIRTHRIGHT",
+            value=boolean("explicit_anchor_flag"),
+            value_type="BOOLEAN",
+            reliability=direct_reliability(F.col("explicit_anchor_flag")),
+            reliability_reason=F.col("explicit_anchor_reason"),
+            source_table="sod.access_intelligence.expected_access",
+            source_record_id=F.col("grant_id"),
+            effective_at=F.col("assessment_date").cast("timestamp"),
+        ),
         *[
             _fact(
                 frame,
@@ -204,7 +263,11 @@ def _build_facts(frame: DataFrame, config: EvidenceEngineConfig) -> DataFrame:
                 ("IDENTITY_COMMUNITY", "comunidade", "identidade_id"),
                 ("IDENTITY_SQUAD", "squad", "identidade_id"),
                 ("IDENTITY_ROLE", "cargo", "identidade_id"),
-                ("ENTITLEMENT_OWNER_COMMUNITY", "comunidade_dona_sigla", "entitlement_id"),
+                (
+                    "ENTITLEMENT_OWNER_COMMUNITY",
+                    "comunidade_dona_sigla",
+                    "entitlement_id",
+                ),
             )
         ],
         _fact(
@@ -248,7 +311,9 @@ def _build_facts(frame: DataFrame, config: EvidenceEngineConfig) -> DataFrame:
                 F.col("approval_relevance"), F.col("approval_linkage_quality")
             ),
             reliability_reason=(
-                F.when(F.col("approval_relevance") == "CONFIRMED", "DIRECT_LINK_UPSTREAM")
+                F.when(
+                    F.col("approval_relevance") == "CONFIRMED", "DIRECT_LINK_UPSTREAM"
+                )
                 .when(
                     (F.col("approval_relevance") == "UNCERTAIN")
                     & (F.col("approval_linkage_quality") == "STRONG_INFERRED"),
@@ -263,24 +328,41 @@ def _build_facts(frame: DataFrame, config: EvidenceEngineConfig) -> DataFrame:
             attributes={
                 "linkage_quality": F.col("approval_linkage_quality"),
                 "candidate_count": F.col("approval_candidate_count"),
-                "approval_to_grant_delta_days": F.col(
-                    "approval_to_grant_delta_days"
-                ),
+                "approval_to_grant_delta_days": F.col("approval_to_grant_delta_days"),
             },
         ),
-        _fact(frame, config, category="AUTHORIZATION", evidence_type="APPROVAL_EVIDENCE",
-              value=F.col("approval_evidence_status"), value_type="STRING",
-              reliability=approval_reliability(F.col("approval_relevance"), F.col("approval_linkage_quality")),
-              reliability_reason=F.when(F.col("approval_evidence_status") == "UNIQUE_MATCH", "UNIQUE_COHERENT_INFERRED_MATCH").otherwise("NO_CAUSAL_LINK"),
-              source_table="sod.silver.iga_access_requests", source_record_id=F.col("request_id"),
-              effective_at=F.col("data_aprovacao").cast("timestamp"),
-              attributes={"candidate_count": F.col("approval_candidate_count")}),
-        _fact(frame, config, category="DATA_QUALITY", evidence_type="REQUEST_SOURCE_COVERAGE",
-              value=F.col("request_source_coverage"), value_type="STRING",
-              reliability=direct_reliability(F.col("request_source_coverage")),
-              reliability_reason=_direct_reason(F.col("request_source_coverage")),
-              source_table="sod.silver.iga_access_requests", source_record_id=F.lit(None).cast("string"),
-              effective_at=F.col("assessment_date").cast("timestamp")),
+        _fact(
+            frame,
+            config,
+            category="AUTHORIZATION",
+            evidence_type="APPROVAL_EVIDENCE",
+            value=F.col("approval_evidence_status"),
+            value_type="STRING",
+            reliability=approval_reliability(
+                F.col("approval_relevance"), F.col("approval_linkage_quality")
+            ),
+            reliability_reason=F.when(
+                F.col("approval_evidence_status") == "UNIQUE_MATCH",
+                "UNIQUE_COHERENT_INFERRED_MATCH",
+            ).otherwise("NO_CAUSAL_LINK"),
+            source_table="sod.silver.iga_access_requests",
+            source_record_id=F.col("request_id"),
+            effective_at=F.col("data_aprovacao").cast("timestamp"),
+            attributes={"candidate_count": F.col("approval_candidate_count")},
+        ),
+        _fact(
+            frame,
+            config,
+            category="DATA_QUALITY",
+            evidence_type="REQUEST_SOURCE_COVERAGE",
+            value=F.col("request_source_coverage"),
+            value_type="STRING",
+            reliability=direct_reliability(F.col("request_source_coverage")),
+            reliability_reason=_direct_reason(F.col("request_source_coverage")),
+            source_table="sod.silver.iga_access_requests",
+            source_record_id=F.lit(None).cast("string"),
+            effective_at=F.col("assessment_date").cast("timestamp"),
+        ),
         _fact(
             frame,
             config,
@@ -301,9 +383,11 @@ def _build_facts(frame: DataFrame, config: EvidenceEngineConfig) -> DataFrame:
             source_table="sod.silver.access_context",
             source_record_id=F.col("certification_campaign_id"),
             effective_at=F.col("certification_data_revisao").cast("timestamp"),
-            where=(~F.col("certification_status").isin(
-                "PENDING", "CERTIFICATION_NOT_FOUND"
-            )),
+            where=(
+                ~F.col("certification_status").isin(
+                    "PENDING", "CERTIFICATION_NOT_FOUND"
+                )
+            ),
         ),
         _fact(
             frame,
@@ -349,7 +433,10 @@ def _build_facts(frame: DataFrame, config: EvidenceEngineConfig) -> DataFrame:
                     F.col("expected_access_status") == "INSUFFICIENT_EVIDENCE",
                     "ANALYTICAL_EVIDENCE_INSUFFICIENT",
                 )
-                .when(F.col("expectation_evidence_strength").isNotNull(), "CONTEXT_SPECIFICITY")
+                .when(
+                    F.col("expectation_evidence_strength").isNotNull(),
+                    "CONTEXT_SPECIFICITY",
+                )
                 .otherwise("ANALYTICAL_RELIABILITY_UNKNOWN")
             ),
             source_table="sod.access_intelligence.expected_access",
@@ -373,7 +460,9 @@ def _build_facts(frame: DataFrame, config: EvidenceEngineConfig) -> DataFrame:
                 "support_count": F.col("support_count"),
                 "prevalence": F.col("prevalence"),
                 "expected_access_method_id": F.col("expected_access_method_id"),
-                "expected_access_method_version": F.col("expected_access_method_version"),
+                "expected_access_method_version": F.col(
+                    "expected_access_method_version"
+                ),
             },
         ),
         _fact(
@@ -387,26 +476,45 @@ def _build_facts(frame: DataFrame, config: EvidenceEngineConfig) -> DataFrame:
                 F.col("inherited_access_candidate"), F.col("identity_history_complete")
             ),
             reliability_reason=(
-                F.when(F.col("inherited_access_candidate").isNull(), "CANDIDATE_UNKNOWN")
-                .when(~F.coalesce(F.col("identity_history_complete"), F.lit(False)), "IDENTITY_HISTORY_INCOMPLETE")
+                F.when(
+                    F.col("inherited_access_candidate").isNull(), "CANDIDATE_UNKNOWN"
+                )
+                .when(
+                    ~F.coalesce(F.col("identity_history_complete"), F.lit(False)),
+                    "IDENTITY_HISTORY_INCOMPLETE",
+                )
                 .otherwise("IDENTITY_HISTORY_COMPLETE")
             ),
             source_table="sod.silver.access_context",
             source_record_id=F.col("grant_id"),
             effective_at=F.col("data_concessao").cast("timestamp"),
         ),
-        _fact(frame, config, category="TEMPORAL_USAGE", evidence_type="GRANT_DATE",
-              value=F.col("data_concessao").cast("string"), value_type="DATE",
-              reliability=direct_reliability(F.col("data_concessao")),
-              reliability_reason=_direct_reason(F.col("data_concessao")),
-              source_table="sod.silver.access_context", source_record_id=F.col("grant_id"),
-              effective_at=F.col("data_concessao").cast("timestamp")),
-        _fact(frame, config, category="TEMPORAL_USAGE", evidence_type="GRANT_AGE_DAYS",
-              value=F.col("access_age_days").cast("string"), value_type="LONG",
-              reliability=direct_reliability(F.col("access_age_days")),
-              reliability_reason=_direct_reason(F.col("access_age_days")),
-              source_table="sod.silver.access_context", source_record_id=F.col("grant_id"),
-              effective_at=F.col("assessment_date").cast("timestamp")),
+        _fact(
+            frame,
+            config,
+            category="TEMPORAL_USAGE",
+            evidence_type="GRANT_DATE",
+            value=F.col("data_concessao").cast("string"),
+            value_type="DATE",
+            reliability=direct_reliability(F.col("data_concessao")),
+            reliability_reason=_direct_reason(F.col("data_concessao")),
+            source_table="sod.silver.access_context",
+            source_record_id=F.col("grant_id"),
+            effective_at=F.col("data_concessao").cast("timestamp"),
+        ),
+        _fact(
+            frame,
+            config,
+            category="TEMPORAL_USAGE",
+            evidence_type="GRANT_AGE_DAYS",
+            value=F.col("access_age_days").cast("string"),
+            value_type="LONG",
+            reliability=direct_reliability(F.col("access_age_days")),
+            reliability_reason=_direct_reason(F.col("access_age_days")),
+            source_table="sod.silver.access_context",
+            source_record_id=F.col("grant_id"),
+            effective_at=F.col("assessment_date").cast("timestamp"),
+        ),
         _fact(
             frame,
             config,
@@ -419,7 +527,10 @@ def _build_facts(frame: DataFrame, config: EvidenceEngineConfig) -> DataFrame:
             ),
             value_type="STRING",
             reliability=coverage_reliability(F.col("usage_coverage")),
-            reliability_reason=F.concat(F.lit("USAGE_COVERAGE_"), F.coalesce(F.col("usage_coverage"), F.lit("UNKNOWN"))),
+            reliability_reason=F.concat(
+                F.lit("USAGE_COVERAGE_"),
+                F.coalesce(F.col("usage_coverage"), F.lit("UNKNOWN")),
+            ),
             source_table="sod.silver.access_context",
             source_record_id=F.col("grant_id"),
             effective_at=F.col("ultimo_uso").cast("timestamp"),
@@ -531,16 +642,26 @@ def _fact(
     observed_at: Column | None = None,
 ) -> DataFrame:
     attributes = attributes or {}
-    attribute_map = F.create_map(
-        *[
-            item
-            for key, expression in attributes.items()
-            for item in (F.lit(key), expression.cast("string"))
-        ]
-    ) if attributes else F.from_json(F.lit("{}"), "map<string,string>")
-    source_snapshot = source_snapshot if source_snapshot is not None else F.col("source_snapshot_id")
-    observed_at = observed_at if observed_at is not None else F.col("_evidence_evaluated_at")
-    temporal_status = F.when(effective_at.isNull(), "EFFECTIVE_TIME_UNKNOWN").otherwise("PERTINENT")
+    attribute_map = (
+        F.create_map(
+            *[
+                item
+                for key, expression in attributes.items()
+                for item in (F.lit(key), expression.cast("string"))
+            ]
+        )
+        if attributes
+        else F.from_json(F.lit("{}"), "map<string,string>")
+    )
+    source_snapshot = (
+        source_snapshot if source_snapshot is not None else F.col("source_snapshot_id")
+    )
+    observed_at = (
+        observed_at if observed_at is not None else F.col("_evidence_evaluated_at")
+    )
+    temporal_status = F.when(effective_at.isNull(), "EFFECTIVE_TIME_UNKNOWN").otherwise(
+        "PERTINENT"
+    )
     base = frame if where is None else frame.where(where)
     selected = base.select(
         *KEYS,
@@ -554,7 +675,9 @@ def _fact(
         observed_at.cast("timestamp").alias("observed_at"),
         effective_at.cast("timestamp").alias("effective_at"),
         temporal_status.alias("temporal_status"),
-        F.lit("SILVER" if source_table.startswith("sod.silver") else "ACCESS_INTELLIGENCE").alias("evidence_source_layer"),
+        F.lit(
+            "SILVER" if source_table.startswith("sod.silver") else "ACCESS_INTELLIGENCE"
+        ).alias("evidence_source_layer"),
         F.lit(source_table).alias("evidence_source_table"),
         source_snapshot.alias("source_snapshot_id"),
         source_record_id.cast("string").alias("source_record_id"),
@@ -588,7 +711,9 @@ def _fact(
     )
 
 
-def _build_summary(frame: DataFrame, facts: DataFrame, config: EvidenceEngineConfig) -> DataFrame:
+def _build_summary(
+    frame: DataFrame, facts: DataFrame, config: EvidenceEngineConfig
+) -> DataFrame:
     evidence = facts.groupBy(*KEYS).agg(
         F.sort_array(F.collect_set("evidence_id")).alias("evidence_ids"),
         F.count("evidence_id").alias("evidence_count"),
@@ -741,13 +866,22 @@ def _build_summary(frame: DataFrame, facts: DataFrame, config: EvidenceEngineCon
 
 def _validate_one_to_one(context: DataFrame, expected: DataFrame) -> None:
     for frame, name in ((context, "Access Context"), (expected, "Expected Access")):
-        if frame.where(F.col("grant_id").isNull() | F.col("assessment_date").isNull()).limit(1).count():
+        if (
+            frame.where(F.col("grant_id").isNull() | F.col("assessment_date").isNull())
+            .limit(1)
+            .count()
+        ):
             raise ValueError(f"{name} contains a null grant/date key")
         if frame.groupBy(*KEYS).count().where("count > 1").limit(1).count():
             raise ValueError(f"{name} violates one-row-per-grant/date grain")
     context_keys, expected_keys = context.select(*KEYS), expected.select(*KEYS)
-    if context_keys.join(expected_keys, KEYS, "left_anti").limit(1).count() or expected_keys.join(context_keys, KEYS, "left_anti").limit(1).count():
-        raise ValueError("Access Context and Expected Access keys are not a one-to-one match")
+    if (
+        context_keys.join(expected_keys, KEYS, "left_anti").limit(1).count()
+        or expected_keys.join(context_keys, KEYS, "left_anti").limit(1).count()
+    ):
+        raise ValueError(
+            "Access Context and Expected Access keys are not a one-to-one match"
+        )
 
 
 def _validate_domains_versions_and_time(context, expected, config) -> None:
@@ -759,7 +893,11 @@ def _validate_domains_versions_and_time(context, expected, config) -> None:
         "fallback_version": config.supported_fallback_version,
     }
     for column, supported in version_checks.items():
-        if expected.where(F.col(column).isNull() | (F.col(column) != supported)).limit(1).count():
+        if (
+            expected.where(F.col(column).isNull() | (F.col(column) != supported))
+            .limit(1)
+            .count()
+        ):
             raise ValueError(f"Unsupported {column} for Evidence Engine")
     domain_checks = (
         (context, "approval_relevance", APPROVAL_VALUES),
@@ -767,12 +905,20 @@ def _validate_domains_versions_and_time(context, expected, config) -> None:
         (expected, "expected_access_status", EXPECTED_VALUES),
     )
     for frame, column, values in domain_checks:
-        if frame.where(F.col(column).isNull() | (~F.col(column).isin(*values))).limit(1).count():
+        if (
+            frame.where(F.col(column).isNull() | (~F.col(column).isin(*values)))
+            .limit(1)
+            .count()
+        ):
             raise ValueError(f"Invalid {column} for Evidence Engine")
-    if expected.where(
-        F.col("expectation_evidence_strength").isNotNull()
-        & (~F.col("expectation_evidence_strength").isin(*STRENGTH_VALUES))
-    ).limit(1).count():
+    if (
+        expected.where(
+            F.col("expectation_evidence_strength").isNotNull()
+            & (~F.col("expectation_evidence_strength").isin(*STRENGTH_VALUES))
+        )
+        .limit(1)
+        .count()
+    ):
         raise ValueError("Invalid expectation_evidence_strength for Evidence Engine")
     future_context = (
         (F.col("data_concessao") > F.col("assessment_date"))
@@ -783,7 +929,11 @@ def _validate_domains_versions_and_time(context, expected, config) -> None:
     )
     if context.where(future_context).limit(1).count():
         raise ValueError("Future or temporally incoherent context evidence")
-    if expected.where(F.to_date("baseline_timestamp") > F.col("assessment_date")).limit(1).count():
+    if (
+        expected.where(F.to_date("baseline_timestamp") > F.col("assessment_date"))
+        .limit(1)
+        .count()
+    ):
         raise ValueError("Future baseline evidence cannot enter Evidence Engine")
 
 
@@ -806,4 +956,6 @@ def _boolean_value(value: str | Column) -> Column:
 
 
 def _direct_reason(value: Column) -> Column:
-    return F.when(value.isNotNull(), "DIRECT_VALID_CONTEXT").otherwise("SOURCE_VALUE_UNKNOWN")
+    return F.when(value.isNotNull(), "DIRECT_VALID_CONTEXT").otherwise(
+        "SOURCE_VALUE_UNKNOWN"
+    )

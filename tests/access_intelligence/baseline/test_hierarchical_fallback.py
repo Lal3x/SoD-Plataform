@@ -26,12 +26,82 @@ def _baseline(spark):
     timestamp = datetime(2025, 2, 1, tzinfo=UTC)
     return spark.createDataFrame(
         [
-            (assessed, "SQUAD_CARGO_TIPO_IDENTIDADE", "Nova", "S1", "Analista", "employee", "E1", 1, 1, 1.0, "2.0.0", "specific", timestamp),
-            (assessed, "COMUNIDADE_CARGO", "Nova", None, "Analista", None, "E1", 3, 2, 2 / 3, "2.0.0", "community-cargo", timestamp),
-            (assessed, "COMUNIDADE", "Nova", None, None, None, "E1", 4, 2, 0.5, "2.0.0", "community", timestamp),
-            (assessed, "POPULACAO_COMPARAVEL", None, None, None, "employee", "E1", 8, 3, 3 / 8, "2.0.0", "comparable-employees", timestamp),
+            (
+                assessed,
+                "SQUAD_CARGO_TIPO_IDENTIDADE",
+                "Nova",
+                "S1",
+                "Analista",
+                "employee",
+                "E1",
+                1,
+                1,
+                1.0,
+                "2.0.0",
+                "specific",
+                timestamp,
+            ),
+            (
+                assessed,
+                "COMUNIDADE_CARGO",
+                "Nova",
+                None,
+                "Analista",
+                None,
+                "E1",
+                3,
+                2,
+                2 / 3,
+                "2.0.0",
+                "community-cargo",
+                timestamp,
+            ),
+            (
+                assessed,
+                "COMUNIDADE",
+                "Nova",
+                None,
+                None,
+                None,
+                "E1",
+                4,
+                2,
+                0.5,
+                "2.0.0",
+                "community",
+                timestamp,
+            ),
+            (
+                assessed,
+                "POPULACAO_COMPARAVEL",
+                None,
+                None,
+                None,
+                "employee",
+                "E1",
+                8,
+                3,
+                3 / 8,
+                "2.0.0",
+                "comparable-employees",
+                timestamp,
+            ),
             # A future assessment must never join a grant assessed in February.
-            (date(2025, 3, 1), "SQUAD_CARGO_TIPO_IDENTIDADE", "Nova", "S1", "Analista", "employee", "E1", 100, 100, 1.0, "2.0.0", "future", datetime(2025, 3, 1, tzinfo=UTC)),
+            (
+                date(2025, 3, 1),
+                "SQUAD_CARGO_TIPO_IDENTIDADE",
+                "Nova",
+                "S1",
+                "Analista",
+                "employee",
+                "E1",
+                100,
+                100,
+                1.0,
+                "2.0.0",
+                "future",
+                datetime(2025, 3, 1, tzinfo=UTC),
+            ),
         ],
         BASELINE_SCHEMA,
     )
@@ -41,7 +111,9 @@ def _config():
     return HierarchicalFallbackConfig(2, 2, "2.0.0", "2.0.0")
 
 
-def test_hierarchical_fallback_uses_next_sufficient_level_without_small_community_signal(spark):
+def test_hierarchical_fallback_uses_next_sufficient_level_without_small_community_signal(
+    spark,
+):
     context = spark.createDataFrame(
         [("G1", date(2025, 2, 1), "E1", "Nova", "S1", "Analista", "employee")],
         CONTEXT_SCHEMA,
@@ -54,7 +126,10 @@ def test_hierarchical_fallback_uses_next_sufficient_level_without_small_communit
     assert row.selection_status == "BASELINE_SELECTED"
     assert row.fallback_applied is True
     assert row.fallback_depth == 1
-    assert "SQUAD_CARGO_TIPO_IDENTIDADE:INSUFFICIENT_ANALYTICAL_SUPPORT" in row.fallback_reason
+    assert (
+        "SQUAD_CARGO_TIPO_IDENTIDADE:INSUFFICIENT_ANALYTICAL_SUPPORT"
+        in row.fallback_reason
+    )
     assert "suspeit" not in row.fallback_reason.lower()
 
 
@@ -67,11 +142,17 @@ def test_hierarchical_fallback_skips_missing_dimensions_then_uses_community(spar
     row = select_hierarchical_fallback(context, _baseline(spark), _config()).first()
 
     assert row.selected_baseline_level == "COMUNIDADE_CARGO"
-    assert "SQUAD_CARGO_TIPO_IDENTIDADE:MISSING_REQUIRED_DIMENSIONS" in row.fallback_reason
+    assert (
+        "SQUAD_CARGO_TIPO_IDENTIDADE:MISSING_REQUIRED_DIMENSIONS" in row.fallback_reason
+    )
 
 
-def test_hierarchical_fallback_uses_comparable_population_after_intermediate_levels_fail(spark):
-    baseline = _baseline(spark).where("baseline_level <> 'COMUNIDADE_CARGO' AND baseline_level <> 'COMUNIDADE'")
+def test_hierarchical_fallback_uses_comparable_population_after_intermediate_levels_fail(
+    spark,
+):
+    baseline = _baseline(spark).where(
+        "baseline_level <> 'COMUNIDADE_CARGO' AND baseline_level <> 'COMUNIDADE'"
+    )
     context = spark.createDataFrame(
         [("G3", date(2025, 2, 1), "E1", "Nova", "S1", "Analista", "employee")],
         CONTEXT_SCHEMA,
@@ -116,23 +197,32 @@ def test_hierarchical_fallback_does_not_use_semantically_incompatible_population
 
 
 def test_hierarchical_fallback_configuration_is_explicit_and_versioned():
-    config = load_hierarchical_fallback_config(
-        Path("configs/access_intelligence.yml")
-    )
+    config = load_hierarchical_fallback_config(Path("configs/access_intelligence.yml"))
 
     assert config == HierarchicalFallbackConfig(2, 2, "2.0.0", "2.0.0")
 
 
 def test_low_prevalence_with_sufficient_support_does_not_trigger_fallback(spark):
-    baseline = _baseline(spark).withColumn(
-        "population_size",
-        F.when(F.col("baseline_level") == "SQUAD_CARGO_TIPO_IDENTIDADE", 20).otherwise(F.col("population_size")),
-    ).withColumn(
-        "support_count",
-        F.when(F.col("baseline_level") == "SQUAD_CARGO_TIPO_IDENTIDADE", 2).otherwise(F.col("support_count")),
-    ).withColumn(
-        "prevalence",
-        F.when(F.col("baseline_level") == "SQUAD_CARGO_TIPO_IDENTIDADE", .1).otherwise(F.col("prevalence")),
+    baseline = (
+        _baseline(spark)
+        .withColumn(
+            "population_size",
+            F.when(
+                F.col("baseline_level") == "SQUAD_CARGO_TIPO_IDENTIDADE", 20
+            ).otherwise(F.col("population_size")),
+        )
+        .withColumn(
+            "support_count",
+            F.when(
+                F.col("baseline_level") == "SQUAD_CARGO_TIPO_IDENTIDADE", 2
+            ).otherwise(F.col("support_count")),
+        )
+        .withColumn(
+            "prevalence",
+            F.when(
+                F.col("baseline_level") == "SQUAD_CARGO_TIPO_IDENTIDADE", 0.1
+            ).otherwise(F.col("prevalence")),
+        )
     )
     context = spark.createDataFrame(
         [("G6", date(2025, 2, 1), "E1", "Nova", "S1", "Analista", "employee")],
@@ -140,5 +230,5 @@ def test_low_prevalence_with_sufficient_support_does_not_trigger_fallback(spark)
     )
     row = select_hierarchical_fallback(context, baseline, _config()).first()
     assert row.selected_baseline_level == "SQUAD_CARGO_TIPO_IDENTIDADE"
-    assert row.selected_prevalence == .1
+    assert row.selected_prevalence == 0.1
     assert row.fallback_applied is False

@@ -169,11 +169,13 @@ def test_pending_requests_and_context_cardinality(spark):
         temporally_incoherent = {
             **valid,
             "iga_access_requests": valid["iga_access_requests"].withColumn(
-            "data_aprovacao", F.lit("2026-01-01").cast("date")
+                "data_aprovacao", F.lit("2026-01-01").cast("date")
             ),
         }
         assert (
-            build_access_context(temporally_incoherent, date(2025, 2, 1)).first().approval_exists
+            build_access_context(temporally_incoherent, date(2025, 2, 1))
+            .first()
+            .approval_exists
             is False
         )
     finally:

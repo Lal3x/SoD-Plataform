@@ -3,12 +3,13 @@
 This is deliberately a catalog-aware operation: tables are dropped through
 Spark/Iceberg first, rather than deleting the warehouse as a primary action.
 """
+
 from __future__ import annotations
 
 import argparse
 import os
 import shutil
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 from sod_platform.bronze.ingestion.config import load_sources
@@ -16,8 +17,25 @@ from sod_platform.bronze.ingestion.spark import create_spark_session
 from sod_platform.common.env import load_project_env
 
 ALLOWED_ENVIRONMENTS = {"local", "development", "dev"}
-PROJECT_NAMESPACES = {"bronze", "silver", "access_intelligence", "evidence", "policy", "risk", "gold", "validation"}
-SOURCE_DOMAINS = {"identity_directory", "access_certifications", "access_requests", "access_assignments", "application_catalog", "identity_master", "entitlements"}
+PROJECT_NAMESPACES = {
+    "bronze",
+    "silver",
+    "access_intelligence",
+    "evidence",
+    "policy",
+    "risk",
+    "gold",
+    "validation",
+}
+SOURCE_DOMAINS = {
+    "identity_directory",
+    "access_certifications",
+    "access_requests",
+    "access_assignments",
+    "application_catalog",
+    "identity_master",
+    "entitlements",
+}
 
 
 def _inside(path: Path, root: Path) -> Path:
@@ -28,7 +46,12 @@ def _inside(path: Path, root: Path) -> Path:
 
 
 def _paths(root: Path) -> list[Path]:
-    candidates = [root / "logs", root / ".airflow" / "logs", root / "data" / "spark-tmp", root / "data" / "checkpoints"]
+    candidates = [
+        root / "logs",
+        root / ".airflow" / "logs",
+        root / "data" / "spark-tmp",
+        root / "data" / "checkpoints",
+    ]
     return [_inside(path, root) for path in candidates if path.exists()]
 
 
@@ -44,23 +67,47 @@ def _inventory(spark) -> list[dict[str, str]]:
             location = "N/A"
             try:
                 detail = spark.sql(f"DESCRIBE TABLE EXTENDED {qualified}").collect()
-                metadata = {row.col_name: row.data_type for row in detail if row.col_name in {"Location", "location"}}
+                metadata = {
+                    row.col_name: row.data_type
+                    for row in detail
+                    if row.col_name in {"Location", "location"}
+                }
                 location = metadata.get("Location", metadata.get("location", "N/A"))
             except Exception:
                 location = "UNAVAILABLE (stale metadata)"
             snapshot = ""
             try:
-                snapshot_row = spark.sql(f"SELECT snapshot_id FROM {qualified}.snapshots ORDER BY committed_at DESC LIMIT 1").first()
+                snapshot_row = spark.sql(
+                    f"SELECT snapshot_id FROM {qualified}.snapshots ORDER BY committed_at DESC LIMIT 1"
+                ).first()
                 snapshot = str(snapshot_row[0]) if snapshot_row else ""
             except Exception:  # namespace metadata or non-Iceberg object
                 snapshot = "N/A"
-            rows.append({"catalog": "sod", "namespace": namespace, "table": table, "location": location, "snapshot": snapshot})
+            rows.append(
+                {
+                    "catalog": "sod",
+                    "namespace": namespace,
+                    "table": table,
+                    "location": location,
+                    "snapshot": snapshot,
+                }
+            )
     return sorted(rows, key=lambda row: (row["namespace"], row["table"]))
 
 
 def _write_inventory(path: Path, rows: list[dict[str, str]]) -> None:
-    lines = ["# Proof-of-fire pre-reset inventory", "", f"Generated UTC: {datetime.now(timezone.utc).isoformat()}", "", "| catalog | namespace | table | location | current snapshot |", "|---|---|---|---|---|"]
-    lines.extend(f"| {r['catalog']} | {r['namespace']} | {r['table']} | {r['location']} | {r['snapshot']} |" for r in rows)
+    lines = [
+        "# Proof-of-fire pre-reset inventory",
+        "",
+        f"Generated UTC: {datetime.now(UTC).isoformat()}",
+        "",
+        "| catalog | namespace | table | location | current snapshot |",
+        "|---|---|---|---|---|",
+    ]
+    lines.extend(
+        f"| {r['catalog']} | {r['namespace']} | {r['table']} | {r['location']} | {r['snapshot']} |"
+        for r in rows
+    )
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
@@ -83,13 +130,17 @@ def main() -> int:
     spark = create_spark_session(root, "sod-local-proof-of-fire-reset")
     try:
         inventory = _inventory(spark)
-        inventory_path = root / "artifacts" / "validation" / "proof-of-fire-pre-reset-inventory.md"
+        inventory_path = (
+            root / "artifacts" / "validation" / "proof-of-fire-pre-reset-inventory.md"
+        )
         # Do not replace the useful pre-reset evidence with an empty inventory
         # when a later zero-state dry run is performed.
         if inventory or not inventory_path.exists():
             _write_inventory(inventory_path, inventory)
         clean_paths = _paths(root)
-        print("tables to drop:", [f"sod.{r['namespace']}.{r['table']}" for r in inventory])
+        print(
+            "tables to drop:", [f"sod.{r['namespace']}.{r['table']}" for r in inventory]
+        )
         print("directories to clean:", [str(path) for path in clean_paths])
         print("files to preserve: V2 raw source domains", sorted(SOURCE_DOMAINS))
         print("inventory:", inventory_path)

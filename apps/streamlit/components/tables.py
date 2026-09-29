@@ -24,10 +24,16 @@ def pagination(total: int, *, key: str, page_size: int = 50) -> int:
     if total <= 0:
         return 0
     pages = max(1, (total + page_size - 1) // page_size)
-    current = st.number_input("Página", min_value=1, max_value=pages, value=1, step=1, key=f"{key}_page")
+    current = st.number_input(
+        "Página", min_value=1, max_value=pages, value=1, step=1, key=f"{key}_page"
+    )
     start = (current - 1) * page_size + 1
     end = min(current * page_size, total)
-    st.caption(f"Exibindo acessos {start:,}–{end:,} de {total:,}. Página {current} de {pages}.".replace(",", "."))
+    st.caption(
+        f"Exibindo acessos {start:,}–{end:,} de {total:,}. Página {current} de {pages}.".replace(
+            ",", "."
+        )
+    )
     return (current - 1) * page_size
 
 
@@ -36,7 +42,9 @@ def present(rows: list[dict], columns: list[str] | None = None) -> list[dict]:
     output = []
     for row in rows:
         selected = ((key, row.get(key)) for key in (columns or list(row)))
-        output.append({field_label(key): display_value(value) for key, value in selected})
+        output.append(
+            {field_label(key): display_value(value) for key, value in selected}
+        )
     return output
 
 
@@ -54,19 +62,31 @@ def display_value(value: object) -> str:
     return str(friendly)
 
 
-def show(rows: list[dict], *, height: int = 420, columns: list[str] | None = None,
-         selection_key: str | None = None, legend: str | None = None) -> dict | None:
+def show(
+    rows: list[dict],
+    *,
+    height: int = 420,
+    columns: list[str] | None = None,
+    selection_key: str | None = None,
+    legend: str | None = None,
+) -> dict | None:
     """Render a table and optionally return its selected persisted record."""
     if not rows:
         st.info("Nenhum registro para os filtros selecionados.")
         return None
     visible_fields = columns or list(rows[0])
-    st.caption(legend or BUSINESS_LEGENDS.get(
-        visible_fields[0], "O que mostra: registros disponíveis para investigação. Cada linha representa um item do resultado apresentado."
-    ))
+    st.caption(
+        legend
+        or BUSINESS_LEGENDS.get(
+            visible_fields[0],
+            "O que mostra: registros disponíveis para investigação. Cada linha representa um item do resultado apresentado.",
+        )
+    )
     options = {"width": "stretch", "hide_index": True, "height": height}
     if selection_key:
-        options.update(on_select="rerun", selection_mode="single-row", key=selection_key)
+        options.update(
+            on_select="rerun", selection_mode="single-row", key=selection_key
+        )
     event = st.dataframe(pd.DataFrame(present(rows, columns)), **options)
     if selection_key and event.selection.rows:
         return rows[event.selection.rows[0]]
@@ -78,11 +98,15 @@ def policy_risk_matrix(rows: list[dict]):
     if not rows:
         st.info("Nenhum registro para a matriz Policy × Risk.")
         return
-    st.caption("Legenda: linhas mostram a situação do acesso; colunas mostram o nível de risco; cada célula é a quantidade de acessos.")
+    st.caption(
+        "Legenda: linhas mostram a situação do acesso; colunas mostram o nível de risco; cada célula é a quantidade de acessos."
+    )
     frame = pd.DataFrame(rows)
     matrix = frame.pivot(index="policy_decision", columns="risk_band", values="count")
-    matrix = matrix.reindex(index=["PADRAO", "LEGITIMO", "REVISAO", "INDEVIDO"],
-                            columns=["LOW", "MEDIUM", "HIGH", "CRITICAL"])
+    matrix = matrix.reindex(
+        index=["PADRAO", "LEGITIMO", "REVISAO", "INDEVIDO"],
+        columns=["LOW", "MEDIUM", "HIGH", "CRITICAL"],
+    )
     matrix.index = [label(value) for value in matrix.index]
     matrix.columns = [label(value) for value in matrix.columns]
     st.table(matrix.fillna(0).astype(int))

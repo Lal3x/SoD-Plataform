@@ -1,6 +1,9 @@
 minimum_pre_commit_version: "3.7.0"
+
 fail_fast: true
+
 exclude: ^(data/|artifacts/|logs/|notebooks/|\.venv/)
+
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
@@ -11,11 +14,32 @@ repos:
       - id: check-json
       - id: check-merge-conflict
       - id: detect-private-key
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.11.13
+
+  - repo: local
     hooks:
-      - id: ruff
-        args: [--select, E,F]
-        files: ^(src/|scripts/|tests/|orchestration/airflow/dags/)
+      - id: ruff-check
+        name: ruff check
+        entry: poetry run ruff check --fix
+        language: system
+        types: [python]
+
       - id: ruff-format
-        files: ^(src/|scripts/|tests/|orchestration/airflow/dags/)
+        name: ruff format
+        entry: poetry run ruff format
+        language: system
+        types: [python]
+
+      - id: task-lint
+        name: task lint
+        entry: poetry run task lint
+        language: system
+        pass_filenames: false
+        always_run: true
+
+      - id: task-tests
+        name: task tests
+        entry: poetry run task tests
+        language: system
+        pass_filenames: false
+        always_run: true
+        stages: [pre-push]

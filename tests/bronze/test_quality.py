@@ -68,7 +68,9 @@ def test_clean_iceberg_warehouse_rejects_non_warehouse_paths(tmp_path) -> None:
 
 def test_missing_java_reports_supported_spark_versions(monkeypatch) -> None:
     monkeypatch.delenv("JAVA_HOME", raising=False)
-    monkeypatch.setattr("sod_platform.bronze.ingestion.spark.shutil.which", lambda _: None)
+    monkeypatch.setattr(
+        "sod_platform.bronze.ingestion.spark.shutil.which", lambda _: None
+    )
 
     with pytest.raises(SparkPrerequisiteError, match="Java 17 or 21"):
         validate_java_runtime()

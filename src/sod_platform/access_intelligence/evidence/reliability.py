@@ -21,7 +21,9 @@ def approval_reliability(value: Column, linkage_quality: Column) -> Column:
     )
 
 
-def certification_reliability(decision: Column, reviewed_at: Column, record_id: Column) -> Column:
+def certification_reliability(
+    decision: Column, reviewed_at: Column, record_id: Column
+) -> Column:
     return F.when(
         decision.isNotNull() & reviewed_at.isNotNull() & record_id.isNotNull(),
         "HIGH",

@@ -55,13 +55,13 @@ def build_access_context(
             & (F.col("data_aprovacao") <= F.lit(reference_date))
         )
         candidates = active.join(approval, PAIR, "inner")
-        candidates = candidates.where(F.col("data_aprovacao") <= F.col("data_concessao"))
+        candidates = candidates.where(
+            F.col("data_aprovacao") <= F.col("data_concessao")
+        )
         candidate_window = Window.partitionBy(*GRANT)
         candidates = candidates.withColumn(
             "_approval_candidate_count", F.count(F.lit(1)).over(candidate_window)
-        ).withColumn(
-            "_approval_relevance", F.lit("UNCERTAIN")
-        )
+        ).withColumn("_approval_relevance", F.lit("UNCERTAIN"))
         chosen = candidates.withColumn(
             "_rank",
             F.row_number().over(
@@ -89,9 +89,7 @@ def build_access_context(
             frame.withColumn("data_aprovacao", F.lit(None).cast("date"))
             .withColumn("aprovador", F.lit(None).cast("string"))
             .withColumn("_approval_relevance", F.lit(None).cast("string"))
-            .withColumn(
-                "approval_linkage_quality", F.lit(None).cast("string")
-            )
+            .withColumn("approval_linkage_quality", F.lit(None).cast("string"))
         )
     if "application_catalog" in tables:
         catalog = _project(tables["application_catalog"], "application_catalog")
@@ -196,7 +194,21 @@ def build_access_context(
         .withColumn("data_quality_blocking", F.lit(False))
         .withColumn(
             "source_snapshot_id",
-            F.sha2(F.concat_ws("|", *[F.coalesce(F.col(c), F.lit("")) for c in ("_accesses_lineage", "_identity_master_lineage", "_iga_entitlements_lineage") if c in frame.columns]), 256),
+            F.sha2(
+                F.concat_ws(
+                    "|",
+                    *[
+                        F.coalesce(F.col(c), F.lit(""))
+                        for c in (
+                            "_accesses_lineage",
+                            "_identity_master_lineage",
+                            "_iga_entitlements_lineage",
+                        )
+                        if c in frame.columns
+                    ],
+                ),
+                256,
+            ),
         )
         .withColumn("access_age_days", F.datediff("reference_date", "data_concessao"))
         .withColumn("days_since_last_use", F.datediff("reference_date", "ultimo_uso"))

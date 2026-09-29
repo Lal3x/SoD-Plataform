@@ -13,12 +13,18 @@ from sod_platform.observability.logging import configure_logging
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Run and inspect persisted Access Intelligence outputs")
+    parser = argparse.ArgumentParser(
+        description="Run and inspect persisted Access Intelligence outputs"
+    )
     parser.add_argument("command", choices=("run", "status", "metrics", "inspect"))
-    parser.add_argument("--config", type=Path, default=Path("configs/access_intelligence.yml"))
+    parser.add_argument(
+        "--config", type=Path, default=Path("configs/access_intelligence.yml")
+    )
     parser.add_argument("--component", choices=tuple(OUTPUTS))
     parser.add_argument("--limit", type=int, default=20)
-    parser.add_argument("--log-file", type=Path, default=Path("logs/access_intelligence/processing.log"))
+    parser.add_argument(
+        "--log-file", type=Path, default=Path("logs/access_intelligence/processing.log")
+    )
     args = parser.parse_args()
     root = Path.cwd()
     load_project_env(root)
@@ -26,7 +32,13 @@ def main() -> int:
     spark = create_spark_session(root, "sod-platform-access-intelligence")
     try:
         if args.command == "run":
-            print(json.dumps(run_access_intelligence(spark, root / args.config), default=str, sort_keys=True))
+            print(
+                json.dumps(
+                    run_access_intelligence(spark, root / args.config),
+                    default=str,
+                    sort_keys=True,
+                )
+            )
             return 0
         if args.command in ("status", "metrics"):
             table = "sod.metadata.access_intelligence_runs"

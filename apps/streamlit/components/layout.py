@@ -17,4 +17,6 @@ def run_page(render):
         render()
     except Exception:
         LOGGER.exception("Dashboard page failed")
-        st.error("Não foi possível carregar esta página. Verifique as fontes e o contrato de dados.")
+        st.error(
+            "Não foi possível carregar esta página. Verifique as fontes e o contrato de dados."
+        )

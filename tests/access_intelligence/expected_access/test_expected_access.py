@@ -495,10 +495,14 @@ def test_anchor_trust_and_unrelated_context_are_separate_from_expectedness(spark
     )
     enriched = enriched.withColumn(
         "hard_trusted_reason",
-        F.when(F.col("grant_id") == "low", F.lit("EXCLUDED_EXPLICIT_CONTRADICTION"))
-        .otherwise(F.col("hard_trusted_reason")),
+        F.when(
+            F.col("grant_id") == "low", F.lit("EXCLUDED_EXPLICIT_CONTRADICTION")
+        ).otherwise(F.col("hard_trusted_reason")),
     )
-    rows = {r.grant_id: r for r in build_expected_access(enriched, fallback, _config()).collect()}
+    rows = {
+        r.grant_id: r
+        for r in build_expected_access(enriched, fallback, _config()).collect()
+    }
     assert rows["anchor"].expected_access_status == "EXPECTED"
     assert rows["anchor"].expectation_evidence_strength == "HIGH"
     assert rows["low"].expected_access_status == "UNEXPECTED"
@@ -510,11 +514,20 @@ def test_anchor_trust_and_unrelated_context_are_separate_from_expectedness(spark
 def test_expected_access_is_deterministic_across_repartitioning(spark):
     hts, fallback = _inputs(spark)
     columns = [
-        "grant_id", "assessment_date", "expected_access_status", "expected_access_reason",
-        "expectation_evidence_strength", "selected_baseline_level", "population_size",
-        "support_count", "prevalence", "expected_access_method_version",
+        "grant_id",
+        "assessment_date",
+        "expected_access_status",
+        "expected_access_reason",
+        "expectation_evidence_strength",
+        "selected_baseline_level",
+        "population_size",
+        "support_count",
+        "prevalence",
+        "expected_access_method_version",
     ]
     first = build_expected_access(hts, fallback, _config()).select(*columns)
-    second = build_expected_access(hts.repartition(3), fallback.repartition(2), _config()).select(*columns)
+    second = build_expected_access(
+        hts.repartition(3), fallback.repartition(2), _config()
+    ).select(*columns)
     assert first.exceptAll(second).count() == 0
     assert second.exceptAll(first).count() == 0

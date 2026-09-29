@@ -45,7 +45,9 @@ def test_silver_pipeline_quarantine_and_idempotent_snapshots(spark, tmp_path: Pa
         "identities": [
             ("ID-1", " CREDITO ", "employee", None, "squad", "cargo", "gestor")
         ],
-        "entitlements": [("ENT-1", "SIG-1", "credito", "true", "false", "HIGH", "false")],
+        "entitlements": [
+            ("ENT-1", "SIG-1", "credito", "true", "false", "HIGH", "false")
+        ],
         "accesses": [
             ("ID-1", "ENT-1", "2024-01-02", "detectado", None),
             ("ID-1", "ENT-1", "2024-01-02", "detectado", None),

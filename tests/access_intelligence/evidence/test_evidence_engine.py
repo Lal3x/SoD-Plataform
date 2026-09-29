@@ -57,57 +57,191 @@ def _inputs(spark):
     context = spark.createDataFrame(
         [
             (
-                "A", ASSESSED, "run-1", "I1", "E1", "S1", True, False,
-                False, "NOT_FOUND", None, None, None, "REVOKE",
-                date(2025, 1, 10), "C1", 0, date(2024, 1, 1), None, False,
-                False, True, "UNKNOWN", 397, None, False, "LOW", "INTERNAL",
-                "NONE", False, "snapshot-a",
+                "A",
+                ASSESSED,
+                "run-1",
+                "I1",
+                "E1",
+                "S1",
+                True,
+                False,
+                False,
+                "NOT_FOUND",
+                None,
+                None,
+                None,
+                "REVOKE",
+                date(2025, 1, 10),
+                "C1",
+                0,
+                date(2024, 1, 1),
+                None,
+                False,
+                False,
+                True,
+                "UNKNOWN",
+                397,
+                None,
+                False,
+                "LOW",
+                "INTERNAL",
+                "NONE",
+                False,
+                "snapshot-a",
             ),
             (
-                "B", ASSESSED, "run-1", "I2", "E2", "S2", False, False,
-                True, "CONFIRMED", "DIRECT_FUTURE_COMPATIBLE", "R2",
-                date(2024, 5, 1), "MAINTAIN", date(2025, 1, 12), "C2", 0,
-                date(2024, 6, 1), date(2025, 1, 1), False, False, False,
-                "COMPLETE", 245, 31, True, "CRITICAL", "RESTRICTED", "BACEN",
-                False, "snapshot-b",
+                "B",
+                ASSESSED,
+                "run-1",
+                "I2",
+                "E2",
+                "S2",
+                False,
+                False,
+                True,
+                "CONFIRMED",
+                "DIRECT_FUTURE_COMPATIBLE",
+                "R2",
+                date(2024, 5, 1),
+                "MAINTAIN",
+                date(2025, 1, 12),
+                "C2",
+                0,
+                date(2024, 6, 1),
+                date(2025, 1, 1),
+                False,
+                False,
+                False,
+                "COMPLETE",
+                245,
+                31,
+                True,
+                "CRITICAL",
+                "RESTRICTED",
+                "BACEN",
+                False,
+                "snapshot-b",
             ),
             (
-                "C", ASSESSED, "run-1", "I3", "E3", "S3", False, True,
-                None, "UNCERTAIN", "STRONG_INFERRED", "R3",
-                date(2024, 7, 1), None, None, None, 1, date(2024, 8, 1), None,
-                True, False, True, "UNKNOWN", 184, None, None, None, None, None,
-                False, "snapshot-c",
+                "C",
+                ASSESSED,
+                "run-1",
+                "I3",
+                "E3",
+                "S3",
+                False,
+                True,
+                None,
+                "UNCERTAIN",
+                "STRONG_INFERRED",
+                "R3",
+                date(2024, 7, 1),
+                None,
+                None,
+                None,
+                1,
+                date(2024, 8, 1),
+                None,
+                True,
+                False,
+                True,
+                "UNKNOWN",
+                184,
+                None,
+                None,
+                None,
+                None,
+                None,
+                False,
+                "snapshot-c",
             ),
         ],
         CONTEXT_SCHEMA,
     ).withColumns(
         {
-            "tipo_identidade": F.when(F.col("grant_id") == "C", "contractor").otherwise("employee"),
-            "comunidade": F.when(F.col("grant_id") == "C", "Tecnologia").otherwise("Credito"),
+            "tipo_identidade": F.when(F.col("grant_id") == "C", "contractor").otherwise(
+                "employee"
+            ),
+            "comunidade": F.when(F.col("grant_id") == "C", "Tecnologia").otherwise(
+                "Credito"
+            ),
             "squad": F.concat(F.lit("Squad-"), F.col("grant_id")),
             "cargo": F.when(F.col("grant_id") == "C", "Engineer").otherwise("Analyst"),
-            "comunidade_dona_sigla": F.when(F.col("grant_id") == "C", "Negocios").otherwise("Credito"),
+            "comunidade_dona_sigla": F.when(
+                F.col("grant_id") == "C", "Negocios"
+            ).otherwise("Credito"),
         }
     )
     expected = spark.createDataFrame(
         [
             (
-                "A", ASSESSED, "EXPECTED", "EXPECTED_EXPLICIT_BIRTHRIGHT", True,
-                "TRUSTED_BIRTHRIGHT_ANCHOR", "SQUAD_CARGO_TIPO_IDENTIDADE", 0,
-                10, 10, 1.0, "HIGH", "EA001", "1.0.0", "2.1.0", "2.0.0",
-                "2.0.0", "snapshot-a", "baseline-a", EVALUATED, EVALUATED,
+                "A",
+                ASSESSED,
+                "EXPECTED",
+                "EXPECTED_EXPLICIT_BIRTHRIGHT",
+                True,
+                "TRUSTED_BIRTHRIGHT_ANCHOR",
+                "SQUAD_CARGO_TIPO_IDENTIDADE",
+                0,
+                10,
+                10,
+                1.0,
+                "HIGH",
+                "EA001",
+                "1.0.0",
+                "2.1.0",
+                "2.0.0",
+                "2.0.0",
+                "snapshot-a",
+                "baseline-a",
+                EVALUATED,
+                EVALUATED,
             ),
             (
-                "B", ASSESSED, "UNEXPECTED", "UNEXPECTED_LOW_CONTEXT_PREVALENCE",
-                False, "EXCLUDED_NOT_EXPLICIT_ANCHOR", "POPULACAO_COMPARAVEL", 3,
-                100, 10, 0.1, "LOW", "EA001", "1.0.0", "2.1.0", "2.0.0",
-                "2.0.0", "snapshot-b", "baseline-b", EVALUATED, EVALUATED,
+                "B",
+                ASSESSED,
+                "UNEXPECTED",
+                "UNEXPECTED_LOW_CONTEXT_PREVALENCE",
+                False,
+                "EXCLUDED_NOT_EXPLICIT_ANCHOR",
+                "POPULACAO_COMPARAVEL",
+                3,
+                100,
+                10,
+                0.1,
+                "LOW",
+                "EA001",
+                "1.0.0",
+                "2.1.0",
+                "2.0.0",
+                "2.0.0",
+                "snapshot-b",
+                "baseline-b",
+                EVALUATED,
+                EVALUATED,
             ),
             (
-                "C", ASSESSED, "INSUFFICIENT_EVIDENCE", "INSUFFICIENT_NO_BASELINE",
-                False, "EXCLUDED_NOT_EXPLICIT_ANCHOR", None, 4, None, None, None,
-                None, "EA001", "1.0.0", "2.1.0", "2.0.0", "2.0.0",
-                "snapshot-c", None, EVALUATED, EVALUATED,
+                "C",
+                ASSESSED,
+                "INSUFFICIENT_EVIDENCE",
+                "INSUFFICIENT_NO_BASELINE",
+                False,
+                "EXCLUDED_NOT_EXPLICIT_ANCHOR",
+                None,
+                4,
+                None,
+                None,
+                None,
+                None,
+                "EA001",
+                "1.0.0",
+                "2.1.0",
+                "2.0.0",
+                "2.0.0",
+                "snapshot-c",
+                None,
+                EVALUATED,
+                EVALUATED,
             ),
         ],
         EXPECTED_SCHEMA,
@@ -116,18 +250,40 @@ def _inputs(spark):
 
 
 def test_v2_request_matching_distinguishes_observable_states(spark):
-    context = spark.createDataFrame([
-        ("unique", ASSESSED, "I1", "E1", date(2025, 1, 20), "NOT_FOUND", "UNKNOWN"),
-        ("multiple", ASSESSED, "I2", "E2", date(2025, 1, 20), "NOT_FOUND", "UNKNOWN"),
-        ("conflict", ASSESSED, "I3", "E3", date(2025, 1, 20), "NOT_FOUND", "UNKNOWN"),
-        ("absent", ASSESSED, "I4", "E4", date(2025, 1, 20), "NOT_FOUND", "UNKNOWN"),
-    ], "grant_id string, assessment_date date, identidade_id string, entitlement_id string, data_concessao date, approval_relevance string, approval_linkage_quality string")
-    requests = spark.createDataFrame([
-        ("R1", "I1", "E1", "APPROVED", date(2025, 1, 1), date(2025, 1, 2), "A"),
-        ("R2", "I2", "E2", "APPROVED", date(2025, 1, 1), date(2025, 1, 2), "A"),
-        ("R3", "I2", "E2", "APPROVED", date(2025, 1, 3), date(2025, 1, 4), "B"),
-        ("R4", "I3", "E3", "APPROVED", date(2025, 1, 21), date(2025, 1, 22), "A"),
-    ], "request_id string, identidade_id string, entitlement_id string, status_solicitacao string, data_solicitacao date, data_aprovacao date, aprovador string")
+    context = spark.createDataFrame(
+        [
+            ("unique", ASSESSED, "I1", "E1", date(2025, 1, 20), "NOT_FOUND", "UNKNOWN"),
+            (
+                "multiple",
+                ASSESSED,
+                "I2",
+                "E2",
+                date(2025, 1, 20),
+                "NOT_FOUND",
+                "UNKNOWN",
+            ),
+            (
+                "conflict",
+                ASSESSED,
+                "I3",
+                "E3",
+                date(2025, 1, 20),
+                "NOT_FOUND",
+                "UNKNOWN",
+            ),
+            ("absent", ASSESSED, "I4", "E4", date(2025, 1, 20), "NOT_FOUND", "UNKNOWN"),
+        ],
+        "grant_id string, assessment_date date, identidade_id string, entitlement_id string, data_concessao date, approval_relevance string, approval_linkage_quality string",
+    )
+    requests = spark.createDataFrame(
+        [
+            ("R1", "I1", "E1", "APPROVED", date(2025, 1, 1), date(2025, 1, 2), "A"),
+            ("R2", "I2", "E2", "APPROVED", date(2025, 1, 1), date(2025, 1, 2), "A"),
+            ("R3", "I2", "E2", "APPROVED", date(2025, 1, 3), date(2025, 1, 4), "B"),
+            ("R4", "I3", "E3", "APPROVED", date(2025, 1, 21), date(2025, 1, 22), "A"),
+        ],
+        "request_id string, identidade_id string, entitlement_id string, status_solicitacao string, data_solicitacao date, data_aprovacao date, aprovador string",
+    )
     rows = {row.grant_id: row for row in _match_requests(context, requests).collect()}
     assert len(rows) == 4
     assert rows["unique"].approval_evidence_status == "UNIQUE_MATCH"
@@ -137,9 +293,12 @@ def test_v2_request_matching_distinguishes_observable_states(spark):
     assert rows["absent"].approval_evidence_status == "NOT_FOUND"
     assert all(row.approval_linkage_quality != "DIRECT" for row in rows.values())
     assert all(row.approval_evidence_status != "UNAUTHORIZED" for row in rows.values())
-    repartitioned = {row.grant_id: row for row in _match_requests(
-        context.repartition(3), requests.repartition(2)
-    ).collect()}
+    repartitioned = {
+        row.grant_id: row
+        for row in _match_requests(
+            context.repartition(3), requests.repartition(2)
+        ).collect()
+    }
     assert {
         key: (row.approval_evidence_status, row.approval_candidate_count)
         for key, row in rows.items()
@@ -186,14 +345,15 @@ def test_ev001_preserves_grain_semantics_reliability_and_mixed_evidence(spark):
     assert "polarity" not in outputs.facts.columns
     assert outputs.facts.where("evidence_bundle_id is null").count() == 0
 
-    facts = {
-        (row.grant_id, row.evidence_type): row for row in outputs.facts.collect()
-    }
+    facts = {(row.grant_id, row.evidence_type): row for row in outputs.facts.collect()}
     assert facts[("B", "APPROVAL_RELEVANCE")].evidence_value == "CONFIRMED"
     assert facts[("B", "APPROVAL_RELEVANCE")].evidence_reliability == "HIGH"
     assert facts[("C", "APPROVAL_RELEVANCE")].evidence_value == "UNCERTAIN"
     assert facts[("C", "APPROVAL_RELEVANCE")].evidence_reliability == "MEDIUM"
-    assert facts[("C", "APPROVAL_RELEVANCE")].reliability_reason_code == "STRONG_INFERRED_LINKAGE"
+    assert (
+        facts[("C", "APPROVAL_RELEVANCE")].reliability_reason_code
+        == "STRONG_INFERRED_LINKAGE"
+    )
     assert facts[("A", "APPROVAL_RELEVANCE")].evidence_reliability == "UNKNOWN"
     assert facts[("B", "EXPECTED_ACCESS")].evidence_reliability == "LOW"
     assert facts[("C", "EXPECTED_ACCESS")].evidence_reliability == "UNKNOWN"
@@ -212,19 +372,27 @@ def test_ev001_emits_explicit_certification_not_found_exclusively(spark):
     context, expected = _inputs(spark)
     context = context.withColumn(
         "certification_pending_count",
-        F.when(F.col("grant_id") == "C", F.lit(0)).otherwise(F.col("certification_pending_count")),
+        F.when(F.col("grant_id") == "C", F.lit(0)).otherwise(
+            F.col("certification_pending_count")
+        ),
     )
     outputs = build_evidence(context, expected, _config(), evaluated_at=EVALUATED)
     summary = {row.grant_id: row for row in outputs.summary.collect()}
     assert summary["C"].certification_status == "CERTIFICATION_NOT_FOUND"
     assert all(row.certification_status is not None for row in summary.values())
-    states = outputs.facts.where(F.col("evidence_type").isin(
-        "CERTIFICATION_DECISION", "CERTIFICATION_PENDING", "CERTIFICATION_NOT_FOUND"
-    ))
+    states = outputs.facts.where(
+        F.col("evidence_type").isin(
+            "CERTIFICATION_DECISION", "CERTIFICATION_PENDING", "CERTIFICATION_NOT_FOUND"
+        )
+    )
     assert states.groupBy("grant_id").count().where("count > 1").count() == 0
-    assert states.where(
-        (F.col("grant_id") == "C") & (F.col("evidence_type") == "CERTIFICATION_NOT_FOUND")
-    ).count() == 1
+    assert (
+        states.where(
+            (F.col("grant_id") == "C")
+            & (F.col("evidence_type") == "CERTIFICATION_NOT_FOUND")
+        ).count()
+        == 1
+    )
 
 
 def test_ev001_is_deterministic_and_does_not_duplicate_evidence(spark):

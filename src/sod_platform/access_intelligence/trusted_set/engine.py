@@ -28,12 +28,20 @@ def build_hard_trusted_set(access_context: DataFrame) -> DataFrame:
     """
     missing = REQUIRED_CONTEXT_COLUMNS - set(access_context.columns)
     if missing:
-        raise ValueError(f"Access Context missing Hard Trusted Set fields: {sorted(missing)}")
+        raise ValueError(
+            f"Access Context missing Hard Trusted Set fields: {sorted(missing)}"
+        )
 
     reason = (
         F.when(F.col("data_quality_blocking"), "EXCLUDED_BLOCKING_DQ")
-        .when(~F.coalesce(F.col("birthright"), F.lit(False)), "EXCLUDED_NOT_EXPLICIT_ANCHOR")
-        .when(F.col("certification_decisao") == "REVOKE", "EXCLUDED_EXPLICIT_CONTRADICTION")
+        .when(
+            ~F.coalesce(F.col("birthright"), F.lit(False)),
+            "EXCLUDED_NOT_EXPLICIT_ANCHOR",
+        )
+        .when(
+            F.col("certification_decisao") == "REVOKE",
+            "EXCLUDED_EXPLICIT_CONTRADICTION",
+        )
         .when(
             F.coalesce(F.col("cross_community"), F.lit(True))
             & (~F.coalesce(F.col("sigla_publica"), F.lit(False))),

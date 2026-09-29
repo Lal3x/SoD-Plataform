@@ -108,7 +108,9 @@ class EvidenceEngineConfig:
 
     def __post_init__(self) -> None:
         if not all(vars(self).values()):
-            raise ValueError("Evidence Engine identifiers and versions must be non-empty")
+            raise ValueError(
+                "Evidence Engine identifiers and versions must be non-empty"
+            )
         if self.method_id != METHOD_ID:
             raise ValueError(f"Unsupported Evidence Engine method_id: {self.method_id}")
 
@@ -117,6 +119,13 @@ def load_evidence_engine_config(path: Path) -> EvidenceEngineConfig:
     """Load the explicit EV001 compatibility contract."""
     try:
         values = yaml.safe_load(path.read_text(encoding="utf-8"))["evidence_engine"]
-        return EvidenceEngineConfig(**{field: str(values[field]) for field in EvidenceEngineConfig.__dataclass_fields__})
+        return EvidenceEngineConfig(
+            **{
+                field: str(values[field])
+                for field in EvidenceEngineConfig.__dataclass_fields__
+            }
+        )
     except (KeyError, OSError, TypeError, ValueError, yaml.YAMLError) as exc:
-        raise ValueError(f"Invalid Evidence Engine configuration {path}: {exc}") from exc
+        raise ValueError(
+            f"Invalid Evidence Engine configuration {path}: {exc}"
+        ) from exc

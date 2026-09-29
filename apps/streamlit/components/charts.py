@@ -17,24 +17,44 @@ CHART_LEGENDS = {
 
 def distribution(rows: list[dict], dimension: str, title: str):
     st.subheader(title)
-    st.caption(CHART_LEGENDS.get(dimension, "O que mostra: a distribuição dos acessos pela dimensão selecionada."))
+    st.caption(
+        CHART_LEGENDS.get(
+            dimension,
+            "O que mostra: a distribuição dos acessos pela dimensão selecionada.",
+        )
+    )
     if not rows:
         st.info("Nenhum registro disponível.")
         return
     frame = pd.DataFrame(rows)
     frame[dimension] = frame[dimension].fillna("UNKNOWN").astype(str)
-    palette = (POLICY_COLORS if dimension == "policy_decision" else
-               RISK_COLORS if dimension == "risk_band" else None)
+    palette = (
+        POLICY_COLORS
+        if dimension == "policy_decision"
+        else RISK_COLORS
+        if dimension == "risk_band"
+        else None
+    )
     if palette:
-        color = alt.Color(dimension, scale=alt.Scale(domain=list(palette), range=list(palette.values())),
-                          legend=None)
+        color = alt.Color(
+            dimension,
+            scale=alt.Scale(domain=list(palette), range=list(palette.values())),
+            legend=None,
+        )
     else:
         color = alt.value(BRAND_BLUE)
     frame[f"{dimension}_label"] = frame[dimension].map(label)
-    chart = alt.Chart(frame).mark_bar().encode(
-        x=alt.X(f"{dimension}_label:N", sort="-y", title=None),
-        y=alt.Y("count:Q", title="Acessos"),
-        color=color,
-        tooltip=[alt.Tooltip(f"{dimension}_label:N", title=field_label(dimension)), "count:Q"],
+    chart = (
+        alt.Chart(frame)
+        .mark_bar()
+        .encode(
+            x=alt.X(f"{dimension}_label:N", sort="-y", title=None),
+            y=alt.Y("count:Q", title="Acessos"),
+            color=color,
+            tooltip=[
+                alt.Tooltip(f"{dimension}_label:N", title=field_label(dimension)),
+                "count:Q",
+            ],
+        )
     )
     st.altair_chart(chart, width="stretch")

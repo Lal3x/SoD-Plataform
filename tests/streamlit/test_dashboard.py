@@ -25,15 +25,25 @@ APP = ROOT / "apps/streamlit"
 
 
 def test_seven_pages_exist():
-    assert len(list((APP / "pages").glob("*.py"))) == 8  # seven pages and package marker
+    assert (
+        len(list((APP / "pages").glob("*.py"))) == 8
+    )  # seven pages and package marker
 
 
 def test_v2_contract_and_runtime_isolation():
     assert DATASET_VERSION == "V2"
     assert GOLD_TABLE.startswith("sod.gold.")
-    assert all(table.startswith("sod.validation.") for table in VALIDATION_TABLES.values())
-    for name in ("executive_overview", "access_business", "risk_prioritization",
-                 "explainability", "data_analysis", "observability"):
+    assert all(
+        table.startswith("sod.validation.") for table in VALIDATION_TABLES.values()
+    )
+    for name in (
+        "executive_overview",
+        "access_business",
+        "risk_prioritization",
+        "explainability",
+        "data_analysis",
+        "observability",
+    ):
         page = (APP / "pages" / f"{name}.py").read_text()
         assert "ValidationRepository" not in page
         assert "sod.validation" not in page
@@ -112,7 +122,13 @@ def test_table_presentation_normalizes_mixed_values_before_arrow_conversion():
 
 
 def test_dashboard_contains_no_data_mutation():
-    forbidden = ("writeTo(", "createOrReplace(", "INSERT INTO", "DELETE FROM", "MERGE INTO")
+    forbidden = (
+        "writeTo(",
+        "createOrReplace(",
+        "INSERT INTO",
+        "DELETE FROM",
+        "MERGE INTO",
+    )
     for path in APP.rglob("*.py"):
         assert all(token not in path.read_text() for token in forbidden)
 
@@ -154,4 +170,6 @@ def test_cache_keeps_distinct_repository_methods_separate():
 
     query = Query()
     assert query.metrics() == {"total": 75577}
-    assert query.matrix() == [{"policy_decision": "REVISAO", "risk_band": "HIGH", "count": 900}]
+    assert query.matrix() == [
+        {"policy_decision": "REVISAO", "risk_band": "HIGH", "count": 900}
+    ]

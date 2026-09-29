@@ -16,10 +16,14 @@ from .pipeline import OUTPUTS, run_evidence_engine
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run and inspect the Evidence Engine")
     parser.add_argument("command", choices=("run", "status", "metrics", "inspect"))
-    parser.add_argument("--config", type=Path, default=Path("configs/evidence_engine.yml"))
+    parser.add_argument(
+        "--config", type=Path, default=Path("configs/evidence_engine.yml")
+    )
     parser.add_argument("--output", choices=tuple(OUTPUTS))
     parser.add_argument("--limit", type=int, default=20)
-    parser.add_argument("--log-file", type=Path, default=Path("logs/evidence/processing.log"))
+    parser.add_argument(
+        "--log-file", type=Path, default=Path("logs/evidence/processing.log")
+    )
     args = parser.parse_args()
     root = Path.cwd()
     load_project_env(root)
@@ -28,7 +32,11 @@ def main() -> int:
     try:
         if args.command == "run":
             config = args.config if args.config.is_absolute() else root / args.config
-            print(json.dumps(run_evidence_engine(spark, config), default=str, sort_keys=True))
+            print(
+                json.dumps(
+                    run_evidence_engine(spark, config), default=str, sort_keys=True
+                )
+            )
             return 0
         if args.command in ("status", "metrics"):
             table = "sod.metadata.access_intelligence_runs"
@@ -53,4 +61,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

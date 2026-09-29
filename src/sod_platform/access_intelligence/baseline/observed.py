@@ -27,7 +27,10 @@ REQUIRED_COLUMNS = {
 # These are independent materializations.  Selecting between them is the
 # future fallback stage; this stage never chooses a level for a grant.
 BASELINE_LEVELS = (
-    ("SQUAD_CARGO_TIPO_IDENTIDADE", ("comunidade", "squad", "cargo", "tipo_identidade")),
+    (
+        "SQUAD_CARGO_TIPO_IDENTIDADE",
+        ("comunidade", "squad", "cargo", "tipo_identidade"),
+    ),
     ("COMUNIDADE_CARGO", ("comunidade", "cargo")),
     ("COMUNIDADE", ("comunidade",)),
     # Phase 1's broadest defensible comparison retains identity type.  It is
@@ -105,7 +108,9 @@ def _build_level(
         "entitlement_id",
         "population_size",
         "support_count",
-        (F.col("support_count") / F.col("population_size")).cast("double").alias("prevalence"),
+        (F.col("support_count") / F.col("population_size"))
+        .cast("double")
+        .alias("prevalence"),
         F.lit(baseline_version).alias("baseline_version"),
         "source_snapshot_id",
         F.to_timestamp("assessment_date").alias("baseline_timestamp"),

@@ -45,8 +45,29 @@ dev = [
     "ruff (>=0.16.9,<0.17.0)",
     "pre-commit (>=4.6.2,<5.0.0)",
     "ipykernel (>=7.3.0,<8.0.0)",
-    "mkdocs-material (>=9.7.7,<10.0.0)"
+    "mkdocs-material (>=9.7.7,<10.0.0)",
+    "taskipy (>=1.14.1,<2.0.0)",
+    "black (>=26.5.1,<27.0.0)",
+    "pytest-cov (>=7.1.0,<8.0.0)"
 ]
 docs = [
     "mkdocs-material (>=9,<10)"
 ]
+
+[tool.taskipy.tasks]
+lint = "ruff check --select I . && ruff format --check . && black --check ."
+format = "ruff format . && ruff check --select I --fix . && black ."
+tests = "pytest tests -v --cov=sod_platform --cov-report=term-missing --cov-report=xml --cov-fail-under=70"
+
+[tool.black]
+force-exclude = '''
+(
+    apps/streamlit/components/charts\.py
+    | scripts/validate_silver\.py
+    | scripts/validate_v2_risk_offline\.py
+    | src/sod_platform/silver/quality/quarantine\.py
+)
+'''
+
+[tool.ruff.lint.per-file-ignores]
+"scripts/*.py" = ["BLE001"]

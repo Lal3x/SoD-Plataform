@@ -12,8 +12,14 @@ def select_filters(repo, fields: list[str], prefix: str):
     for field in available:
         options = options_by_field[field]
         display = ["Todos", *[label(option) for option in options]]
-        chosen_display = st.selectbox(field_label(field), display, key=f"{prefix}_{field}")
-        chosen = None if chosen_display == "Todos" else options[display.index(chosen_display) - 1]
+        chosen_display = st.selectbox(
+            field_label(field), display, key=f"{prefix}_{field}"
+        )
+        chosen = (
+            None
+            if chosen_display == "Todos"
+            else options[display.index(chosen_display) - 1]
+        )
         if chosen is not None:
             filters[field] = chosen
     return filters

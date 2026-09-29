@@ -46,3 +46,8 @@ application_logs/
 *.temp
 .DS_Store
 Thumbs.db
+
+# Windows Zone Identifier
+*:Zone.Identifier
+*Zone.Identifier
+coverage.xml

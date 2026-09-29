@@ -151,9 +151,11 @@ def ingest_group(spark, source, runs, schema):
             fail_run(
                 run,
                 exc,
-                "schema"
-                if isinstance(exc, SchemaCompatibilityError)
-                else "infrastructure",
+                (
+                    "schema"
+                    if isinstance(exc, SchemaCompatibilityError)
+                    else "infrastructure"
+                ),
             )
     finally:
         data.unpersist()

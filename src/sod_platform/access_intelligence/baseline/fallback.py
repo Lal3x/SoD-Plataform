@@ -39,7 +39,10 @@ REQUIRED_BASELINE_COLUMNS = {
     "baseline_timestamp",
 }
 LEVELS = (
-    ("SQUAD_CARGO_TIPO_IDENTIDADE", ("comunidade", "squad", "cargo", "tipo_identidade")),
+    (
+        "SQUAD_CARGO_TIPO_IDENTIDADE",
+        ("comunidade", "squad", "cargo", "tipo_identidade"),
+    ),
     ("COMUNIDADE_CARGO", ("comunidade", "cargo")),
     ("COMUNIDADE", ("comunidade",)),
     ("POPULACAO_COMPARAVEL", ("tipo_identidade",)),
@@ -74,7 +77,9 @@ def load_hierarchical_fallback_config(path: Path) -> HierarchicalFallbackConfig:
             version=str(values["version"]),
         )
     except (KeyError, OSError, TypeError, ValueError, yaml.YAMLError) as exc:
-        raise ValueError(f"Invalid hierarchical fallback configuration {path}: {exc}") from exc
+        raise ValueError(
+            f"Invalid hierarchical fallback configuration {path}: {exc}"
+        ) from exc
 
 
 def select_hierarchical_fallback(
@@ -102,17 +107,24 @@ def select_hierarchical_fallback(
             F.col("c.assessment_date") == F.col(f"b{index}.assessment_date"),
             F.col("c.entitlement_id") == F.col(f"b{index}.entitlement_id"),
         ]
-        conditions.extend(F.col(f"c.{dimension}") == F.col(f"b{index}.{dimension}") for dimension in dimensions)
+        conditions.extend(
+            F.col(f"c.{dimension}") == F.col(f"b{index}.{dimension}")
+            for dimension in dimensions
+        )
         condition = conditions[0]
         for extra in conditions[1:]:
             condition = condition & extra
-        result = result.alias("c").join(baseline, condition, "left").select(
-            "c.*",
-            F.col(f"b{index}.population_size").alias(f"population_{index}"),
-            F.col(f"b{index}.support_count").alias(f"support_{index}"),
-            F.col(f"b{index}.prevalence").alias(f"prevalence_{index}"),
-            F.col(f"b{index}.source_snapshot_id").alias(f"snapshot_{index}"),
-            F.col(f"b{index}.baseline_timestamp").alias(f"timestamp_{index}"),
+        result = (
+            result.alias("c")
+            .join(baseline, condition, "left")
+            .select(
+                "c.*",
+                F.col(f"b{index}.population_size").alias(f"population_{index}"),
+                F.col(f"b{index}.support_count").alias(f"support_{index}"),
+                F.col(f"b{index}.prevalence").alias(f"prevalence_{index}"),
+                F.col(f"b{index}.source_snapshot_id").alias(f"snapshot_{index}"),
+                F.col(f"b{index}.baseline_timestamp").alias(f"timestamp_{index}"),
+            )
         )
         applicable = F.lit(True)
         for dimension in dimensions:
@@ -124,28 +136,39 @@ def select_hierarchical_fallback(
             & (F.col(f"population_{index}") >= config.minimum_population_size)
             & (F.col(f"support_{index}") >= config.minimum_support_count)
         )
-        reason = F.when(~applicable, F.lit("MISSING_REQUIRED_DIMENSIONS")).when(
-            ~present, F.lit("BASELINE_NOT_AVAILABLE")
-        ).when(~sufficient, F.lit("INSUFFICIENT_ANALYTICAL_SUPPORT")).otherwise(F.lit("SUFFICIENT"))
+        reason = (
+            F.when(~applicable, F.lit("MISSING_REQUIRED_DIMENSIONS"))
+            .when(~present, F.lit("BASELINE_NOT_AVAILABLE"))
+            .when(~sufficient, F.lit("INSUFFICIENT_ANALYTICAL_SUPPORT"))
+            .otherwise(F.lit("SUFFICIENT"))
+        )
         candidates.append({"sufficient": sufficient, "reason": reason})
 
     selected_index = F.lit(None).cast("int")
     for index in reversed(range(len(LEVELS))):
-        selected_index = F.when(candidates[index]["sufficient"], F.lit(index)).otherwise(selected_index)
+        selected_index = F.when(
+            candidates[index]["sufficient"], F.lit(index)
+        ).otherwise(selected_index)
 
     def selected_value(prefix: str, cast: str | None = None) -> F.Column:
         value = F.lit(None)
         for index in reversed(range(len(LEVELS))):
-            value = F.when(selected_index == index, F.col(f"{prefix}_{index}")).otherwise(value)
+            value = F.when(
+                selected_index == index, F.col(f"{prefix}_{index}")
+            ).otherwise(value)
         return value.cast(cast) if cast else value
 
-    attempts = F.array(*[
-        F.concat(F.lit(f"{level}:"), candidates[index]["reason"])
-        for index, (level, _) in enumerate(LEVELS)
-    ])
+    attempts = F.array(
+        *[
+            F.concat(F.lit(f"{level}:"), candidates[index]["reason"])
+            for index, (level, _) in enumerate(LEVELS)
+        ]
+    )
     selected_level = F.lit(None).cast("string")
     for index, (level, _) in reversed(list(enumerate(LEVELS))):
-        selected_level = F.when(selected_index == index, F.lit(level)).otherwise(selected_level)
+        selected_level = F.when(selected_index == index, F.lit(level)).otherwise(
+            selected_level
+        )
 
     return result.select(
         "grant_id",

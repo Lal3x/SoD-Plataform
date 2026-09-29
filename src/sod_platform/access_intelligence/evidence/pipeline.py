@@ -39,9 +39,7 @@ def evidence_metrics(summary: DataFrame, facts: DataFrame) -> dict:
     fact_count = facts.count()
     distinct_evidence_ids = facts.select("evidence_id").distinct().count()
     mixed_codes = summary.select(F.explode("mixed_evidence_codes").alias("code"))
-    contradiction_codes = summary.select(
-        F.explode("contradiction_codes").alias("code")
-    )
+    contradiction_codes = summary.select(F.explode("contradiction_codes").alias("code"))
     return {
         "evaluated_grants": summary_rows,
         "distinct_grants": distinct_grants,
@@ -52,26 +50,18 @@ def evidence_metrics(summary: DataFrame, facts: DataFrame) -> dict:
         "evidence_count": fact_count,
         "distinct_evidence_ids": distinct_evidence_ids,
         "duplicate_evidence_ids": fact_count - distinct_evidence_ids,
-        "facts_without_bundle_id": facts.where(
-            "evidence_bundle_id is null"
-        ).count(),
+        "facts_without_bundle_id": facts.where("evidence_bundle_id is null").count(),
         "evidence_type_distribution": distribution(facts, "evidence_type"),
         "evidence_category_distribution": distribution(facts, "evidence_category"),
         "evidence_reliability_distribution": distribution(
             facts, "evidence_reliability"
         ),
-        "approval_relevance_distribution": distribution(
-            summary, "approval_relevance"
-        ),
+        "approval_relevance_distribution": distribution(summary, "approval_relevance"),
         "approval_linkage_quality_distribution": distribution(
             summary, "approval_linkage_quality"
         ),
-        "certification_distribution": distribution(
-            summary, "certification_decision"
-        ),
-        "expected_access_distribution": distribution(
-            summary, "expected_access_status"
-        ),
+        "certification_distribution": distribution(summary, "certification_decision"),
+        "expected_access_distribution": distribution(summary, "expected_access_status"),
         "expectation_strength_distribution": distribution(
             summary, "expectation_evidence_strength"
         ),
@@ -96,20 +86,16 @@ def evidence_metrics(summary: DataFrame, facts: DataFrame) -> dict:
         "contradictory_evidence_count": summary.where(
             "contradictory_evidence_flag"
         ).count(),
-        "contradiction_code_distribution": distribution(
-            contradiction_codes, "code"
-        ),
+        "contradiction_code_distribution": distribution(contradiction_codes, "code"),
         "unknown_reliability_count": facts.where(
             "evidence_reliability = 'UNKNOWN'"
         ).count(),
         # Successful materialization means the temporal input gate passed.
         "future_evidence_rejected_count": 0,
-        "evidence_bundle_versions": distribution(
-            summary, "evidence_bundle_version"
-        ),
-        "source_snapshots": summary.select(
-            "access_context_source_snapshot_id"
-        ).distinct().count(),
+        "evidence_bundle_versions": distribution(summary, "evidence_bundle_version"),
+        "source_snapshots": summary.select("access_context_source_snapshot_id")
+        .distinct()
+        .count(),
         "expected_access_method_versions": distribution(
             summary, "expected_access_method_version"
         ),
@@ -127,11 +113,14 @@ def run_evidence_engine(spark: SparkSession, config_path: Path) -> dict:
     config = load_evidence_engine_config(config_path)
     run_ids = [row[0] for row in context.select("_silver_run_id").distinct().collect()]
     if len(run_ids) != 1 or run_ids[0] is None:
-        raise ValueError("Access Context must contain exactly one non-null _silver_run_id")
+        raise ValueError(
+            "Access Context must contain exactly one non-null _silver_run_id"
+        )
     run_id = run_ids[0]
     try:
-        outputs = build_evidence(context, expected, config, evaluated_at=started_at,
-                                 requests=requests)
+        outputs = build_evidence(
+            context, expected, config, evaluated_at=started_at, requests=requests
+        )
         _write_snapshot(outputs.facts, OUTPUTS["evidence_facts"])
         _write_snapshot(outputs.summary, OUTPUTS["evidence_summary"])
         metrics = evidence_metrics(outputs.summary, outputs.facts)

@@ -1,4 +1,5 @@
 """Standalone materializer for PDISC002; it never invokes official stages."""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -26,6 +27,10 @@ def run_nmf_hdbscan_shadow(spark: SparkSession, config_path: Path) -> dict:
     result = run_nmf_hdbscan(context, config)
     for key, table in OUTPUTS.items():
         _write_snapshot(result[key], table)
-    return {"run_id": _source_run_id(context), "method_id": config.method_id,
-            "model_version": config.version, "config_hash": config.config_hash,
-            **result["metrics"]}
+    return {
+        "run_id": _source_run_id(context),
+        "method_id": config.method_id,
+        "model_version": config.version,
+        "config_hash": config.config_hash,
+        **result["metrics"],
+    }

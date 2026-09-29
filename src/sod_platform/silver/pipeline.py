@@ -144,7 +144,9 @@ def run_silver(
             cached.append(context)
             context_count = context.count()
             if context.select(*GRANT).distinct().count() != context_count:
-                raise ValueError("Access context violated one-row-per-active-grant contract")
+                raise ValueError(
+                    "Access context violated one-row-per-active-grant contract"
+                )
 
         next_phase("diagnostics")
         quality_rows = []
@@ -197,29 +199,41 @@ def run_silver(
             "dq_failures": sum(not row[4] for row in quality_rows),
             "access_context_records": context_count if include_access_context else None,
             "unmatched_approval_records": unmatched,
-            "access_context_metrics": {
-                "active_grants": context_count,
-                "distinct_grant_ids": context.select("grant_id").distinct().count() if context is not None else None,
-                "generated_grant_ids": generated_grant_ids,
-                "approval_relevance": {
-                    str(row["approval_relevance"]): row["count"]
-                    for row in context.groupBy("approval_relevance").count().collect()
-                },
-                "usage_coverage": {
-                    str(row["usage_coverage"]): row["count"]
-                    for row in context.groupBy("usage_coverage").count().collect()
-                },
-                "identity_history_complete": {
-                    str(row["identity_history_complete"]): row["count"]
-                    for row in context.groupBy("identity_history_complete").count().collect()
-                },
-                "cross_community": {
-                    str(row["cross_community"]): row["count"]
-                    for row in context.groupBy("cross_community").count().collect()
-                },
-                "grain_integrity": "VALIDATED",
-                "join_explosion_detected": False,
-            } if context is not None else None,
+            "access_context_metrics": (
+                {
+                    "active_grants": context_count,
+                    "distinct_grant_ids": (
+                        context.select("grant_id").distinct().count()
+                        if context is not None
+                        else None
+                    ),
+                    "generated_grant_ids": generated_grant_ids,
+                    "approval_relevance": {
+                        str(row["approval_relevance"]): row["count"]
+                        for row in context.groupBy("approval_relevance")
+                        .count()
+                        .collect()
+                    },
+                    "usage_coverage": {
+                        str(row["usage_coverage"]): row["count"]
+                        for row in context.groupBy("usage_coverage").count().collect()
+                    },
+                    "identity_history_complete": {
+                        str(row["identity_history_complete"]): row["count"]
+                        for row in context.groupBy("identity_history_complete")
+                        .count()
+                        .collect()
+                    },
+                    "cross_community": {
+                        str(row["cross_community"]): row["count"]
+                        for row in context.groupBy("cross_community").count().collect()
+                    },
+                    "grain_integrity": "VALIDATED",
+                    "join_explosion_detected": False,
+                }
+                if context is not None
+                else None
+            ),
             "quarantine_by_reason": reason_counts,
             "tables": {
                 name: {

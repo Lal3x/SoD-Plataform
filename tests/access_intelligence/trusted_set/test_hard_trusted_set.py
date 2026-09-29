@@ -29,8 +29,13 @@ def test_hard_trusted_set_uses_birthright_as_explicit_anchor(spark):
     assert result["cross-private"].hard_trusted_reason == "EXCLUDED_CONTEXT_CONFLICT"
     assert result["cross-public"].hard_trusted_flag is True
     assert result["cross-public"].hard_trusted_reason == "TRUSTED_BIRTHRIGHT_ANCHOR"
-    assert result["public-revoked"].hard_trusted_reason == "EXCLUDED_EXPLICIT_CONTRADICTION"
-    assert result["same-revoked"].hard_trusted_reason == "EXCLUDED_EXPLICIT_CONTRADICTION"
+    assert (
+        result["public-revoked"].hard_trusted_reason
+        == "EXCLUDED_EXPLICIT_CONTRADICTION"
+    )
+    assert (
+        result["same-revoked"].hard_trusted_reason == "EXCLUDED_EXPLICIT_CONTRADICTION"
+    )
     assert result["blocking"].hard_trusted_reason == "EXCLUDED_BLOCKING_DQ"
     assert {r.hard_trusted_rule_version for r in result.values()} == {"2.1.0"}
 

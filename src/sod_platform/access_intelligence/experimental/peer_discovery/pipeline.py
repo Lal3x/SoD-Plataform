@@ -50,22 +50,34 @@ def run_lda_shadow(spark: SparkSession, config_path: Path) -> dict:
             "inner",
         )
         metrics = {
-            "input_identity_count": assignments.select("identidade_id").distinct().count(),
+            "input_identity_count": assignments.select("identidade_id")
+            .distinct()
+            .count(),
             "input_grant_count": context.select("grant_id").distinct().count(),
             "vocabulary_size": peer["feature_dictionary"].count(),
             "lda_topics": peer["model_selection"]["selected_k"],
             "peer_groups": assignments.select("peer_group_id").distinct().count(),
-            "high_confidence_peers": assignments.where("peer_confidence = 'HIGH_CONFIDENCE'").count(),
-            "ambiguous_peers": assignments.where("peer_confidence = 'AMBIGUOUS'").count(),
-            "low_confidence_peers": assignments.where("peer_confidence = 'LOW_CONFIDENCE'").count(),
+            "high_confidence_peers": assignments.where(
+                "peer_confidence = 'HIGH_CONFIDENCE'"
+            ).count(),
+            "ambiguous_peers": assignments.where(
+                "peer_confidence = 'AMBIGUOUS'"
+            ).count(),
+            "low_confidence_peers": assignments.where(
+                "peer_confidence = 'LOW_CONFIDENCE'"
+            ).count(),
             "peer_baseline_rows": peer["peer_baseline"].count(),
             "patterns_count": peer["frequent_patterns"].count(),
             "shadow_status": distribution(shadow, "peer_expected_status"),
             "current_vs_peer": {
-                f"{row['expected_access_status']}→{row['peer_expected_status']}": row["count"]
+                f"{row['expected_access_status']}→{row['peer_expected_status']}": row[
+                    "count"
+                ]
                 for row in comparison.groupBy(
                     "expected_access_status", "peer_expected_status"
-                ).count().collect()
+                )
+                .count()
+                .collect()
             },
             "current_insufficient_with_reliable_peer": comparison.where(
                 "expected_access_status = 'INSUFFICIENT_EVIDENCE' "
@@ -74,7 +86,10 @@ def run_lda_shadow(spark: SparkSession, config_path: Path) -> dict:
             "model_selection": peer["model_selection"],
         }
         append_component_run(
-            spark, run_id=run_id, component="peer_discovery_shadow", status="success",
+            spark,
+            run_id=run_id,
+            component="peer_discovery_shadow",
+            status="success",
             started_at=started_at,
             duration_seconds=round(time.monotonic() - monotonic_started, 3),
             metrics=metrics,
@@ -82,7 +97,10 @@ def run_lda_shadow(spark: SparkSession, config_path: Path) -> dict:
         return {"run_id": run_id, "peer_discovery_shadow": metrics}
     except Exception:
         append_component_run(
-            spark, run_id=run_id, component="peer_discovery_shadow", status="failed",
+            spark,
+            run_id=run_id,
+            component="peer_discovery_shadow",
+            status="failed",
             started_at=started_at,
             duration_seconds=round(time.monotonic() - monotonic_started, 3),
             metrics={"error": "peer_discovery_failed"},
