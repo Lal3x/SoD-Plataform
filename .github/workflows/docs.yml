@@ -22,7 +22,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: docs-\${{ github.ref }}
+  group: docs-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -67,7 +67,7 @@ jobs:
       id-token: write
     environment:
       name: github-pages
-      url: \${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Publicar no GitHub Pages
         id: deployment
