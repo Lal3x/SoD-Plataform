@@ -2,7 +2,7 @@
 
 ## 1. O problema operacional antes da tecnologia
 
-O desafio não começa em Spark, machine learning ou regras SoD. Ele começa em uma pergunta operacional simples e difícil de responder em escala:
+O desafio não começa em ferramentas ou algoritmos. Ele começa em uma pergunta operacional simples e difícil de responder em escala:
 
 > **“Este acesso deveria estar com esta pessoa?”**
 
@@ -38,7 +38,40 @@ Esse fluxo possui três problemas estruturais:
 
 O case explicita que muitos apontamentos atuais são acessos que não pertencem aparentemente à estrutura da pessoa e que tratar esse conjunto é o primeiro passo, mas **ainda não representa SoD plena**.
 
-## 2. Fase 1 — reduzir o “mato alto”
+## 2. Antes da arquitetura: o modelo mental dos dados
+
+Para entender o restante da solução, basta guardar esta relação:
+
+```mermaid
+flowchart LR
+    A["Pessoa / Identidade"] -->|"possui"| B["Acesso concedido<br/>grant"]
+    B -->|"concede"| C["Permissão<br/>entitlement"]
+    C -->|"pertence a"| D["Aplicação / Sigla"]
+    D -->|"é de responsabilidade de"| E["Comunidade"]
+```
+
+Exemplo simples:
+
+```text
+João trabalha na comunidade Crédito
+        ↓
+possui ENT_APROVAR_COBRANCA
+        ↓
+esse entitlement pertence ao sistema COB
+        ↓
+o sistema COB pertence à comunidade Cobrança
+        ↓
+o acesso atravessa a fronteira da comunidade
+        ↓
+isso exige contexto e evidência; não significa automaticamente irregularidade
+```
+
+A partir daí, a plataforma pergunta: o acesso é público? é nato? existe aprovação? é comum para pessoas comparáveis? há certificação? existe evidência suficiente para decidir?
+
+!!! info "Por que o projeto se chama SoD Platform se a Fase 1 não é SoD completa?"
+    Porque a **Fase 1 constrói a fundação governada** — dados padronizados, contexto, evidência, regras, risco, rastreabilidade (`lineage`) e observabilidade — que a **Fase 2 reutiliza para analisar conflitos SoD transacionais**. A ideia é resolver o problema imediato sem criar uma arquitetura descartável.
+
+## 3. Fase 1 — reduzir o “mato alto”
 
 A primeira fase é uma sanitização top-down por comunidade.
 
@@ -72,7 +105,7 @@ A implementação precisa ir um nível abaixo para produzir uma decisão auditá
 
 Isso permite explicar o caso individual e depois agregar por comunidade sem perder o detalhe.
 
-## 3. O que torna a Fase 1 difícil
+## 4. O que torna a Fase 1 difícil
 
 ### Cross-community não é automaticamente indevido
 
@@ -94,9 +127,11 @@ Se um erro histórico foi replicado para muitas pessoas, ele pode se tornar “c
 
 Se um grupo tem poucos membros, uma estatística local pode ser enganosa. Essa limitação levou ao Hierarchical Fallback.
 
-## 4. Fase 2 — SoD transacional
+## 5. Fase 2 — SoD transacional
 
 Depois da sanitização, a pergunta fica mais profunda.
+
+**SoD (Segregation of Duties / Segregação de Funções)** procura combinações de capacidades incompatíveis na mesma pessoa.
 
 A Fase 1 pergunta:
 
@@ -126,7 +161,7 @@ IDENTIDADE
 
 A análise futura precisa considerar função, transação, ação, objeto, escopo, vigência, exceção formal e controle compensatório.
 
-## 5. Por que as fases pertencem à mesma arquitetura
+## 6. Por que as fases pertencem à mesma arquitetura
 
 Os componentes atuais já resolvem problemas que continuarão existindo na SoD transacional:
 
@@ -143,7 +178,7 @@ Os componentes atuais já resolvem problemas que continuarão existindo na SoD t
 
 A Fase 2 adiciona **semântica transacional e catálogo de conflitos**, não substitui a fundação.
 
-## 6. Resultado esperado da Fase 1
+## 7. Resultado esperado da Fase 1
 
 Ao final, o objetivo não é apenas gerar um arquivo com suspeitas. É produzir uma fila explicável:
 

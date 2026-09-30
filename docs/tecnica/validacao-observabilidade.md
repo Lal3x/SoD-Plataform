@@ -4,6 +4,11 @@
 
 A validação V2 roda em DAG separado.
 
+!!! tip "Em linguagem simples"
+    **Runtime** é a parte que produz a decisão. **Ground truth (gabarito)** é a resposta esperada usada depois para conferir o resultado. **Leakage** seria deixar esse gabarito influenciar a decisão antes da avaliação. O desenho separa essas etapas justamente para evitar isso.
+
+    O **Validation Mart** é o conjunto de tabelas de avaliação produzido depois da execução, com matriz de confusão e métricas de qualidade.
+
 A sequência correta é:
 
 ~~~text
@@ -87,6 +92,11 @@ A ideia é simples:
 > o gabarito não pode ensinar a resposta para o pipeline que será avaliado.
 
 ## 5. O que a validação calcula
+
+O código de validação gera um arquivo por execução em `artifacts/validation/v2-validation-mart-metrics.json` e também materializa tabelas consumidas pelo dashboard.
+
+!!! note "Importante para interpretar a documentação"
+    O **método de cálculo está versionado no repositório**, mas o snapshot final desse arquivo de métricas **não está versionado na `main`**. Por isso a documentação não publica uma accuracy fixa sem associá-la a uma execução concreta.
 
 O Validation Mart produz:
 

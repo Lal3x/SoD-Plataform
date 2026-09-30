@@ -2,6 +2,9 @@
 
 <div class="sod-page-wide sod-page-architecture"></div>
 
+!!! info "Leitura opcional"
+    Esta página descreve **como a solução poderia ser operada em cloud**. Ela não é necessária para entender as regras da POC e não representa infraestrutura já implantada.
+
 ## 1. Princípio
 
 A migração para AWS não deve mudar a semântica da solução. Ela deve mudar **como a plataforma executa, escala, protege e observa** seus componentes.
@@ -76,11 +79,11 @@ Produção bancária não deve compartilhar estado entre desenvolvimento, homolo
 
 Arquitetura recomendada:
 
-<div class="sod-mini-flow sod-mini-flow--3">
-  <div><strong>1</strong><span>DEV</span></div>
-  <div><strong>2</strong><span>HML · promoção controlada</span></div>
-  <div><strong>3</strong><span>PRD · aprovação</span></div>
-</div>
+```mermaid
+flowchart LR
+    A["DEV<br/>desenvolvimento"] --> B["HML<br/>homologação"]
+    B -->|"promoção controlada"| C["PRD<br/>produção"]
+```
 
 Cada ambiente deve possuir:
 
@@ -97,10 +100,10 @@ Uma das fronteiras mais importantes é runtime versus validação.
 
 O role usado pelo runtime não deve ter acesso ao ground truth.
 
-<div class="sod-lane-grid sod-lane-grid--2">
-  <div class="sod-lane"><span class="sod-kicker">Runtime role</span><h3>Produção da decisão</h3><p>Lê Bronze/Silver e escreve Intelligence/Gold. Não recebe permissão para ler o ground truth.</p></div>
-  <div class="sod-lane"><span class="sod-kicker">Validation role</span><h3>Avaliação posterior</h3><p>Lê a Gold congelada e o ground truth exclusivamente para medir a execução.</p></div>
-</div>
+| Role | Responsabilidade | Acesso ao gabarito |
+|---|---|---|
+| **Runtime role** | lê Bronze/Silver e produz Intelligence/Gold | **não** |
+| **Validation role** | lê Gold congelada e ground truth para medir a execução | **sim, somente para validação** |
 
 Isso transforma prevenção de leakage em controle de infraestrutura.
 
@@ -157,13 +160,13 @@ Os snapshots Iceberg continuam sendo parte da rastreabilidade de dados.
 
 ## 10. CI/CD
 
-<div class="sod-mini-flow sod-mini-flow--5">
-  <div><strong>1</strong><span>GitHub</span></div>
-  <div><strong>2</strong><span>testes / validações</span></div>
-  <div><strong>3</strong><span>build + ECR</span></div>
-  <div><strong>4</strong><span>DEV / HML</span></div>
-  <div><strong>5</strong><span>PRD</span></div>
-</div>
+```mermaid
+flowchart LR
+    A["GitHub"] --> B["Testes / validações"]
+    B --> C["Build + ECR"]
+    C --> D["DEV / HML"]
+    D --> E["PRD"]
+```
 
 A infraestrutura deveria ser declarada em IaC conforme padrão organizacional, por exemplo Terraform, CDK ou CloudFormation.
 

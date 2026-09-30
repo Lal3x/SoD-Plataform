@@ -126,7 +126,30 @@ flowchart LR
 
 A Gold não cria regra nova; ela publica de forma reconciliada o que os estágios anteriores já decidiram.
 
-## 7. Cobertura da validação offline
+## 7. A pergunta mais direta: a solução acertou?
+
+A POC **implementa a medição dessa resposta**, mas o repositório não versiona na `main` um snapshot final do arquivo `artifacts/validation/v2-validation-mart-metrics.json` produzido por uma execução específica.
+
+Por isso, esta documentação **não apresenta uma accuracy estática sem evidência versionada**.
+
+Quando o Validation Mart é executado sobre uma Gold congelada, o dashboard mostra:
+
+- accuracy exata;
+- accuracy das decisões automatizadas;
+- precision, recall e F1 por classe;
+- taxa de automação;
+- taxa de revisão;
+- false-safe crítico;
+- false-indevido;
+- matriz de confusão;
+- métricas por cenário.
+
+!!! success "O que já podemos afirmar com evidência versionada"
+    O runtime preserva **75.577 grants** nos estágios críticos, mantém o gabarito fora da decisão, produz `REVISÃO` quando há incerteza/contradição e materializa todo o mecanismo necessário para medir qualidade posteriormente. O número final de accuracy deve ser lido de um **run de validação identificado**, não inferido destes volumes.
+
+Para uma apresentação formal com um número de qualidade, o passo correto é executar a Validation DAG, congelar o run e versionar ou anexar o snapshot de métricas correspondente.
+
+## 8. Cobertura da validação offline
 
 O Validation Mart é executado **depois da Gold congelada** e compara o runtime com o gabarito sintético.
 
@@ -152,7 +175,7 @@ A validação materializa:
 !!! note "Por que não há uma accuracy fixa nesta página?"
     As métricas executivas são calculadas pelo Validation Mart para a execução congelada e consumidas pelo dashboard. O repositório versiona o método e os contratos, mas não mantém nesta página um número de accuracy desconectado de um run específico.
 
-## 8. Cenários exercitados
+## 9. Cenários exercitados
 
 O gerador sintético inclui situações desenhadas para testar decisões diferentes:
 
@@ -171,7 +194,7 @@ O gerador sintético inclui situações desenhadas para testar decisões diferen
 
 Alguns cenários funcionam como modificadores ou condições de teste; portanto, essa tabela representa cobertura do gerador e não deve ser lida como classes mutuamente exclusivas em todos os casos.
 
-## 9. Controles técnicos demonstrados
+## 10. Controles técnicos demonstrados
 
 A execução também comprova propriedades arquiteturais importantes:
 
@@ -183,7 +206,7 @@ A execução também comprova propriedades arquiteturais importantes:
 - Validation Mart isolado do runtime;
 - casos ambíguos podem terminar em `REVISÃO` em vez de decisão forçada.
 
-## 10. O que esses resultados demonstram
+## 11. O que esses resultados demonstram
 
 Os resultados sintéticos mostram que a implementação consegue:
 
@@ -196,7 +219,7 @@ Os resultados sintéticos mostram que a implementação consegue:
 7. publicar uma Gold reconciliada e auditável;
 8. avaliar a solução posteriormente em um Validation Mart isolado.
 
-## 11. O que esses resultados ainda não provam
+## 12. O que esses resultados ainda não provam
 
 Eles não demonstram, por si só:
 

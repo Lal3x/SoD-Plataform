@@ -7,7 +7,9 @@
 
 # SoD Platform
 
-Uma POC executável para transformar acessos dispersos em **decisões explicáveis, priorizadas e auditáveis**, resolvendo a sanitização top-down da Fase 1 sem fechar o caminho para a SoD transacional da Fase 2.
+Esta solução analisa os acessos que pessoas possuem aos sistemas de uma organização e ajuda a separar **acessos normais, exceções justificadas, possíveis irregularidades e casos que precisam de revisão**.
+
+Tecnicamente, é uma **prova de conceito (POC)** de Governança de Acessos que implementa a Fase 1 e prepara a evolução para **Segregation of Duties (SoD)** transacional.
 
 <div class="sod-actions">
 <a href="negocio/problema-e-fases/" class="md-button md-button--primary">Entender o problema</a>
@@ -18,9 +20,9 @@ Uma POC executável para transformar acessos dispersos em **decisões explicáve
 </div>
 
 <div class="sod-metric-strip">
-  <div class="sod-metric"><b>Fase 1</b><span>sanitização e governança de acesso</span></div>
+  <div class="sod-metric"><b>Fase 1</b><span>limpeza e governança de acessos</span></div>
   <div class="sod-metric"><b>4 decisões</b><span>PADRÃO · LEGÍTIMO · INDEVIDO · REVISÃO</span></div>
-  <div class="sod-metric"><b>Runtime V2</b><span>Airflow + Spark + Iceberg</span></div>
+  <div class="sod-metric"><b>Implementação V2</b><span>Airflow + Spark + Iceberg</span></div>
   <div class="sod-metric"><b>Fase 2</b><span>evolução para SoD transacional</span></div>
 </div>
 
@@ -31,6 +33,11 @@ Uma POC executável para transformar acessos dispersos em **decisões explicáve
 
 Hoje, descobrir se um acesso é realmente inadequado pode exigir entrevistas, conhecimento distribuído e análise manual. O desafio é transformar esse processo em uma decisão baseada em dados **sem confundir comportamento frequente com autorização**.
 
+!!! info "O que significa SoD?"
+    **SoD (Segregation of Duties / Segregação de Funções)** é o princípio de evitar que uma mesma pessoa acumule capacidades incompatíveis. Exemplo: quem **cria um pagamento** não deveria, sem controles adequados, também **aprovar o mesmo pagamento**.
+
+    A Fase 1 ainda não executa a SoD transacional completa. Ela limpa, contextualiza e governa os acessos para que a Fase 2 consiga analisar conflitos com uma base confiável.
+
 <div class="sod-flow" markdown>
 
 **A proposta:** contextualizar o acesso → estimar comportamento esperado → organizar evidências → aplicar política explícita → calcular risco → publicar uma fila acionável.
@@ -40,7 +47,7 @@ Hoje, descobrir se um acesso é realmente inadequado pode exigir entrevistas, co
 ## Duas fases, uma única fundação
 
 <div class="sod-summary" markdown>
-<p><strong>Visão da evolução:</strong> a Fase 1 usa fundamentos de Segurança da Informação — baseline, least privilege, need-to-know, evidência e auditabilidade — para governar acessos atuais. A Fase 2 reutiliza essa fundação e acrescenta semântica transacional, ML/Graph e LLM + RAG para descobrir e interpretar conflitos SoD sem transferir a decisão final para a IA.</p>
+<p><strong>Visão da evolução:</strong> a Fase 1 usa fundamentos de Segurança da Informação — padrão de comportamento (baseline), menor privilégio, necessidade de acesso, evidência e auditabilidade — para governar acessos atuais. A Fase 2 reutiliza essa fundação e acrescenta semântica transacional, ML/Graph e LLM + RAG para descobrir e interpretar conflitos SoD sem transferir a decisão final para a IA.</p>
 </div>
 
 A solução foi desenhada para resolver o problema imediato sem criar uma arquitetura descartável.
@@ -63,7 +70,7 @@ A solução foi desenhada para resolver o problema imediato sem criar uma arquit
 </div>
 
 !!! important "Escopo correto"
-    A POC implementa a **Fase 1**. Ela não chama a sanitização top-down de “SoD plena”. A **Fase 2** é uma arquitetura evolutiva que reutiliza contexto, evidência, política, risco, lineage, observabilidade e operação.
+    A POC implementa a **Fase 1**. Ela não chama essa limpeza e governança top-down de “SoD plena”. A **Fase 2** é uma arquitetura evolutiva que reutiliza contexto, evidência, política, risco, lineage, observabilidade e operação.
 
 ## A arquitetura em uma visão
 
@@ -75,17 +82,17 @@ flowchart LR
     end
 
     subgraph I["INTELIGÊNCIA DE ACESSO"]
-        C --> D["Access Context"]
-        D --> E["HTS + Baseline"]
-        E --> F["Hierarchical Fallback"]
-        F --> G["Expected Access"]
+        C --> D["Contexto do acesso<br/>Access Context"]
+        D --> E["Âncoras + padrão observado<br/>HTS + Baseline"]
+        E --> F["Ampliação do grupo<br/>Hierarchical Fallback"]
+        F --> G["Comum ou incomum?<br/>Expected Access"]
     end
 
     subgraph DCS["DECISÃO"]
-        G --> H["Evidence"]
-        H --> J["Policy"]
-        J --> K["Risk"]
-        K --> L["Gold"]
+        G --> H["Fatos e confiabilidade<br/>Evidence"]
+        H --> J["Regras de decisão<br/>Policy"]
+        J --> K["Prioridade<br/>Risk"]
+        K --> L["Resultado publicado<br/>Gold"]
     end
 
     O["Airflow + Observabilidade + Lineage"] -. controla e observa .-> P
@@ -94,6 +101,17 @@ flowchart LR
 ```
 
 A arquitetura separa **preparação**, **inteligência de acesso** e **decisão**. Airflow e observabilidade atravessam o fluxo inteiro para garantir ordem, qualidade, versões, snapshots e reconciliação.
+
+## A stack em linguagem simples
+
+| Tecnologia | Papel na solução |
+|---|---|
+| **Spark / PySpark** | processa e transforma grandes volumes de dados |
+| **Iceberg** | armazena tabelas com snapshots/versionamento para rastreabilidade |
+| **Airflow** | garante a ordem de execução e as dependências entre etapas |
+| **Streamlit** | apresenta resultados, explicações e observabilidade |
+
+Essas ferramentas executam a solução; **as regras de negócio e os princípios de Segurança da Informação continuam sendo a parte que define o significado da decisão**.
 
 ## O que está implementado
 
