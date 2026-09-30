@@ -181,6 +181,17 @@ Ao mesmo tempo:
 
 ## 8. Onde a solução acertou e onde ainda pode melhorar?
 
+Antes de olhar as métricas, vale entender o que cada resposta significa:
+
+| Resposta | Em linguagem simples |
+|---|---|
+| **PADRÃO** | acesso que as regras conseguem aceitar como parte do funcionamento esperado |
+| **LEGÍTIMO** | acesso aceito porque existe uma justificativa ou autorização específica; é uma exceção válida, não um erro |
+| **INDEVIDO** | acesso em que as regras encontraram condição suficiente para indicar remediação |
+| **REVISÃO** | caso em que os dados ainda não permitem uma conclusão segura e, por isso, precisa de análise humana |
+
+Essa diferença é importante porque **PADRÃO e LEGÍTIMO são duas formas diferentes de um acesso ser aceito**. PADRÃO representa algo esperado para aquele contexto. LEGÍTIMO representa uma exceção autorizada que precisa de evidência para ser explicada.
+
 A matriz abaixo mostra o que o gabarito dizia e o que a Policy respondeu.
 
 | Resposta esperada | PADRÃO | LEGÍTIMO | INDEVIDO | REVISÃO | Total |
@@ -189,31 +200,91 @@ A matriz abaixo mostra o que o gabarito dizia e o que a Policy respondeu.
 | **LEGÍTIMO** | 3.084 | **2.639** | 0 | 70 | **5.793** |
 | **INDEVIDO** | 0 | 0 | **272** | 0 | **272** |
 
-A principal oportunidade de calibração aparece na fronteira entre **PADRÃO e LEGÍTIMO**.
+### O que aconteceu com os acessos LEGÍTIMOS?
 
-Dos 5.793 casos que o gabarito considera LEGÍTIMO:
+O gabarito contém **5.793 acessos LEGÍTIMOS**. Eles representam acessos válidos que exigem uma justificativa ou autorização específica.
+
+A solução tratou esses casos da seguinte forma:
+
+| Resultado da solução | Quantidade | O que isso significa |
+|---|---:|---|
+| **LEGÍTIMO** | **2.639** | reconheceu corretamente a exceção autorizada |
+| **PADRÃO** | **3.084** | aceitou o acesso, mas o interpretou como parte do comportamento esperado |
+| **REVISÃO** | **70** | não encontrou evidência suficiente para concluir automaticamente |
+| **INDEVIDO** | **0** | nenhum acesso legítimo foi tratado como acesso indevido |
+
+O ponto principal é este:
+
+> **A solução não confundiu acessos legítimos com acessos indevidos. A diferença ficou concentrada entre acesso comum e exceção autorizada.**
+
+Em outras palavras, a principal oportunidade de calibração está em melhorar a distinção:
 
 ```text
-2.639 → LEGÍTIMO
-3.084 → PADRÃO
-   70 → REVISÃO
-    0 → INDEVIDO
+acesso comum e esperado
+        ↓
+      PADRÃO
+
+acesso válido, mas que depende
+de justificativa ou autorização
+        ↓
+     LEGÍTIMO
 ```
 
-Por isso o **recall de LEGÍTIMO é 45,55%**. Isso não significa que 54,45% dos legítimos foram tratados como indevidos: **nenhum foi classificado como INDEVIDO**. A maior parte foi absorvida pela classe PADRÃO.
+### Por que o recall de LEGÍTIMO é 45,55%?
+
+**Recall** responde à pergunta:
+
+> “De todos os casos que realmente eram LEGÍTIMOS, quantos a solução conseguiu identificar exatamente como LEGÍTIMO?”
+
+Neste run:
+
+```text
+2.639 casos identificados como LEGÍTIMO
+---------------------------------------
+5.793 casos realmente LEGÍTIMOS
+
+recall = 45,55%
+```
+
+Isso **não significa que os outros 54,45% foram considerados indevidos**.
+
+A distribuição foi:
+
+```text
+2.639 LEGÍTIMO → LEGÍTIMO
+3.084 LEGÍTIMO → PADRÃO
+   70 LEGÍTIMO → REVISÃO
+    0 LEGÍTIMO → INDEVIDO
+```
+
+Portanto, o principal ajuste necessário é:
+
+```text
+LEGÍTIMO → PADRÃO
+```
+
+e não:
+
+```text
+LEGÍTIMO → INDEVIDO
+```
 
 ### Métricas por classe
 
 | Classe | Precision | Recall | Leitura simples |
 |---|---:|---:|---|
-| **PADRÃO** | **95,69%** | **98,72%** | identifica quase todos os padrões, com alguma absorção de legítimos |
-| **LEGÍTIMO** | **100%** | **45,55%** | quando chama de legítimo, acerta; ainda perde muitos legítimos para PADRÃO |
-| **INDEVIDO** | **100%** | **100%** | encontrou todos os indevidos rotulados e não gerou falso indevido |
+| **PADRÃO** | **95,69%** | **98,72%** | identifica quase todos os padrões; parte das exceções legítimas também caiu nesta classe |
+| **LEGÍTIMO** | **100%** | **45,55%** | quando chama de legítimo, acerta; ainda confunde parte das exceções autorizadas com PADRÃO |
+| **INDEVIDO** | **100%** | **100%** | encontrou todos os indevidos rotulados sem classificar acesso válido como indevido |
 
 Para quem não conhece essas métricas:
 
 - **precision** pergunta: “quando a solução usa esta classe, com que frequência ela está certa?”;
 - **recall** pergunta: “de todos os casos que realmente pertencem a esta classe, quantos a solução conseguiu encontrar?”.
+
+No cenário sintético validado, essa oportunidade de calibração ocorreu mantendo dois controles importantes: **nenhum INDEVIDO foi tratado como seguro (*critical false-safe* = 0)** e **nenhum acesso PADRÃO ou LEGÍTIMO foi classificado como INDEVIDO (*false-indevido* = 0)**.
+
+> **A principal evolução futura é melhorar a capacidade de diferenciar acessos comuns de exceções autorizadas, sem perder os controles de segurança que já funcionaram neste cenário de validação.**
 
 ## 9. O que aconteceu com os casos mais sensíveis?
 
