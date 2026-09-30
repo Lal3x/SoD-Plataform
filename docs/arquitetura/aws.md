@@ -38,14 +38,15 @@ AWS Glue ETL também é alternativa possível, mas não é o alvo principal dest
 | catálogo local | Glue Data Catalog | catálogo |
 | PySpark | EMR Serverless | processamento |
 | Airflow local | MWAA | orquestração |
-| Docker Streamlit | ECS Fargate | dashboard |
-| imagens | ECR | registry |
+| Streamlit local | QuickSight | dashboards analíticos e executivos |
 | logs | CloudWatch | observabilidade |
 | segredos | Secrets Manager | credenciais |
 | autorização data lake | IAM + Lake Formation | governança |
 | criptografia | KMS | proteção |
 | consulta ad hoc | Athena | exploração |
 | auditoria cloud | CloudTrail | trilha administrativa |
+
+Na POC local, o **Streamlit** continua sendo útil para demonstração, investigação e operação assistida. Na arquitetura-alvo AWS, a camada de visualização passa a ser **QuickSight**, consumindo a Gold por meio do **Athena**. Com isso, o dashboard deixa de exigir uma aplicação containerizada dedicada e, para essa finalidade, **ECS Fargate e ECR deixam de ser necessários**.
 
 ## 4. Arquitetura
 
@@ -62,15 +63,16 @@ flowchart LR
 
     H --> I["Glue Data Catalog"]
     I --> J["Athena"]
-    I --> K["ECS Fargate<br/>Streamlit"]
+    J --> K["QuickSight<br/>Dashboards analíticos e executivos"]
     H --> L["Validation Mart<br/>isolado"]
 
     M["CloudWatch"] -. logs · métricas · alarmes .-> C
     M -. observa .-> D
-    M -. observa .-> K
     N["IAM + Lake Formation + KMS + Secrets Manager"] -. protege .-> B
     N -. protege .-> D
     N -. protege .-> H
+    N -. governa acesso .-> J
+    N -. governa acesso .-> K
 ```
 
 ## 5. Ambientes
@@ -109,7 +111,7 @@ Isso transforma prevenção de leakage em controle de infraestrutura.
 
 ## 7. Rede
 
-MWAA, EMR Serverless e ECS devem operar em rede controlada.
+MWAA e EMR Serverless devem operar em rede controlada. A camada analítica usa Athena e QuickSight com acesso governado por IAM e Lake Formation.
 
 Quando aplicável:
 
@@ -117,7 +119,7 @@ Quando aplicável:
 - security groups restritivos;
 - endpoints privados;
 - S3 sem exposição pública;
-- acesso corporativo autenticado ao dashboard.
+- acesso corporativo autenticado e autorizado aos dashboards do QuickSight.
 
 ## 8. Segurança e governança
 
@@ -127,12 +129,12 @@ Roles distintas para:
 
 - runtime;
 - validation;
-- dashboard;
+- consumo analítico / QuickSight;
 - CI/CD.
 
 ### Lake Formation
 
-Permissões de tabela/coluna para separar consumo operacional, validação e exploração.
+Permissões de tabela/coluna para separar runtime, validação, exploração e consumo analítico pelo QuickSight.
 
 ### KMS
 
@@ -144,15 +146,21 @@ Nenhum segredo deve depender de arquivo versionado no Git.
 
 ## 9. Observabilidade na AWS
 
-CloudWatch centraliza:
+CloudWatch centraliza a **observabilidade técnica**:
 
 - status e duração dos jobs;
 - falha de gates;
+- erros de execução;
 - volume por estágio;
-- taxa de revisão;
+- métricas operacionais do pipeline.
+
+QuickSight concentra a **visualização analítica e executiva**:
+
 - distribuição de Policy;
-- métricas de fallback;
-- saúde do dashboard.
+- taxa de revisão;
+- risco por comunidade;
+- filas e tendências;
+- indicadores de negócio derivados da Gold.
 
 CloudTrail complementa com auditoria administrativa.
 
@@ -163,12 +171,12 @@ Os snapshots Iceberg continuam sendo parte da rastreabilidade de dados.
 ```mermaid
 flowchart LR
     A["GitHub"] --> B["Testes / validações"]
-    B --> C["Build + ECR"]
+    B --> C["Jobs + configurações + IaC versionados"]
     C --> D["DEV / HML"]
     D --> E["PRD"]
 ```
 
-A infraestrutura deveria ser declarada em IaC conforme padrão organizacional, por exemplo Terraform, CDK ou CloudFormation.
+A infraestrutura deveria ser declarada em IaC conforme padrão organizacional, por exemplo Terraform, CDK ou CloudFormation. Jobs, configurações, permissões e ativos analíticos devem seguir promoção controlada entre ambientes; a arquitetura não depende mais de publicar uma imagem de dashboard em ECR.
 
 ## 11. Data Mesh
 
