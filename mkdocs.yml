@@ -66,6 +66,7 @@ nav:
       - Orquestração e observabilidade: tecnica/orquestracao-observabilidade.md
       - Validação e testes: tecnica/validacao-observabilidade.md
       - Dashboard e operação: tecnica/dashboard-operacao.md
+  - Resultados da POC: resultados.md
   - Parte IV — Decisões:
       - Experimentos e shadow mode: decisoes/experimentos.md
       - Premissas, controles e evolução: decisoes/limitacoes.md
