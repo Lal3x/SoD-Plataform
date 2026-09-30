@@ -1,236 +1,222 @@
 # Arquitetura alvo na AWS
 
-## 1. Objetivo
+## 1. Princípio
 
-A implementação atual é executável localmente com Spark, Iceberg, Airflow e Streamlit. Esta página mostra como as mesmas responsabilidades poderiam ser levadas para AWS sem alterar a semântica central da solução.
+A migração para AWS não deve mudar a semântica da solução. Ela deve mudar **como a plataforma executa, escala, protege e observa** seus componentes.
 
-!!! info "Status"
-    Esta é uma **arquitetura-alvo de produção**, não uma descrição de infraestrutura já implantada.
+Esta página descreve arquitetura-alvo, não infraestrutura já implantada.
 
-## 2. Mapeamento de componentes
+## 2. Escolha principal para processamento: EMR Serverless
 
-| Implementação atual | Arquitetura AWS sugerida | Responsabilidade |
+A implementação atual é PySpark batch orientado por DAG.
+
+Para esse perfil, a opção principal proposta é **Amazon EMR Serverless**.
+
+Motivos:
+
+- preserva Spark/PySpark;
+- não exige cluster permanentemente ligado;
+- encaixa bem em jobs disparados pelo Airflow;
+- permite escalar por workload;
+- reduz gestão de nós para uma POC evoluindo a plataforma.
+
+EMR em cluster continua sendo alternativa quando houver necessidade de workloads persistentes, controle mais fino de infraestrutura ou tuning específico.
+
+AWS Glue ETL também é alternativa possível, mas não é o alvo principal desta proposta.
+
+## 3. Mapeamento
+
+| Atual | AWS alvo | Função |
 |---|---|---|
-| data/raw | Amazon S3 landing/raw | entrada imutável |
-| warehouse Iceberg | Amazon S3 | armazenamento Bronze/Silver/Intelligence/Gold |
-| catálogo local Iceberg | AWS Glue Data Catalog | catálogo das tabelas Iceberg |
-| jobs PySpark | Amazon EMR / EMR Serverless | processamento distribuído |
-| Airflow local | Amazon MWAA | orquestração gerenciada |
-| configs locais | S3 + versionamento / Parameter Store | configuração |
-| segredos locais | AWS Secrets Manager | credenciais e segredos |
-| Streamlit Docker | Amazon ECS Fargate | aplicação web |
-| imagens Docker | Amazon ECR | registry |
-| logs locais | Amazon CloudWatch | logs, métricas e alarmes |
-| controles de acesso ao data lake | IAM + Lake Formation | autorização e governança |
-| criptografia local/volume | AWS KMS | chaves e criptografia |
-| consultas ad hoc | Amazon Athena | exploração SQL sobre Iceberg |
-| trilha de ações cloud | AWS CloudTrail | auditoria de API |
+| data/raw | S3 Landing | ingestão |
+| Iceberg warehouse | S3 | armazenamento |
+| catálogo local | Glue Data Catalog | catálogo |
+| PySpark | EMR Serverless | processamento |
+| Airflow local | MWAA | orquestração |
+| Docker Streamlit | ECS Fargate | dashboard |
+| imagens | ECR | registry |
+| logs | CloudWatch | observabilidade |
+| segredos | Secrets Manager | credenciais |
+| autorização data lake | IAM + Lake Formation | governança |
+| criptografia | KMS | proteção |
+| consulta ad hoc | Athena | exploração |
+| auditoria cloud | CloudTrail | trilha administrativa |
 
-EMR é a opção mais natural para preservar o modelo PySpark existente. AWS Glue ETL também pode ser avaliado em uma implementação real; a decisão dependeria de padrões internos, custo, runtime suportado e operação da plataforma.
-
-## 3. Arquitetura lógica
+## 4. Arquitetura
 
 ~~~text
-           SISTEMAS CORPORATIVOS / IAM / IGA / HR
+                  FONTES CORPORATIVAS
                          │
                          ▼
-                 S3 Landing / Raw
+                    S3 Landing
                          │
                          ▼
-               ┌─────────────────┐
-               │   MWAA Airflow  │
-               └────────┬────────┘
-                        │ orquestra
-                        ▼
-               EMR / Spark Jobs
-                        │
-        ┌───────────────┼───────────────────────────┐
-        ▼               ▼                           ▼
-   S3 Bronze        S3 Silver              S3 Access Intelligence
-        │               │                           │
-        └───────────────┴──────────────┬────────────┘
-                                       ▼
-                                   S3 Gold
-                                       │
-                         Glue Data Catalog / Iceberg
-                                       │
-                ┌──────────────────────┼─────────────────────┐
-                ▼                      ▼                     ▼
-             Athena               ECS Fargate          Validation Mart
-          consulta ad hoc          Streamlit             S3 separado
-                                       │
-                                      ALB
-                                       │
-                                OIDC / IdP corporativo
+                 MWAA / Airflow
+                         │
+                  dispara e monitora
+                         ▼
+                 EMR Serverless
+                         │
+      ┌──────────────────┼───────────────────┐
+      ▼                  ▼                   ▼
+ S3 Bronze           S3 Silver      S3 Access Intelligence
+      │                  │                   │
+      └──────────────────┴──────────┬────────┘
+                                    ▼
+                                  S3 Gold
+                                    │
+                          Glue Data Catalog
+                                    │
+                 ┌──────────────────┼──────────────────┐
+                 ▼                  ▼                  ▼
+              Athena          ECS Fargate       Validation Mart
+                              Streamlit          isolado em S3
+                                  │
+                                  ▼
+                          ALB + autenticação
 
-Observabilidade: CloudWatch
-Auditoria: CloudTrail
-Segurança: IAM + Lake Formation + KMS + Secrets Manager
-CI/CD: GitHub Actions → ECR → ambientes AWS
+CloudWatch: logs, métricas e alarmes
+CloudTrail: auditoria
+IAM/Lake Formation: autorização
+KMS: criptografia
+Secrets Manager: segredos
 ~~~
 
-## 4. Separação do data lake
+## 5. Ambientes
 
-Uma organização recomendada é separar zonas lógicas:
+Produção bancária não deve compartilhar estado entre desenvolvimento, homologação e produção.
+
+Arquitetura recomendada:
 
 ~~~text
-s3://.../bronze/
-s3://.../silver/
-s3://.../access-intelligence/
-s3://.../gold/
-s3://.../validation/
-s3://.../artifacts/
+DEV
+  ↓ promoção controlada
+HML
+  ↓ aprovação
+PRD
 ~~~
 
-A separação mais importante é **runtime versus validation**. O papel usado pelos jobs de runtime não deve ter permissão de leitura sobre o gabarito de validação.
+Cada ambiente deve possuir:
 
-Essa restrição transforma a prevenção de leakage em controle técnico, não apenas convenção de código.
+- buckets próprios;
+- catálogo próprio;
+- roles próprias;
+- secrets próprios;
+- logs próprios;
+- parâmetros próprios.
 
-## 5. Orquestração com MWAA
+## 6. Isolamento do Validation Mart
 
-O DAG atual pode ser preservado conceitualmente:
+Uma das fronteiras mais importantes é runtime versus validação.
+
+O role usado pelo runtime não deve ter acesso ao ground truth.
 
 ~~~text
-validate
- → bronze
- → bronze_gate
- → silver
- → silver_gate
- → context_hts
- → baseline_fallback
- → expected_access
- → evidence
- → policy
- → risk
- → gold
- → gold_gate
- → register_run
- → trigger_validation
+runtime role
+   ├─ lê Bronze/Silver
+   ├─ escreve Intelligence/Gold
+   └─ NÃO lê validation ground truth
+
+validation role
+   ├─ lê Gold congelada
+   └─ lê ground truth
 ~~~
 
-Em produção, cada tarefa pode disparar um job Spark gerenciado e monitorar seu término.
+Isso transforma prevenção de leakage em controle de infraestrutura.
 
-Gates devem impedir a propagação de dados incompletos para a próxima camada.
+## 7. Rede
 
-## 6. Iceberg + Glue Data Catalog
+MWAA, EMR Serverless e ECS devem operar em rede controlada.
 
-Apache Iceberg continua sendo útil porque oferece:
+Quando aplicável:
 
-- snapshots;
-- evolução de schema;
-- leitura consistente;
-- possibilidade de time travel;
-- interoperabilidade entre Spark e mecanismos SQL.
+- sub-redes privadas;
+- security groups restritivos;
+- endpoints privados;
+- S3 sem exposição pública;
+- acesso corporativo autenticado ao dashboard.
 
-O Glue Data Catalog substitui o catálogo local e permite que Spark e Athena encontrem as mesmas tabelas.
-
-## 7. Dashboard
-
-O Streamlit pode ser empacotado na imagem já existente e publicado em ECS Fargate.
-
-Uma topologia simples:
-
-~~~text
-Usuário corporativo
-       │
-       ▼
-Application Load Balancer
-       │
- OIDC / IdP corporativo
-       │
-       ▼
-ECS Fargate — Streamlit
-       │
-       ▼
-Gold / consultas autorizadas
-~~~
-
-A interface continua read-only. Remediação real deveria ser integrada a um workflow de IAM/IGA ou ferramenta de tickets, não executada diretamente pela página sem governança.
-
-## 8. Segurança
+## 8. Segurança e governança
 
 ### IAM
 
-Cada job recebe uma role de menor privilégio. Runtime, validação e dashboard não precisam compartilhar a mesma role.
+Roles distintas para:
+
+- runtime;
+- validation;
+- dashboard;
+- CI/CD.
 
 ### Lake Formation
 
-Pode governar acesso a tabelas, domínios e colunas sensíveis do data lake.
+Permissões de tabela/coluna para separar consumo operacional, validação e exploração.
 
 ### KMS
 
-Buckets, logs e segredos devem usar criptografia gerenciada por chaves apropriadas ao ambiente.
+Criptografia para S3, logs e demais recursos persistentes.
 
 ### Secrets Manager
 
-Credenciais e tokens não devem aparecer em variáveis versionadas no Git.
+Nenhum segredo deve depender de arquivo versionado no Git.
 
-### Rede
+## 9. Observabilidade na AWS
 
-MWAA, jobs de processamento e ECS podem operar em sub-redes privadas, com acesso controlado aos serviços necessários por endpoints privados quando aplicável.
+CloudWatch centraliza:
 
-## 9. Observabilidade e auditoria
-
-CloudWatch deve concentrar:
-
-- duração e status dos jobs;
-- volume por camada;
-- falhas de gates;
-- taxa de REVISÃO;
-- mudanças de distribuição;
-- erros de leitura/escrita;
+- status e duração dos jobs;
+- falha de gates;
+- volume por estágio;
+- taxa de revisão;
+- distribuição de Policy;
+- métricas de fallback;
 - saúde do dashboard.
 
-CloudTrail complementa a observabilidade ao registrar operações na conta e acesso administrativo à infraestrutura.
+CloudTrail complementa com auditoria administrativa.
+
+Os snapshots Iceberg continuam sendo parte da rastreabilidade de dados.
 
 ## 10. CI/CD
 
-Fluxo sugerido:
-
 ~~~text
 GitHub
-  │
-  ├── lint/test
-  ├── build imagens
-  └── build documentação
-        │
-        ▼
-       ECR
-        │
-        ▼
- ambiente dev
-        │
-        ▼
- validações
-        │
-        ▼
- homologação / produção
+  ↓
+testes + lint + mkdocs
+  ↓
+build de imagem
+  ↓
+ECR
+  ↓
+DEV
+  ↓
+HML
+  ↓
+PRD
 ~~~
 
-Infraestrutura produtiva deveria ser declarativa via IaC. Terraform, CDK ou CloudFormation podem cumprir esse papel conforme o padrão da organização.
+A infraestrutura deveria ser declarada em IaC conforme padrão organizacional, por exemplo Terraform, CDK ou CloudFormation.
 
-## 11. Data Mesh como lente de governança
+## 11. Data Mesh
 
-Data Mesh não é requisito do case e não é o motor de processamento.
+Data Mesh é tratado como lente de ownership, não como motor do pipeline.
 
-Ele pode ser aplicado como modelo de ownership:
+Exemplo:
 
-- domínio de identidade publica dados de identidade;
-- IGA publica grants, requests e certificações;
-- domínios de aplicações publicam metadados de criticidade e função;
-- a plataforma SoD consome esses produtos por contratos.
+- domínio de Identidade publica identidade;
+- IGA publica grants/requests/certificações;
+- domínio de aplicações publica criticidade e função;
+- SoD consome esses contratos.
 
-A arquitetura Medallion resolve processamento. Data Mesh resolve principalmente **ownership, contratos e responsabilidade sobre os dados**. São conceitos complementares, não concorrentes.
+Medallion organiza processamento. Data Mesh organiza responsabilidade.
 
-## 12. O que permanece igual na nuvem
+## 12. O que não muda ao ir para cloud
 
-Migrar para AWS não muda as regras fundamentais:
+Mesmo na AWS:
 
-- Expected Access continua não sendo autorização;
+- frequência continua não sendo autorização;
 - Evidence continua separado de Policy;
 - Risk continua posterior à decisão;
 - Gold continua sem criar inteligência;
-- validação continua isolada;
-- experimentos continuam fora do runtime até aprovação.
+- Validation continua isolada;
+- shadow experiments continuam fora do runtime.
 
-Cloud é uma mudança de execução e operação, não uma desculpa para alterar a semântica do domínio.
+Cloud aumenta capacidade operacional. Não substitui disciplina de decisão.

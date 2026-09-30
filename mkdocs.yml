@@ -1,14 +1,17 @@
 # yaml-language-server: $schema=https://squidfunk.github.io/mkdocs-material/schema.json
 
 site_name: SoD Platform
-site_description: Access Governance e evolução para Segregação de Funções transacional
+site_description: Plataforma de Access Governance com evolução para SoD transacional
 site_author: Lucas Alexandre
 
 theme:
   name: material
   language: pt-BR
-  logo: material/shield-account
-  favicon: material/shield-account
+  logo: material/shield-check
+  favicon: material/shield-check
+  font:
+    text: Inter
+    code: JetBrains Mono
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
@@ -28,12 +31,15 @@ theme:
     - navigation.tabs
     - navigation.sections
     - navigation.top
-    - navigation.expand
+    - navigation.indexes
+    - navigation.footer
     - content.code.copy
     - content.action.edit
+    - content.tooltips
     - search.suggest
     - search.highlight
     - search.share
+    - toc.follow
 
 nav:
   - Início: index.md
@@ -49,10 +55,11 @@ nav:
       - Arquitetura alvo AWS: arquitetura/aws.md
       - Evolução para Fase 2: arquitetura/fase-2.md
   - Parte III — Técnica:
-      - Pipeline e dados: tecnica/pipeline.md
+      - Pipeline e contratos de dados: tecnica/pipeline.md
       - Access Intelligence: tecnica/access-intelligence.md
       - Evidence, Policy, Risk e Gold: tecnica/evidence-policy-risk-gold.md
-      - Validação, observabilidade e testes: tecnica/validacao-observabilidade.md
+      - Orquestração e observabilidade: tecnica/orquestracao-observabilidade.md
+      - Validação e testes: tecnica/validacao-observabilidade.md
       - Dashboard e operação: tecnica/dashboard-operacao.md
   - Parte IV — Decisões:
       - Experimentos e shadow mode: decisoes/experimentos.md
@@ -71,14 +78,23 @@ markdown_extensions:
   - attr_list
   - md_in_html
   - tables
+  - footnotes
+  - def_list
   - toc:
       permalink: true
   - pymdownx.details
   - pymdownx.highlight:
       anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.smartsymbols
   - pymdownx.superfences
   - pymdownx.tabbed:
       alternate_style: true
 
 extra_css:
-  - stylesheets/itau.css
+  - stylesheets/site.css
+
+extra:
+  generator: false
