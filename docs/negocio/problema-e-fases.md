@@ -95,15 +95,15 @@ O resultado esperado pelo case é distinguir:
 
 A POC acrescenta **REVISÃO** como mecanismo de segurança: quando os dados não sustentam uma conclusão confiável, o sistema não força uma decisão binária.
 
-### Unidade de análise versus grain técnico
+### Unidade de análise e nível de detalhe da decisão
 
 O case fala em unidade de análise **comunidade** e granularidade do acesso **Entitlement × Sigla**.
 
-A implementação precisa ir um nível abaixo para produzir uma decisão auditável:
+Para produzir uma decisão auditável, a implementação precisa representar cada caso em um nível mais detalhado:
 
-> **grant de uma identidade × data de avaliação**
+> **um acesso específico de uma identidade × data de avaliação**
 
-Isso permite explicar o caso individual e depois agregar por comunidade sem perder o detalhe.
+Em linguagem simples, **cada linha de decisão representa um acesso específico de uma pessoa em uma determinada data**. Isso permite explicar o caso individual e depois agregar os resultados por comunidade sem perder o detalhe.
 
 ## 4. O que torna a Fase 1 difícil
 
