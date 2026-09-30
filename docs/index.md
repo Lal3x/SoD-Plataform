@@ -13,7 +13,7 @@ Tecnicamente, é uma **prova de conceito (POC)** de Governança de Acessos que i
 
 <div class="sod-actions">
 <a href="negocio/problema-e-fases/" class="md-button md-button--primary">Entender o problema</a>
-<a href="arquitetura/arquitetura-v2/" class="md-button sod-secondary">Ver arquitetura V2</a>
+<a href="arquitetura/arquitetura-v2/" class="md-button sod-secondary">Ver arquitetura</a>
 <a href="https://github.com/Lal3x/SoD-Plataform" class="md-button sod-secondary" target="_blank" rel="noopener">Ver repositório</a>
 </div>
 
@@ -22,7 +22,7 @@ Tecnicamente, é uma **prova de conceito (POC)** de Governança de Acessos que i
 <div class="sod-metric-strip">
   <div class="sod-metric"><b>Fase 1</b><span>limpeza e governança de acessos</span></div>
   <div class="sod-metric"><b>4 decisões</b><span>PADRÃO · LEGÍTIMO · INDEVIDO · REVISÃO</span></div>
-  <div class="sod-metric"><b>Implementação V2</b><span>Airflow + Spark + Iceberg</span></div>
+  <div class="sod-metric"><b>Arquitetura atual</b><span>Airflow + Spark + Iceberg</span></div>
   <div class="sod-metric"><b>Fase 2</b><span>evolução para SoD transacional</span></div>
 </div>
 
