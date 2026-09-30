@@ -34,10 +34,10 @@ Na V2 sintética, a base de requests é tratada como autoritativa para o univers
 
 Esse contrato permite diferenciar duas situações:
 
-<div class="sod-lane-grid sod-lane-grid--2">
-  <div class="sod-lane"><span class="sod-kicker">Fonte completa</span><h3>Aprovação ausente tem significado</h3><p>Se sabemos que todas as aprovações relevantes deveriam estar ali, a ausência pode participar de uma regra.</p></div>
-  <div class="sod-lane"><span class="sod-kicker">Cobertura desconhecida</span><h3>A ausência permanece incerta</h3><p>Não encontrar um registro não é prova suficiente; o caso deve preservar incerteza.</p></div>
-</div>
+| Situação da fonte | O que a ausência de aprovação significa |
+|---|---|
+| **Fonte completa/autoritativa** | se todas as aprovações relevantes deveriam estar presentes, a ausência pode participar de uma regra |
+| **Cobertura desconhecida ou incompleta** | não encontrar um registro não é prova suficiente; o caso deve preservar incerteza |
 
 Em produção, a cobertura precisa ser medida por canal de concessão. Quando ela não for suficiente, a arquitetura deve preferir **REVISÃO** a uma conclusão automática.
 
@@ -121,14 +121,14 @@ Essa divisão evita forçar uma conclusão transacional sem possuir os dados que
 
 ## 13. Critérios para promoção produtiva
 
-<div class="sod-security-map">
-  <div><b>Dados</b><span>profiling, cobertura, temporalidade e contratos de origem conhecidos.</span></div>
-  <div><b>Decisão</b><span>Policy aprovada, thresholds calibrados e exceções governadas.</span></div>
-  <div><b>Validação</b><span>precision, recall, false-safe e false-positive rate avaliados por cenário.</span></div>
-  <div><b>Operação</b><span>SLA, reprocessamento, observabilidade, alertas e runbooks definidos.</span></div>
-  <div><b>Segurança</b><span>segregação de roles, secrets, criptografia e isolamento do ground truth.</span></div>
-  <div><b>Rollout</b><span>shadow run, revisão humana e aumento gradual da automação.</span></div>
-</div>
+| Dimensão | Critério para promoção |
+|---|---|
+| **Dados** | profiling, cobertura, temporalidade e contratos de origem conhecidos |
+| **Decisão** | Policy aprovada, thresholds calibrados e exceções governadas |
+| **Validação** | precision, recall, false-safe e false-positive rate avaliados por cenário |
+| **Operação** | SLA, reprocessamento, observabilidade, alertas e runbooks definidos |
+| **Segurança** | segregação de roles, secrets, criptografia e isolamento do ground truth |
+| **Rollout** | shadow run, revisão humana e aumento gradual da automação |
 
 ## 14. O que essa página demonstra
 

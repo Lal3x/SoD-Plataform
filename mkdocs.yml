@@ -71,8 +71,9 @@ nav:
       - Validação e testes: tecnica/validacao-observabilidade.md
       - Dashboard e operação: tecnica/dashboard-operacao.md
       - Rastreabilidade técnica: tecnica/rastreabilidade.md
-  - Resultados da POC: resultados.md
-  - Parte IV — Decisões:
+  - Parte IV — Resultados:
+      - Resultados da POC: resultados.md
+  - Parte V — Decisões:
       - Experimentos e shadow mode: decisoes/experimentos.md
       - Premissas, controles e evolução: decisoes/limitacoes.md
       - Uso de IA no desenvolvimento: decisoes/uso-ia.md

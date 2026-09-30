@@ -133,18 +133,11 @@ Depois que o runtime é congelado, a validação offline pode comparar a saída 
 
 ## 10. Resultado do refinamento
 
-<div class="sod-evolution">
-  <div class="sod-evolution-col">
-    <span class="sod-kicker">V0</span>
-    <h3>Capacidades agrupadas</h3>
-    <p>Dados → Bronze → Silver → baseline, grupos, experimentos analíticos e regras → Gold.</p>
-  </div>
-  <div class="sod-evolution-arrow">→</div>
-  <div class="sod-evolution-col sod-evolution-col--highlight">
-    <span class="sod-kicker">V2</span>
-    <h3>Responsabilidades formalizadas</h3>
-    <p>Context → HTS + Baseline/Fallback → Expected Access → Evidence → Policy → Risk → Gold.</p>
-  </div>
-</div>
+```mermaid
+flowchart LR
+    A["V0<br/>Bronze → Silver → baseline / grupos / experimentos / regras → Gold"]
+    -->|"formalização"|
+    B["V2<br/>Context → HTS + Baseline/Fallback → Expected Access → Evidence → Policy → Risk → Gold"]
+```
 
 A evolução não foi adicionar complexidade por estética. Cada separação reduz uma ambiguidade específica do problema.

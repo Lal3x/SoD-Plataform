@@ -18,7 +18,7 @@ Uma identidade da comunidade **Crédito** possui um entitlement pertencente à c
 | sigla pública | `false` |
 | birthright | `false` |
 | data de concessão | 2025-01-10 |
-| approval válida | 2025-01-05 |
+| aprovação (`approval`) válida | 2025-01-05 |
 | certificação | MAINTAIN |
 
 Isso é um acesso **cross-community non-public**. A diferença de comunidade é um sinal relevante, mas não é suficiente para chamá-lo de indevido.
@@ -52,7 +52,7 @@ Para o exemplo, o contexto produziria sinais equivalentes a:
 | certification decision | `MAINTAIN` |
 | uso | tratado de acordo com a cobertura disponível |
 
-A approval é `STRONG_INFERRED`, e não `DIRECT`, porque o contrato atual não possui uma chave causal nativa ligando request e grant.
+A aprovação é registrada com qualidade `STRONG_INFERRED`, e não `DIRECT`, porque o contrato atual não possui uma chave causal nativa ligando a solicitação (`request`) ao acesso concedido (`grant`).
 
 ## 4. Baseline e Expected Access — o comportamento é incomum
 
@@ -90,7 +90,7 @@ flowchart LR
     D --> E["fatos + confiabilidade + temporalidade"]
 ```
 
-A principal ideia é que **a evidência comportamental e a evidência de autorização coexistem**. Uma não apaga a outra.
+A principal ideia é que **a evidência comportamental e a evidência de autorização coexistem**. Uma não apaga a outra. Para um leitor não técnico: uma coisa responde **“isso é comum?”**; a outra responde **“existe justificativa para isso?”**.
 
 ## 6. Policy — a regra formal decide
 
