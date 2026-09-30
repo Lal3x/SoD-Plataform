@@ -241,3 +241,8 @@ O repositório contém experimentos de LDA + FP-Growth, NMF-HDBSCAN e MinHash/Ja
 Eles estão em shadow mode e não alimentam o runtime V2.
 
 O objetivo é testar se pares descobertos por comportamento podem, no futuro, melhorar a referência de comparação sem sacrificar explicabilidade e estabilidade.
+
+
+---
+
+Para fórmulas, thresholds, pesos e definição das variáveis, consulte **[Como os cálculos funcionam](calculos.md)**.

@@ -193,3 +193,8 @@ Uma sequência segura seria:
 9. revisão periódica da política.
 
 A POC demonstra método. Produção exige evidência operacional.
+
+
+---
+
+Para fórmulas, thresholds, pesos e definição das variáveis, consulte **[Como os cálculos funcionam](calculos.md)**.

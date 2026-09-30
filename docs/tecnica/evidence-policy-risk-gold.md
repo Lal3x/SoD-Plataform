@@ -263,3 +263,8 @@ quais versões e snapshots?
 ~~~
 
 A meta não é apenas fornecer uma resposta, mas fornecer uma resposta que possa ser contestada, reproduzida e auditada.
+
+
+---
+
+Para fórmulas, thresholds, pesos e definição das variáveis, consulte **[Como os cálculos funcionam](calculos.md)**.
