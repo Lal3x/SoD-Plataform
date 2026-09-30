@@ -44,43 +44,29 @@ AWS Glue ETL também é alternativa possível, mas não é o alvo principal dest
 
 ## 4. Arquitetura
 
-~~~text
-                  FONTES CORPORATIVAS
-                         │
-                         ▼
-                    S3 Landing
-                         │
-                         ▼
-                 MWAA / Airflow
-                         │
-                  dispara e monitora
-                         ▼
-                 EMR Serverless
-                         │
-      ┌──────────────────┼───────────────────┐
-      ▼                  ▼                   ▼
- S3 Bronze           S3 Silver      S3 Access Intelligence
-      │                  │                   │
-      └──────────────────┴──────────┬────────┘
-                                    ▼
-                                  S3 Gold
-                                    │
-                          Glue Data Catalog
-                                    │
-                 ┌──────────────────┼──────────────────┐
-                 ▼                  ▼                  ▼
-              Athena          ECS Fargate       Validation Mart
-                              Streamlit          isolado em S3
-                                  │
-                                  ▼
-                          ALB + autenticação
+```mermaid
+flowchart LR
+    A["Fontes corporativas<br/>IAM · IGA · RH · aplicações"] --> B["Amazon S3<br/>Landing"]
+    B --> C["Amazon MWAA<br/>Orquestração"]
+    C --> D["EMR Serverless<br/>PySpark"]
 
-CloudWatch: logs, métricas e alarmes
-CloudTrail: auditoria
-IAM/Lake Formation: autorização
-KMS: criptografia
-Secrets Manager: segredos
-~~~
+    D --> E["S3 + Iceberg<br/>Bronze"]
+    E --> F["S3 + Iceberg<br/>Silver"]
+    F --> G["S3 + Iceberg<br/>Access Intelligence"]
+    G --> H["S3 + Iceberg<br/>Gold"]
+
+    H --> I["Glue Data Catalog"]
+    I --> J["Athena"]
+    I --> K["ECS Fargate<br/>Streamlit"]
+    H --> L["Validation Mart<br/>isolado"]
+
+    M["CloudWatch"] -. logs · métricas · alarmes .-> C
+    M -. observa .-> D
+    M -. observa .-> K
+    N["IAM + Lake Formation + KMS + Secrets Manager"] -. protege .-> B
+    N -. protege .-> D
+    N -. protege .-> H
+```
 
 ## 5. Ambientes
 
@@ -88,13 +74,11 @@ Produção bancária não deve compartilhar estado entre desenvolvimento, homolo
 
 Arquitetura recomendada:
 
-~~~text
-DEV
-  ↓ promoção controlada
-HML
-  ↓ aprovação
-PRD
-~~~
+<div class="sod-mini-flow sod-mini-flow--3">
+  <div><strong>1</strong><span>DEV</span></div>
+  <div><strong>2</strong><span>HML · promoção controlada</span></div>
+  <div><strong>3</strong><span>PRD · aprovação</span></div>
+</div>
 
 Cada ambiente deve possuir:
 
@@ -111,16 +95,10 @@ Uma das fronteiras mais importantes é runtime versus validação.
 
 O role usado pelo runtime não deve ter acesso ao ground truth.
 
-~~~text
-runtime role
-   ├─ lê Bronze/Silver
-   ├─ escreve Intelligence/Gold
-   └─ NÃO lê validation ground truth
-
-validation role
-   ├─ lê Gold congelada
-   └─ lê ground truth
-~~~
+<div class="sod-lane-grid sod-lane-grid--2">
+  <div class="sod-lane"><span class="sod-kicker">Runtime role</span><h3>Produção da decisão</h3><p>Lê Bronze/Silver e escreve Intelligence/Gold. Não recebe permissão para ler o ground truth.</p></div>
+  <div class="sod-lane"><span class="sod-kicker">Validation role</span><h3>Avaliação posterior</h3><p>Lê a Gold congelada e o ground truth exclusivamente para medir a execução.</p></div>
+</div>
 
 Isso transforma prevenção de leakage em controle de infraestrutura.
 
@@ -177,21 +155,13 @@ Os snapshots Iceberg continuam sendo parte da rastreabilidade de dados.
 
 ## 10. CI/CD
 
-~~~text
-GitHub
-  ↓
-testes + lint + mkdocs
-  ↓
-build de imagem
-  ↓
-ECR
-  ↓
-DEV
-  ↓
-HML
-  ↓
-PRD
-~~~
+<div class="sod-mini-flow sod-mini-flow--5">
+  <div><strong>1</strong><span>GitHub</span></div>
+  <div><strong>2</strong><span>testes / validações</span></div>
+  <div><strong>3</strong><span>build + ECR</span></div>
+  <div><strong>4</strong><span>DEV / HML</span></div>
+  <div><strong>5</strong><span>PRD</span></div>
+</div>
 
 A infraestrutura deveria ser declarada em IaC conforme padrão organizacional, por exemplo Terraform, CDK ou CloudFormation.
 

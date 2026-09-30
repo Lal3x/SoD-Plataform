@@ -4,25 +4,29 @@
 
 O desenho inicial não partiu apenas de ferramentas de Engenharia de Dados. Ele partiu de uma combinação de **princípios de Segurança da Informação** com uma arquitetura capaz de executá-los em escala.
 
-A tese era simples:
-
 > **não é possível identificar um desvio de acesso sem antes estabelecer uma referência de comportamento esperado, entender o contexto e preservar evidências para explicar a decisão.**
 
-<div class="sod-diagram" markdown>
-  <div class="sod-diagram-title">Arquitetura inicial</div>
-  <div class="sod-diagram-row">
-    <div class="sod-node"><span>01</span><strong>Fontes</strong><small>identidades · acessos · contexto</small></div>
-    <div class="sod-arrow">→</div>
-    <div class="sod-node"><span>02</span><strong>Bronze</strong><small>preservar o que chegou</small></div>
-    <div class="sod-arrow">→</div>
-    <div class="sod-node"><span>03</span><strong>Silver</strong><small>qualidade · contratos · chaves</small></div>
-    <div class="sod-arrow">→</div>
-    <div class="sod-node sod-node--accent"><span>04</span><strong>Baseline + Analytics</strong><small>grupos · padrões · desvios · regras</small></div>
-    <div class="sod-arrow">→</div>
-    <div class="sod-node"><span>05</span><strong>Gold</strong><small>resultado consumível</small></div>
-  </div>
-  <div class="sod-diagram-band"><strong>Observabilidade</strong><span>qualidade · rastreabilidade · execução · comportamento</span></div>
-</div>
+```mermaid
+flowchart LR
+    A["Fontes<br/>identidades · acessos · contexto"] --> B["Bronze<br/>preservar o recebido"]
+    B --> C["Silver<br/>qualidade · contratos · chaves"]
+
+    subgraph ANALYTICS["ANÁLISE / CLASSIFICAÇÃO"]
+        D["Baseline"] --> E["Análise por grupos"]
+        E --> F["Clustering / Peer Discovery"]
+        E --> G["Detecção de desvios"]
+        F --> G
+        G --> H["Regras / hipótese SoD"]
+    end
+
+    C --> D
+    H --> I["Gold"]
+    I --> J["Visualização"]
+    O["Observabilidade"] -. qualidade · execução · rastreabilidade .-> B
+    O -. acompanha .-> C
+    O -. acompanha .-> ANALYTICS
+    O -. acompanha .-> I
+```
 
 A V2 não substituiu esse raciocínio. Ela **formalizou responsabilidades que inicialmente estavam agrupadas**.
 
@@ -39,6 +43,17 @@ A V2 não substituiu esse raciocínio. Ela **formalizou responsabilidades que in
 
 !!! info "Leitura correta"
     **A Engenharia de Dados fornece escala, contratos e rastreabilidade; Segurança da Informação fornece os princípios que determinam o que observar, comparar e proteger.**
+
+### Como esses princípios viraram arquitetura
+
+<div class="sod-security-map">
+  <div><b>Baseline + monitoramento comportamental</b><span>motivaram comparação por grupos, prevalência e identificação de desvios.</span></div>
+  <div><b>Least Privilege</b><span>orientou a busca por acessos além do necessário, sem transformar raridade em culpa.</span></div>
+  <div><b>Need-to-Know</b><span>levou ao uso de comunidade, função e contexto para interpretar a necessidade do acesso.</span></div>
+  <div><b>Segregation of Duties</b><span>manteve desde o início o horizonte de detectar combinações incompatíveis de capacidades.</span></div>
+  <div><b>Accountability e auditoria</b><span>motivaram Gold, observabilidade, lineage, snapshots, reason codes e versionamento.</span></div>
+  <div><b>Defesa em camadas</b><span>aparece na separação entre qualidade, contexto, comportamento, evidência, política e risco.</span></div>
+</div>
 
 ## 3. A baseline não surgiu na V2
 

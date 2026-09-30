@@ -2,27 +2,44 @@
 
 ## 1. A arquitetura canônica é o DAG
 
-O runtime V2 não é definido apenas pela existência dos módulos no repositório. A fonte operacional de verdade é o DAG Airflow sod_runtime_v2.
+O runtime V2 não é definido apenas pela existência dos módulos no repositório. A fonte operacional de verdade é o DAG Airflow `sod_runtime_v2`.
 
-<div class="sod-diagram" markdown>
-  <div class="sod-diagram-title">Fluxo de dados e decisão</div>
-  <div class="sod-diagram-row">
-    <div class="sod-node"><span>01</span><strong>Bronze</strong><small>dados recebidos + metadados</small></div>
-    <div class="sod-arrow">→</div>
-    <div class="sod-node"><span>02</span><strong>Silver</strong><small>contratos + DQ + quarentena</small></div>
-    <div class="sod-arrow">→</div>
-    <div class="sod-node"><span>03</span><strong>Context + HTS</strong><small>contexto factual + âncoras</small></div>
-    <div class="sod-arrow">→</div>
-    <div class="sod-node sod-node--accent"><span>04</span><strong>Baseline + EA</strong><small>comportamento esperado</small></div>
-    <div class="sod-arrow">→</div>
-    <div class="sod-node"><span>05</span><strong>Evidence + Policy</strong><small>evidências + decisão</small></div>
-    <div class="sod-arrow">→</div>
-    <div class="sod-node"><span>06</span><strong>Risk + Gold</strong><small>prioridade + publicação</small></div>
-  </div>
-  <div class="sod-diagram-band"><strong>Control path</strong><span>Airflow · gates · run registry · observabilidade · validação offline</span></div>
-</div>
+```mermaid
+flowchart LR
+    subgraph PREP["PREPARAÇÃO"]
+        A["Fontes"] --> B["Bronze"]
+        B --> BG{"Bronze Gate"}
+        BG --> C["Silver"]
+        C --> SG{"Silver Gate"}
+    end
 
-A arquitetura técnica possui, portanto, dois eixos:
+    subgraph INTEL["INTELIGÊNCIA DE ACESSO"]
+        SG --> D["Access Context"]
+        D --> E["Hard Trusted Set"]
+        D --> F["Observed Baseline"]
+        F --> G["Hierarchical Fallback"]
+        E --> H["Expected Access"]
+        G --> H
+    end
+
+    subgraph DEC["DECISÃO"]
+        H --> I["Evidence"]
+        I --> J["Policy"]
+        J --> K["Risk"]
+        K --> L["Gold"]
+        L --> GG{"Gold Gate"}
+    end
+
+    GG --> R["Register Run"]
+    R --> V["Validation DAG"]
+    O["Observabilidade"] -. métricas · DQ · snapshots · lineage .-> B
+    O -. acompanha .-> C
+    O -. acompanha .-> H
+    O -. acompanha .-> J
+    O -. acompanha .-> L
+```
+
+A arquitetura possui dois eixos:
 
 **Data/decision path:** transforma dados em decisão.
 
@@ -97,10 +114,10 @@ Risk recebe a decisão e adiciona impacto.
 
 A ordem é proposital:
 
-~~~text
-Policy primeiro
-Risk depois
-~~~
+<div class="sod-mini-flow sod-mini-flow--2">
+  <div><strong>1</strong><span>Policy classifica</span></div>
+  <div><strong>2</strong><span>Risk prioriza</span></div>
+</div>
 
 Se Risk viesse antes, impacto poderia contaminar a própria classificação.
 
@@ -126,16 +143,12 @@ Airflow não está sendo usado apenas para “agendar scripts”.
 
 Ele materializa dependências arquiteturais:
 
-~~~text
-não existe Policy válida
-sem Evidence válido
-
-não existe Evidence válido
-sem Expected Access válido
-
-não existe validação offline
-antes de Gold congelada
-~~~
+<div class="sod-dependency-stack">
+  <div><span>Expected Access válido</span><b>pré-condição</b></div>
+  <div><span>Evidence válido</span><b>pré-condição</b></div>
+  <div><span>Policy válida</span><b>pré-condição</b></div>
+  <div><span>Gold congelada</span><b>antes da validação offline</b></div>
+</div>
 
 Também controla retry e max_active_runs para reduzir concorrência acidental sobre um warehouse local compartilhado.
 
@@ -164,23 +177,15 @@ Isso permite experimentação sem colocar um método ainda não aprovado no cami
 
 ## 13. Runtime versus validação
 
-~~~text
-RUNTIME
-  ↓
-Gold congelada
-  ↓
-registro do run
-  ↓
-trigger
-  ↓
-VALIDATION DAG
-  ↓
-ground truth
-  ↓
-Validation Mart
-~~~
+<div class="sod-mini-flow sod-mini-flow--5">
+  <div><strong>1</strong><span>Runtime</span></div>
+  <div><strong>2</strong><span>Gold congelada</span></div>
+  <div><strong>3</strong><span>registro do run</span></div>
+  <div><strong>4</strong><span>Validation DAG</span></div>
+  <div><strong>5</strong><span>Validation Mart</span></div>
+</div>
 
-A direção é unilateral.
+O ground truth entra apenas na etapa de validação. A direção é unilateral.
 
 ## 14. Propriedades que a V2 busca
 
