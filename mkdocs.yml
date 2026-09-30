@@ -3,6 +3,8 @@
 site_name: SoD Platform
 site_description: Plataforma de Access Governance com evolução para SoD transacional
 site_author: Lucas Alexandre
+repo_url: https://github.com/Lal3x/SoD-Plataform
+repo_name: Lal3x/SoD-Plataform
 
 theme:
   name: material
@@ -61,11 +63,14 @@ nav:
       - Evolução para Fase 2: arquitetura/fase-2.md
   - Parte III — Técnica:
       - Pipeline e contratos de dados: tecnica/pipeline.md
+      - Modelo de dados sintéticos: tecnica/modelo-dados.md
+      - Anatomia de uma decisão: tecnica/anatomia-decisao.md
       - Access Intelligence: tecnica/access-intelligence.md
       - Evidence, Policy, Risk e Gold: tecnica/evidence-policy-risk-gold.md
       - Orquestração e observabilidade: tecnica/orquestracao-observabilidade.md
       - Validação e testes: tecnica/validacao-observabilidade.md
       - Dashboard e operação: tecnica/dashboard-operacao.md
+      - Rastreabilidade técnica: tecnica/rastreabilidade.md
   - Resultados da POC: resultados.md
   - Parte IV — Decisões:
       - Experimentos e shadow mode: decisoes/experimentos.md

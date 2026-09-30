@@ -12,6 +12,7 @@ Uma POC executável para transformar acessos dispersos em **decisões explicáve
 <div class="sod-actions">
 <a href="negocio/problema-e-fases/" class="md-button md-button--primary">Entender o problema</a>
 <a href="arquitetura/arquitetura-v2/" class="md-button sod-secondary">Ver arquitetura V2</a>
+<a href="https://github.com/Lal3x/SoD-Plataform" class="md-button sod-secondary" target="_blank" rel="noopener">Ver repositório</a>
 </div>
 
 </div>
