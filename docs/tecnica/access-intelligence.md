@@ -1,8 +1,12 @@
 # Access Intelligence
 
-## 1. Por que existe uma camada própria
+## 1. O problema que esta camada resolve
 
-Bronze e Silver organizam dados. Access Intelligence transforma esses dados em **contexto e sinais analíticos**, ainda preservando a separação entre observação e autorização.
+Bronze e Silver conseguem responder “quais dados recebemos?” e “qual é a representação canônica?”. Elas ainda não respondem:
+
+> “Este grant é coerente com o contexto da identidade?”
+
+Access Intelligence existe para construir **contexto e evidência comportamental** sem misturar essa análise com autorização.
 
 ~~~text
 Access Context
@@ -18,9 +22,32 @@ Hard Trusted Set   Observed Baseline
         Expected Access
 ~~~
 
-## 2. Access Context
+## 2. Access Context — dar significado ao grant
 
-O engine cria uma visão factual por grant.
+Considere um registro simples:
+
+~~~text
+identidade_id = I-1023
+entitlement_id = E-451
+sigla_id = COB
+~~~
+
+Sozinho, ele não permite decidir nada.
+
+A mesma linha precisa ser enriquecida com perguntas de contexto:
+
+- qual comunidade da identidade?
+- quem é dono da sigla?
+- a sigla é pública?
+- o entitlement é birthright?
+- existe request aprovada?
+- quando a concessão ocorreu?
+- a pessoa já estava na comunidade atual?
+- existe certificação?
+- aplicação é crítica?
+- entitlement é privilegiado?
+
+Por isso Access Context cria uma visão factual por grant/data.
 
 Entre os campos derivados estão:
 
@@ -38,111 +65,157 @@ Entre os campos derivados estão:
 - access_age_days;
 - days_since_last_use.
 
-A palavra importante é **factual**. Access Context não classifica o grant.
+A palavra importante é **factual**. Access Context não classifica.
 
-### Aprovação
+## 3. Hard Trusted Set — âncoras explícitas
 
-Quando existe fonte de requests, a implementação procura candidatos por identidade e entitlement e exige coerência temporal com a concessão.
+O problema do baseline puramente observado é simples: um erro repetido por muitas pessoas pode virar “normal”.
 
-Se existe um único candidato, o linkage pode ser marcado como STRONG_INFERRED, mas a relevância ainda é conservadora.
+O Hard Trusted Set cria um conjunto de âncoras explícitas cuja confiança não depende da frequência.
 
-Isso representa uma limitação real: sem uma chave direta request → grant, associação temporal forte ainda é inferência.
-
-### Acesso herdado
-
-A implementação compara data_concessao com data_entrada_comunidade_atual.
-
-Se a concessão é anterior, o acesso é marcado como candidato herdado.
-
-identity_history_complete permanece falso na POC porque o histórico organizacional completo não está garantido.
-
-### Uso
-
-ultimo_uso nulo gera no_usage_recorded, mas usage_coverage permanece UNKNOWN.
-
-Assim, a aplicação não transforma ausência de telemetria em “nunca usado” com certeza indevida.
-
-## 3. Hard Trusted Set
-
-HTS001 marca âncoras explícitas.
-
-A principal âncora atual é birthright, desde que não exista:
-
-- bloqueio de qualidade;
-- certificação REVOKE;
-- conflito contextual cross-community não público.
-
-Sigla pública, frequência ou aprovação não criam sozinhas uma âncora HTS.
-
-O resultado contém:
-
-- hard_trusted_flag;
-- hard_trusted_reason;
-- hard_trusted_rule_id;
-- hard_trusted_rule_version.
-
-## 4. Observed Baseline
-
-Observed Baseline mede comportamento, não legitimidade.
-
-A população observável atual exige:
-
-- dado sem bloqueio de qualidade;
-- identidade ativa;
-- acesso same-community;
-- data de concessão válida e anterior à assessment_date.
-
-Níveis materializados:
-
-1. SQUAD_CARGO_TIPO_IDENTIDADE;
-2. COMUNIDADE_CARGO;
-3. COMUNIDADE;
-4. POPULACAO_COMPARAVEL por tipo_identidade.
-
-Para cada entitlement e população são calculados:
-
-- population_size;
-- support_count;
-- prevalence.
-
-### Por que o baseline não usa apenas HTS?
-
-Na V2 congelada, baseline é construído a partir do Access Context filtrado, não apenas das âncoras HTS.
-
-Isso amplia a capacidade de observar comportamento real, mas mantém um risco residual de contaminação.
-
-Essa é uma escolha de POC que deve ser monitorada e pode ser refinada futuramente com estratégias mais robustas de população confiável.
-
-## 5. Hierarchical Fallback
-
-Um baseline muito específico pode ter pouca população.
-
-O fallback escolhe o primeiro nível que satisfaz os mínimos configurados de população e suporte.
-
-Na POC, os mínimos são baixos para permitir demonstração com dados sintéticos. Esses números são parâmetros técnicos e não política institucional.
-
-## 6. Expected Access
-
-EA001 recebe HTS e o baseline selecionado.
-
-Regras conceituais:
+Na V2, a principal âncora é birthright sem contradição relevante.
 
 ~~~text
-hard trusted
-    → EXPECTED por âncora explícita
-
-senão, baseline suficiente:
-    prevalência alta  → EXPECTED
-    prevalência baixa → UNEXPECTED
-    zona intermediária → INSUFFICIENT_EVIDENCE
-
-sem baseline suficiente
-    → INSUFFICIENT_EVIDENCE
+birthright válido
+      ↓
+hard_trusted_flag = true
+      ↓
+Expected Access recebe
+uma evidência explícita HIGH
 ~~~
 
-Os thresholds atuais são parâmetros calibráveis da POC e foram definidos independentemente do gabarito de validação.
+### Por que HTS não é o próprio baseline?
 
-## 7. O que Expected Access não faz
+Essa é uma decisão importante da V2.
+
+Usar apenas âncoras HTS tornaria a população muito restrita para observar comportamento funcional em vários grupos. Por isso:
+
+- HTS é usado como **âncora explícita**;
+- Observed Baseline usa uma população observável filtrada mais ampla.
+
+Consequência: ganha-se cobertura, mas permanece risco residual de contaminação do baseline. A arquitetura mitiga esse risco não deixando Expected Access decidir autorização sozinho.
+
+## 4. Observed Baseline — medir prevalência
+
+Observed Baseline responde:
+
+> “Com que frequência este entitlement aparece em uma população comparável?”
+
+A população atual exige identidade ativa, sem DQ bloqueante, same-community e concessão temporalmente válida.
+
+Para cada população e entitlement, calculamos:
+
+~~~text
+population_size = número de identidades comparáveis
+support_count   = quantas possuem o entitlement
+prevalence      = support_count / population_size
+~~~
+
+### Exemplo
+
+~~~text
+grupo: Crédito + squad Alfa + Analista + employee
+
+population_size = 20
+support_count = 18
+
+prevalence = 18 / 20 = 0.90
+~~~
+
+Isso é forte evidência de comportamento esperado.
+
+Mas ainda não é autorização.
+
+## 5. Hierarchical Fallback — lidar com grupo pequeno
+
+Imagine:
+
+~~~text
+Crédito + Squad Alfa + Especialista + contractor
+population_size = 1
+~~~
+
+Uma pessoa não é referência suficiente para si mesma.
+
+O fallback tenta populações progressivamente mais amplas:
+
+~~~text
+1. comunidade + squad + cargo + tipo_identidade
+2. comunidade + cargo
+3. comunidade
+4. tipo_identidade
+~~~
+
+Cada tentativa preserva um motivo:
+
+- dimensões ausentes;
+- baseline inexistente;
+- suporte insuficiente;
+- suficiente.
+
+Se nenhum nível é defensável, o resultado é INSUFFICIENT_EVIDENCE.
+
+### Por que isso é melhor do que “usar o banco inteiro”?
+
+Porque expandir diretamente para toda a organização pode comparar populações sem relação funcional. O fallback tenta manter contexto enquanto aumenta a capacidade estatística.
+
+## 6. Thresholds da POC
+
+A configuração atual usa:
+
+~~~text
+prevalence >= 0.80 → EXPECTED
+prevalence <= 0.20 → UNEXPECTED
+entre 0.20 e 0.80 → INSUFFICIENT_EVIDENCE
+~~~
+
+Esses valores são parâmetros técnicos iniciais.
+
+Eles **não foram calibrados pelo gabarito** e não devem ser tratados como regra institucional.
+
+Da mesma forma, os mínimos de população e suporte atuais são adequados para demonstrar funcionamento da POC, mas são permissivos demais para serem assumidos como thresholds produtivos sem calibração.
+
+## 7. Força da evidência
+
+Nem todo fallback possui a mesma força.
+
+A arquitetura diferencia a especificidade do baseline. O nível mais contextual pode sustentar evidência mais forte; populações mais amplas carregam força menor.
+
+Isso cria uma diferença importante:
+
+~~~text
+fallback encontrou um padrão
+        ≠
+Policy obrigatoriamente classifica PADRÃO
+~~~
+
+R060 exige evidência HIGH para transformar padrão observado em decisão PADRÃO.
+
+## 8. Expected Access
+
+Expected Access combina duas famílias de evidência:
+
+### Âncora explícita
+
+~~~text
+hard_trusted_flag = true
+        ↓
+EXPECTED
+reason = EXPECTED_EXPLICIT_BIRTHRIGHT
+strength = HIGH
+~~~
+
+### Padrão observado
+
+~~~text
+baseline suficiente
++
+prevalence
+        ↓
+EXPECTED / UNEXPECTED / INSUFFICIENT_EVIDENCE
+~~~
+
+## 9. O que Expected Access não faz
 
 Expected Access não decide:
 
@@ -153,18 +226,12 @@ Expected Access não decide:
 - prioridade;
 - remediação.
 
-Essa fronteira é central para evitar a falácia “raro = irregular”.
+Essa fronteira evita transformar “estatisticamente diferente” em “indevido”.
 
-## 8. Peer Discovery
+## 10. Peer Discovery
 
-O repositório contém experimentos de:
+O repositório contém experimentos de LDA + FP-Growth, NMF-HDBSCAN e MinHash/Jaccard + Leiden.
 
-- LDA + FP-Growth;
-- NMF-HDBSCAN;
-- MinHash/Jaccard + Leiden.
+Eles estão em shadow mode e não alimentam o runtime V2.
 
-Eles estão em shadow mode.
-
-Seu objetivo é explorar se grupos comportamentais descobertos nos dados podem melhorar a referência de pares no futuro.
-
-No runtime V2 atual eles **não alimentam EA001, Evidence, Policy, Risk ou Gold**.
+O objetivo é testar se pares descobertos por comportamento podem, no futuro, melhorar a referência de comparação sem sacrificar explicabilidade e estabilidade.

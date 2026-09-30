@@ -1,155 +1,210 @@
 # Arquitetura V2 atual
 
-## 1. Arquitetura canônica
+## 1. A arquitetura canônica é o DAG
 
-O DAG Airflow sod_runtime_v2 é a referência operacional da implementação atual.
-
-~~~text
-VALIDAÇÃO DE PARÂMETROS E FONTES
-            │
-            ▼
-          Bronze
-            │
-       Bronze Gate
-            │
-            ▼
-          Silver
-            │
-       Silver Gate
-            │
-            ▼
- Access Context + HTS
-            │
-            ▼
-Observed Baseline + Fallback
-            │
-            ▼
-     Expected Access
-            │
-            ▼
-        Evidence
-            │
-            ▼
-     Policy PD002
-            │
-            ▼
-      Risk RISK001
-            │
-            ▼
-      Gold GOLD001
-            │
-        Gold Gate
-            │
-            ▼
-     Registro do Run
-            │
-            ▼
-  dispara validação offline
-~~~
-
-O DAG de validação é separado. Ele não é upstream do runtime.
-
-## 2. Fronteiras de responsabilidade
-
-### Preparação
-
-**Bronze** preserva o dado ingerido e seu lineage técnico.
-
-**Silver** normaliza contratos, tipos, qualidade, rejeições e dados canônicos.
-
-### Curadoria de contexto
-
-**Access Context** consolida os fatos necessários para interpretar cada grant.
-
-**Hard Trusted Set** marca âncoras explícitas de alta confiança.
-
-### Inteligência de acesso
-
-**Observed Baseline** mede prevalência.
-
-**Hierarchical Fallback** escolhe a melhor população disponível.
-
-**Expected Access** responde se o grant adere ao comportamento esperado.
-
-### Decisão
-
-**Evidence** organiza fatos e confiabilidade.
-
-**Policy** classifica.
-
-**Risk** prioriza.
-
-**Gold** materializa o contrato operacional.
-
-## 3. Por que Gold vem depois de Risk
-
-A Gold é uma camada de publicação. Colocar regras novas na Gold teria três efeitos ruins:
-
-1. esconder lógica de negócio no consumo;
-2. dificultar testes isolados;
-3. quebrar rastreabilidade entre decisão e score.
-
-Na V2, campos como policy_decision, policy_rule_id, risk_score e expected_access_state chegam à Gold já calculados.
-
-## 4. Runtime versus validação
+O runtime V2 não é definido apenas pela existência dos módulos no repositório. A fonte operacional de verdade é o DAG Airflow sod_runtime_v2.
 
 ~~~text
-                    RUNTIME
-Sources → ... → Policy → Risk → Gold
+                         ORQUESTRAÇÃO
                               │
-                              ▼
-                         Freeze/Snapshot
-                              │
-              ┌───────────────┘
-              ▼
-       VALIDATION DAG
-              │
-              ├── gabarito sintético
-              ├── métricas descritivas
-              └── Validation Mart
+      ┌───────────────────────┼───────────────────────┐
+      │                       │                       │
+      ▼                       ▼                       ▼
+   PREPARAÇÃO              CURADORIA          INTELIGÊNCIA/DECISÃO
+      │                       │                       │
+   Bronze                  Silver                Baseline
+      │                       │                  Fallback
+ Bronze Gate             Silver Gate                │
+                              │                 Expected Access
+                        Context + HTS               │
+                                                  Evidence
+                                                    │
+                                                   Policy
+                                                    │
+                                                    Risk
+                                                    │
+                                                    Gold
+                                                    │
+                                                 Gold Gate
+                                                    │
+                                              Register Run
+                                                    │
+                                           Validation Offline
+
+OBSERVABILIDADE:
+métricas · journal · DQ · quarentena · versions · snapshots · lineage · reconciliação
 ~~~
 
-A separação é intencional. Um label de validação jamais deve alterar a saída que ele próprio será usado para avaliar.
+A arquitetura técnica possui, portanto, dois eixos:
 
-## 5. Runtime versus experimental
+**Data/decision path:** transforma dados em decisão.
 
-O arquivo de configuração de Access Intelligence contém experimentos de Peer Discovery em shadow mode.
+**Control path:** garante ordem, qualidade, rastreabilidade e observabilidade.
 
-Eles não participam de:
+## 2. Preparação — Bronze
 
-- EA001;
-- Evidence;
-- Policy;
-- Gold;
-- decisão runtime.
+Bronze recebe as fontes e preserva a visão ingerida.
 
-Isso permite explorar novas técnicas sem transformar a POC em uma caixa-preta operacional.
+Seu objetivo não é “limpar” o dado até ele parecer bom. É registrar o que chegou, com metadados suficientes para reprocessamento e auditoria.
 
-## 6. Versionamento
+A observabilidade de Bronze registra volumes, arquivos, bytes, falhas e duração.
 
-A arquitetura preserva versões explícitas de engines e regras, incluindo:
+Depois da execução, Bronze Gate impede avanço se as tabelas obrigatórias estiverem ausentes ou vazias.
 
-- HTS;
-- baseline;
-- fallback;
-- Expected Access;
-- Evidence;
-- Policy;
-- Risk;
-- Gold.
+## 3. Curadoria — Silver
 
-O objetivo é permitir que uma decisão seja reconstruída não apenas pelos dados, mas também pela versão do comportamento que a produziu.
+Silver transforma fontes heterogêneas em contratos canônicos.
 
-## 7. Propriedades desejadas
+Ela concentra:
 
-A arquitetura atual busca cinco propriedades:
+- normalização;
+- tipos;
+- chaves;
+- DQ;
+- quarentena;
+- persistência Iceberg.
 
-**Reprodutibilidade:** mesma entrada e mesma configuração devem produzir a mesma lógica de decisão.
+O DAG usa a opção silver-only. Access Context é executado separadamente depois do Silver Gate.
 
-**Explicabilidade:** cada grant deve trazer fatos, motivo e regra.
+Essa separação é importante porque canonicalização e interpretação do acesso são responsabilidades distintas.
 
-**Auditabilidade:** snapshots e versões devem permitir reconstrução.
+## 4. Contexto e âncoras
 
-**Separação de concerns:** estatística, evidência, política e prioridade não são misturadas.
+Access Context monta a representação factual por grant.
 
-**Evolutividade:** novos sinais e a futura SoD transacional podem ser adicionados sem reescrever todo o pipeline.
+HTS marca âncoras explícitas.
+
+Esses dois componentes preparam a análise, mas ainda não classificam o acesso.
+
+## 5. Baseline e Fallback
+
+Observed Baseline materializa estatísticas em diferentes níveis de contexto.
+
+Hierarchical Fallback escolhe o nível defensável para cada grant.
+
+Se nenhum nível possui suporte, o pipeline preserva insuficiência de evidência.
+
+## 6. Expected Access
+
+Expected Access converte âncora e prevalência em uma expectativa analítica.
+
+Ele responde:
+
+- EXPECTED;
+- UNEXPECTED;
+- INSUFFICIENT_EVIDENCE.
+
+Ele não responde “autorizado” ou “indevido”.
+
+## 7. Evidence e Policy
+
+Evidence normaliza fatos e confiabilidade.
+
+Policy aplica regras explícitas e precedência.
+
+Essa divisão é central: o mesmo Evidence Bundle pode ser reavaliado por uma nova versão de Policy sem reconstruir toda a contextualização.
+
+## 8. Risk
+
+Risk recebe a decisão e adiciona impacto.
+
+A ordem é proposital:
+
+~~~text
+Policy primeiro
+Risk depois
+~~~
+
+Se Risk viesse antes, impacto poderia contaminar a própria classificação.
+
+## 9. Gold
+
+Gold é contrato de consumo.
+
+Ela reconcilia os componentes upstream e publica:
+
+- decisão;
+- evidências;
+- expectedness;
+- risco;
+- fila operacional;
+- versões;
+- lineage.
+
+Se a reconciliação falhar, o estágio não deve ser considerado válido.
+
+## 10. Control path: por que Airflow importa
+
+Airflow não está sendo usado apenas para “agendar scripts”.
+
+Ele materializa dependências arquiteturais:
+
+~~~text
+não existe Policy válida
+sem Evidence válido
+
+não existe Evidence válido
+sem Expected Access válido
+
+não existe validação offline
+antes de Gold congelada
+~~~
+
+Também controla retry e max_active_runs para reduzir concorrência acidental sobre um warehouse local compartilhado.
+
+## 11. Control path: observabilidade
+
+A plataforma acompanha:
+
+- saúde da ingestão;
+- DQ e quarentena;
+- execução por componente;
+- contagem por estágio;
+- versões;
+- snapshots;
+- lineage;
+- reconciliação final.
+
+Esse caminho de controle é tão importante quanto as transformações, porque uma decisão sem prova de origem não atende bem a requisitos de auditoria.
+
+## 12. Runtime versus experimental
+
+Peer Discovery existe em modo shadow.
+
+LDA, FP-Growth, NMF-HDBSCAN e Leiden não participam de EA001, Evidence, Policy, Risk ou Gold do runtime V2.
+
+Isso permite experimentação sem colocar um método ainda não aprovado no caminho crítico da decisão.
+
+## 13. Runtime versus validação
+
+~~~text
+RUNTIME
+  ↓
+Gold congelada
+  ↓
+registro do run
+  ↓
+trigger
+  ↓
+VALIDATION DAG
+  ↓
+ground truth
+  ↓
+Validation Mart
+~~~
+
+A direção é unilateral.
+
+## 14. Propriedades que a V2 busca
+
+**Reprodutibilidade** — versões e snapshots explícitos.
+
+**Explicabilidade** — regra, motivo e evidências por grant.
+
+**Auditabilidade** — lineage, freeze e journal.
+
+**Segurança de decisão** — incerteza não é escondida.
+
+**Operabilidade** — gates, retry, health view e reconciliação.
+
+**Evolutividade** — componentes podem receber a semântica transacional da Fase 2 sem reescrever a fundação.

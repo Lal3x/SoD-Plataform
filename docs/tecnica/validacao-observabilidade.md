@@ -1,156 +1,185 @@
-# Validação, observabilidade e testes
+# Validação e testes
 
-## 1. Validação não é runtime
+## 1. Validação mede a solução; não controla a solução
 
-A validação V2 possui um DAG próprio: sod_validation_v2.
+A validação V2 roda em DAG separado.
 
-O runtime dispara a validação apenas depois de registrar e congelar sua execução.
+A sequência correta é:
 
 ~~~text
 runtime
   ↓
-Gold
+Gold congelada
   ↓
-freeze / registro
+registro do run
   ↓
 validation DAG
+  ↓
+ground truth
   ↓
 Validation Mart
 ~~~
 
-Essa direção importa. O Validation Mart nunca deve alimentar Policy ou Expected Access durante a mesma avaliação.
+Isso é uma escolha arquitetural para evitar leakage.
 
-## 2. Gabarito sintético
+## 2. Dataset sintético como ambiente controlado
 
-O gabarito existe para medir o comportamento da POC em cenários controlados.
+O case não fornece uma base de dados.
 
-Ele não deve ser usado para:
+A POC criou um universo sintético com seed fixa e cenários conhecidos.
 
-- gerar thresholds;
-- descobrir regras;
-- treinar a Policy;
-- selecionar parâmetros;
-- produzir features runtime.
+Os relatórios versionados descrevem uma ordem de grandeza de:
 
-A finalidade é avaliação posterior.
+- cerca de 9,9 mil identidades;
+- cerca de 75,5 mil grants;
+- 1,9 mil entitlements;
+- 2,6 mil requests;
+- 18,8 mil certificações.
 
-## 3. O que validar
+Os cenários incluem:
 
-A avaliação técnica deve olhar mais do que uma acurácia total.
+- birthright;
+- normal;
+- sigla pública;
+- acesso opcional aprovado;
+- cross legítimo;
+- cross sem aprovação;
+- acesso herdado;
+- contractor fora de escopo;
+- comunidade pequena;
+- tecnologia com acesso a negócio.
 
-### Por classe
+O objetivo desses dados não é provar performance produtiva. É garantir que o pipeline seja testado contra situações conhecidas.
 
+## 3. Ground truth é contrato de teste
+
+O ground truth V2 possui semântica explícita.
+
+Exemplo:
+
+~~~text
+cross_legitimo
+  expected_class = LEGITIMO
+  evidência necessária = request aprovada antes da concessão
+
+cross_sem_aprovacao
+  expected_class = INDEVIDO
+  premissa = fonte de requests completa/autoritativa
+~~~
+
+Isso permite saber exatamente o que está sendo validado.
+
+## 4. O que o runtime é proibido de ler
+
+Scripts runtime verificam ausência de colunas como:
+
+- scenario;
+- cenario;
+- classificacao_esperada;
+- ground_truth;
+- expected_class;
+- offline_label.
+
+Esse controle aparece em Expected Access, Policy, Risk e Gold.
+
+A ideia é simples:
+
+> o gabarito não pode ensinar a resposta para o pipeline que será avaliado.
+
+## 5. O que a validação calcula
+
+O Validation Mart produz:
+
+### Matriz de confusão
+
+Ground truth × decisão de Policy.
+
+### Métricas por classe
+
+- precision;
+- recall;
+- F1;
+- support.
+
+### Métricas por cenário
+
+- total;
 - PADRÃO;
 - LEGÍTIMO;
 - INDEVIDO;
-- REVISÃO.
+- REVISÃO;
+- accuracy;
+- automation rate;
+- review rate.
 
-### Por cenário
+### Métricas executivas
 
-- público;
-- cross aprovado;
-- cross sem aprovação;
-- birthright;
-- acesso herdado;
-- sem uso registrado;
-- comunidades pequenas.
-
-### Por comportamento operacional
-
-- cobertura;
+- grants runtime;
+- grants rotulados;
+- grants sem rótulo;
+- accuracy exata;
+- accuracy das decisões automatizadas;
+- taxa de automação;
 - taxa de revisão;
-- falsos positivos;
-- falsos negativos;
-- distribuição de risk bands;
-- estabilidade entre versões.
+- false-safe crítico;
+- false-indevido;
+- cobertura de autorização cross legítimo.
 
-## 4. O que seria necessário antes de produção
+## 6. Por que accuracy sozinha seria insuficiente
 
-Dados reais exigiriam validação com especialistas e amostras confirmadas.
+Imagine uma base dominada por casos normais.
 
-Uma estratégia segura incluiria:
+Um classificador que marque quase tudo como PADRÃO poderia obter accuracy alta e ainda falhar justamente nos casos mais importantes.
 
-1. shadow run;
-2. comparação com achados existentes;
-3. revisão de amostras por especialistas;
-4. análise por comunidade;
-5. calibração sem leakage;
-6. aprovação formal das regras;
-7. rollout gradual;
-8. monitoramento contínuo.
+Por isso a validação olha classe, cenário e tipo de erro.
 
-## 5. Observabilidade
+Em segurança, dois erros merecem atenção especial:
 
-A observabilidade deve responder três grupos de perguntas.
+**False-safe crítico:** ground truth INDEVIDO classificado como PADRÃO/LEGÍTIMO.
 
-### Dados
+**False-indevido:** ground truth PADRÃO/LEGÍTIMO classificado como INDEVIDO.
 
-- chegaram todos os inputs?
-- houve mudança brusca de volume?
-- aumentaram rejects?
-- há campos-chave ausentes?
+Eles representam riscos diferentes.
 
-### Pipeline
+## 7. Testes automatizados
 
-- qual etapa falhou?
-- quanto tempo levou?
-- qual snapshot foi produzido?
-- houve reprocessamento?
-
-### Decisão
-
-- mudou a proporção de PADRÃO/LEGÍTIMO/INDEVIDO/REVISÃO?
-- aumentou a taxa de fallback?
-- aumentou INSUFFICIENT_EVIDENCE?
-- alguma regra passou a dominar as decisões?
-- mudou a distribuição de risco?
-
-A observabilidade de decisão é importante porque um pipeline pode estar “verde” tecnicamente e ainda produzir comportamento anômalo.
-
-## 6. Testes
-
-O projeto separa testes em:
+O projeto separa:
 
 - unit;
 - integration;
 - e2e.
 
-A suite também possui testes específicos de Bronze, Silver, Access Intelligence, Gold, Streamlit e Observability.
+Existem testes específicos de:
 
-O objetivo é testar:
+- Bronze;
+- Silver;
+- Access Intelligence;
+- Gold;
+- Observability;
+- Streamlit.
 
-- funções isoladas;
-- contratos entre componentes;
-- comportamento Spark;
-- pipeline reduzido ponta a ponta;
-- invariantes de decisão.
+Os testes de observabilidade, por exemplo, verificam se componentes registram métricas usando o mesmo run_id da Silver e se o funil do fallback é persistido.
 
-## 7. CI
+## 8. CI
 
-O GitHub Actions atual executa testes e constrói as imagens Docker de Streamlit e Airflow.
+A pipeline de CI executa testes e build das imagens de Streamlit e Airflow.
 
-Isso garante um nível mínimo de controle antes de integrar alterações.
+A documentação também passa a ser validada com build estrito do MkDocs.
 
-Uma evolução natural é adicionar ao CI:
+Isso reduz o risco de publicar navegação quebrada ou referência inválida.
 
-- lint;
-- build do MkDocs;
-- validação de links internos;
-- checks de schema/config;
-- scanner de dependências e imagem;
-- publicação controlada de artefatos.
+## 9. O que seria necessário antes de produção
 
-## 8. Métricas de valor de negócio
+Uma sequência segura seria:
 
-Além de métricas técnicas, a implantação real deve medir:
+1. profiling de fontes reais;
+2. shadow run;
+3. amostra revisada por especialistas;
+4. comparação com RC/achados confirmados;
+5. calibração de thresholds;
+6. aprovação formal das regras;
+7. rollout gradual;
+8. monitoramento de drift e distribuição;
+9. revisão periódica da política.
 
-- redução do número de entrevistas;
-- tempo médio para analisar um apontamento;
-- proporção de casos automaticamente explicados;
-- proporção encaminhada a revisão;
-- tempo de remediação;
-- reincidência;
-- cobertura de comunidades;
-- estabilidade das regras.
-
-O objetivo não é apenas “ter um modelo”. É reduzir custo operacional mantendo controle e evidência.
+A POC demonstra método. Produção exige evidência operacional.

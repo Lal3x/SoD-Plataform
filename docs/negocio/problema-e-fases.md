@@ -1,94 +1,168 @@
 # O problema e as duas fases
 
-## 1. O problema de origem
+## 1. O problema operacional antes da tecnologia
 
-O ponto de partida do case é um processo de identificação de acessos conflitantes e indevidos ainda muito dependente de entrevistas com áreas de negócio, desenvolvimento e gestores. O conhecimento sobre “quem pode o quê” está disperso, enquanto o volume de identidades, sistemas e acessos impede que a análise manual escale.
+O desafio não começa em Spark, machine learning ou regras SoD. Ele começa em uma pergunta operacional simples e difícil de responder em escala:
 
-O case também deixa uma distinção essencial: muitos apontamentos atuais são acessos que parecem não pertencer à estrutura da pessoa, mas **tratar esse conjunto ainda não é SoD no sentido pleno**.
+> **“Este acesso deveria estar com esta pessoa?”**
 
-Exemplos apresentados no case incluem:
-
-- tecnologia ou engenharia com perfil de sistema de negócio;
-- pessoa de uma comunidade com acesso a sigla de outra;
-- terceiro com acesso fora do escopo;
-- acesso residual após mudança de área;
-- acesso sem registro de utilização;
-- sigla pública;
-- acesso cross-community legitimamente solicitado e aprovado;
-- comunidade pequena, com poucos pares para comparação.
-
-A dificuldade real não é apenas encontrar acessos “diferentes”. É separar **diferença legítima** de **desvio que exige tratamento**.
-
-## 2. Fase 1 — sanitização top-down
-
-A primeira fase é uma sanitização por comunidade, descrita pelo próprio case como o momento de “cortar o mato-alto”.
-
-A unidade de análise de negócio é a **comunidade**. A granularidade do acesso é **Entitlement × Sigla**, contextualizada pela identidade e pelo grant concreto.
-
-O objetivo operacional é produzir uma decisão compreensível:
+Em um processo predominantemente manual, responder essa pergunta pode exigir consultar diferentes áreas, gestores e sistemas até reconstruir o contexto.
 
 ~~~text
-ACESSO
-  │
-  ├── coerente com padrão explícito/observado → PADRÃO
-  ├── exceção justificada                   → LEGÍTIMO
-  ├── violação suportada por política       → INDEVIDO
-  └── evidência insuficiente/contraditória  → REVISÃO
+apontamento de acesso
+        ↓
+quem é a pessoa?
+        ↓
+qual é sua comunidade?
+        ↓
+quem é dono da sigla?
+        ↓
+o acesso é padrão?
+        ↓
+há aprovação?
+        ↓
+houve mudança de área?
+        ↓
+há evidência suficiente?
+        ↓
+decisão
 ~~~
 
-A classe REVISÃO é uma decisão de engenharia da POC para representar incerteza de forma explícita. O case pede padrão, legítimo e indevido; a POC evita forçar um desses três quando os dados não sustentam uma conclusão segura.
+Esse fluxo possui três problemas estruturais:
 
-## 3. Fase 2 — SoD transacional
+**Conhecimento distribuído.** A regra não está centralizada em uma única fonte.
 
-Depois da sanitização, a SoD madura precisa descer ao nível de funções, transações e ações nos sistemas.
+**Escala.** Entrevistar todas as áreas não acompanha o volume de identidades, sistemas e grants.
 
-A pergunta deixa de ser somente:
+**Ambiguidade.** Um acesso diferente pode ser indevido, mas também pode ser uma exceção legítima.
 
-> “Este entitlement faz sentido para esta pessoa?”
+O case explicita que muitos apontamentos atuais são acessos que não pertencem aparentemente à estrutura da pessoa e que tratar esse conjunto é o primeiro passo, mas **ainda não representa SoD plena**.
 
-e passa a incluir:
+## 2. Fase 1 — reduzir o “mato alto”
 
-> “A combinação das capacidades dessa pessoa permite executar etapas conflitantes do mesmo processo?”
+A primeira fase é uma sanitização top-down por comunidade.
 
-Exemplo conceitual:
+A lógica de negócio é:
 
 ~~~text
-Identidade
-  ├── cadastrar favorecido
-  └── aprovar favorecido
-          │
-          ▼
-  mesmo processo / mesmo escopo
-          │
-          ▼
-  potencial conflito SoD
+Comunidade
+    │
+    ├─ quais siglas pertencem a ela?
+    ├─ quais acessos são recorrentes?
+    ├─ quais exceções possuem autorização?
+    ├─ quais acessos atravessam fronteiras?
+    └─ quais casos não possuem evidência suficiente?
 ~~~
 
-Uma análise madura ainda precisa considerar vigência, escopo, objeto, exceção formal e controles compensatórios.
+O resultado esperado pelo case é distinguir:
 
-## 4. Relação entre as fases
+- **PADRÃO:** coerente com o funcionamento esperado do grupo;
+- **LEGÍTIMO:** exceção válida, como uma autorização cross-community;
+- **INDEVIDO:** acesso que viola uma regra sustentada por evidência.
 
-A Fase 2 não deve exigir uma nova plataforma do zero. Ela deve reutilizar o que a Fase 1 já organiza:
+A POC acrescenta **REVISÃO** como mecanismo de segurança: quando os dados não sustentam uma conclusão confiável, o sistema não força uma decisão binária.
 
-- identidade e contexto organizacional;
-- grants e temporalidade;
-- qualidade e lineage;
-- evidências;
-- catálogo de política;
-- risco e priorização;
-- trilha de decisão;
-- Gold e mecanismos de consumo;
-- observabilidade, versionamento e validação.
+### Unidade de análise versus grain técnico
 
-Por isso, a POC foi decomposta em responsabilidades independentes. A semântica transacional será adicionada posteriormente sem misturar contexto, evidência, política e risco em um único algoritmo.
+O case fala em unidade de análise **comunidade** e granularidade do acesso **Entitlement × Sigla**.
 
-## 5. O que a POC resolve hoje
+A implementação precisa ir um nível abaixo para produzir uma decisão auditável:
 
-A solução atual responde à Fase 1 de maneira executável e deixa a Fase 2 arquitetada.
+> **grant de uma identidade × data de avaliação**
 
-Isso evita dois extremos:
+Isso permite explicar o caso individual e depois agregar por comunidade sem perder o detalhe.
 
-- **resolver pouco demais:** apenas listar cross-community como suspeito;
-- **prometer demais:** chamar uma análise top-down de “SoD transacional completa”.
+## 3. O que torna a Fase 1 difícil
 
-A escolha é deliberada: resolver bem o primeiro problema, preservando um caminho técnico claro para o estado final.
+### Cross-community não é automaticamente indevido
+
+Uma pessoa pode acessar uma sigla de outra comunidade por necessidade legítima. Portanto, cross-community é um **fato a explicar**, não uma sentença.
+
+### Sigla pública rompe a fronteira organizacional
+
+Se a aplicação é pública para o banco, pertencer a outra comunidade não é sinal suficiente de risco.
+
+### Acesso raro pode ser legítimo
+
+Um especialista pode precisar de um entitlement que quase ninguém possui.
+
+### Acesso frequente pode continuar errado
+
+Se um erro histórico foi replicado para muitas pessoas, ele pode se tornar “comum” sem se tornar “autorizado”. Essa observação é a razão para separar **Expected Access** de **Policy**.
+
+### Comunidades pequenas não sustentam uma comparação simples
+
+Se um grupo tem poucos membros, uma estatística local pode ser enganosa. Essa limitação levou ao Hierarchical Fallback.
+
+## 4. Fase 2 — SoD transacional
+
+Depois da sanitização, a pergunta fica mais profunda.
+
+A Fase 1 pergunta:
+
+> “Este acesso faz sentido neste contexto?”
+
+A Fase 2 pergunta:
+
+> “A combinação das capacidades acumuladas por esta identidade permite executar atividades conflitantes?”
+
+Exemplo:
+
+~~~text
+IDENTIDADE
+   │
+   ├─ pode criar pagamento
+   │
+   └─ pode aprovar pagamento
+             │
+             ▼
+      mesmo processo?
+      mesmo escopo?
+      mesma vigência?
+             │
+             ▼
+     conflito SoD potencial
+~~~
+
+A análise futura precisa considerar função, transação, ação, objeto, escopo, vigência, exceção formal e controle compensatório.
+
+## 5. Por que as fases pertencem à mesma arquitetura
+
+Os componentes atuais já resolvem problemas que continuarão existindo na SoD transacional:
+
+| Capacidade atual | Por que continua necessária |
+|---|---|
+| contexto da identidade | conflito depende de quem executa |
+| temporalidade | conflito depende de vigência |
+| evidência | exceções e controles precisam ser provados |
+| política versionada | regra SoD muda ao longo do tempo |
+| risco | conflitos possuem impactos diferentes |
+| lineage | auditoria precisa reconstruir a decisão |
+| observabilidade | dados e regras podem degradar |
+| orquestração | ordem e consistência das etapas importam |
+
+A Fase 2 adiciona **semântica transacional e catálogo de conflitos**, não substitui a fundação.
+
+## 6. Resultado esperado da Fase 1
+
+Ao final, o objetivo não é apenas gerar um arquivo com suspeitas. É produzir uma fila explicável:
+
+~~~text
+grant
+  ↓
+contexto
+  ↓
+evidências
+  ↓
+decisão + motivo
+  ↓
+risco + drivers
+  ↓
+ação:
+  REMEDIATE
+  REVIEW
+  MONITOR
+  NONE
+~~~
+
+Isso muda o trabalho humano: em vez de descobrir a regra do zero para cada acesso, o analista recebe uma decisão contextualizada e pode concentrar esforço em risco e incerteza.
