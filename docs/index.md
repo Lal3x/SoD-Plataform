@@ -20,6 +20,9 @@ Uma POC executável para transformar acessos dispersos em **decisões explicáve
   <div class="sod-metric"><b>Fase 2</b><span>evolução para SoD transacional</span></div>
 </div>
 
+!!! tip "Não conhece IAM ou os termos técnicos?"
+    A documentação foi escrita para começar pela linguagem de negócio. Consulte o [Vocabulário essencial](negocio/vocabulario.md) para entender termos como grant, birthright, cross-community, baseline, Hierarchical Fallback, âncora, Policy e Risk.
+
 ## O problema em uma frase
 
 Hoje, descobrir se um acesso é realmente inadequado pode exigir entrevistas, conhecimento distribuído e análise manual. O desafio é transformar esse processo em uma decisão baseada em dados **sem confundir comportamento frequente com autorização**.
@@ -102,8 +105,8 @@ A escolha de colocar **orquestração e observabilidade ao redor do fluxo**, e n
 
 <div class="sod-grid">
   <div class="sod-card"><span class="sod-kicker">Implementado</span><h3>Pipeline de dados</h3><p>Bronze e Silver com contratos, qualidade, quarentena e persistência Iceberg.</p></div>
-  <div class="sod-card"><span class="sod-kicker">Implementado</span><h3>Access Intelligence</h3><p>Context, HTS, Baseline, Fallback e Expected Access separados da autorização.</p></div>
-  <div class="sod-card"><span class="sod-kicker">Implementado</span><h3>Decisioning</h3><p>Evidence → Policy → Risk → Gold com regras e versões explícitas.</p></div>
+  <div class="sod-card"><span class="sod-kicker">Implementado</span><h3>Entendimento do acesso</h3><p>Contexto, referências explícitas confiáveis, padrão observado e comparação por pares. Na parte técnica: Access Context, HTS, Baseline, Fallback e Expected Access.</p></div>
+  <div class="sod-card"><span class="sod-kicker">Implementado</span><h3>Decisão e prioridade</h3><p>Fatos são organizados, regras classificam e o risco define o que tratar primeiro. Tecnicamente: Evidence → Policy → Risk → Gold.</p></div>
   <div class="sod-card"><span class="sod-kicker">Operação</span><h3>Airflow</h3><p>DAG V2 com gates, dependências, retries, registro de execução e validação offline separada.</p></div>
   <div class="sod-card"><span class="sod-kicker">Controle</span><h3>Observabilidade</h3><p>Contagens, DQ, quarentena, journal de componentes, snapshots, lineage, versões e reconciliação.</p></div>
   <div class="sod-card"><span class="sod-kicker">Consumo</span><h3>Streamlit</h3><p>Visões executiva, operacional, explicabilidade, validação e saúde do pipeline.</p></div>

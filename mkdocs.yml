@@ -45,6 +45,7 @@ nav:
   - Início: index.md
   - Parte I — Negócio:
       - O problema e as duas fases: negocio/problema-e-fases.md
+      - Vocabulário essencial: negocio/vocabulario.md
       - Regras de negócio: negocio/regras-de-negocio.md
       - Hipóteses e dados sintéticos: negocio/hipoteses-e-dados-sinteticos.md
       - Resposta aos 9 desafios: negocio/resposta-ao-case.md
