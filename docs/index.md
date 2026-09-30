@@ -1,6 +1,9 @@
 <div class="sod-hero" markdown>
 
-<span class="sod-eyebrow">Access Governance · Data Engineering · Security</span>
+<div class="sod-brand-lockup">
+  <img src="assets/logo.svg" alt="SoD Platform" class="sod-hero-logo">
+  <span class="sod-eyebrow">Access Governance · Data Engineering · Information Security</span>
+</div>
 
 # SoD Platform
 
@@ -35,6 +38,10 @@ Hoje, descobrir se um acesso é realmente inadequado pode exigir entrevistas, co
 
 ## Duas fases, uma única fundação
 
+<div class="sod-summary" markdown>
+<p><strong>Visão da evolução:</strong> a Fase 1 usa fundamentos de Segurança da Informação — baseline, least privilege, need-to-know, evidência e auditabilidade — para governar acessos atuais. A Fase 2 reutiliza essa fundação e acrescenta semântica transacional, ML/Graph e LLM + RAG para descobrir e interpretar conflitos SoD sem transferir a decisão final para a IA.</p>
+</div>
+
 A solução foi desenhada para resolver o problema imediato sem criar uma arquitetura descartável.
 
 <div class="sod-phase-architecture">
@@ -59,25 +66,33 @@ A solução foi desenhada para resolver o problema imediato sem criar uma arquit
 
 ## A arquitetura em uma visão
 
-<div class="sod-diagram" markdown>
-  <div class="sod-diagram-title">Runtime V2</div>
-  <div class="sod-diagram-row">
-    <div class="sod-node"><strong>Bronze</strong><small>ingestão e rastreabilidade</small></div>
-    <div class="sod-arrow">→</div>
-    <div class="sod-node"><strong>Silver</strong><small>contratos, DQ e canonicalização</small></div>
-    <div class="sod-arrow">→</div>
-    <div class="sod-node"><strong>Context + Baseline</strong><small>contexto, âncoras e grupos comparáveis</small></div>
-    <div class="sod-arrow">→</div>
-    <div class="sod-node sod-node--accent"><strong>Expected Access</strong><small>comportamento esperado sem decidir autorização</small></div>
-    <div class="sod-arrow">→</div>
-    <div class="sod-node"><strong>Evidence + Policy</strong><small>fatos, regras e classificação</small></div>
-    <div class="sod-arrow">→</div>
-    <div class="sod-node"><strong>Risk + Gold</strong><small>prioridade e consumo</small></div>
-  </div>
-  <div class="sod-diagram-band"><strong>Airflow + Observabilidade</strong><span>ordem · gates · retry · DQ · snapshots · lineage · reconciliação</span></div>
-</div>
+```mermaid
+flowchart LR
+    subgraph P["PREPARAÇÃO"]
+        A["Fontes"] --> B["Bronze"]
+        B --> C["Silver"]
+    end
 
-A escolha de colocar **orquestração e observabilidade ao redor do fluxo**, e não no final, é deliberada: uma decisão de acesso só é confiável se for possível provar **qual dado entrou, em que ordem foi processado, qual versão decidiu e se o resultado final reconciliou com os componentes upstream**.
+    subgraph I["INTELIGÊNCIA DE ACESSO"]
+        C --> D["Access Context"]
+        D --> E["HTS + Baseline"]
+        E --> F["Hierarchical Fallback"]
+        F --> G["Expected Access"]
+    end
+
+    subgraph DCS["DECISÃO"]
+        G --> H["Evidence"]
+        H --> J["Policy"]
+        J --> K["Risk"]
+        K --> L["Gold"]
+    end
+
+    O["Airflow + Observabilidade + Lineage"] -. controla e observa .-> P
+    O -. controla e observa .-> I
+    O -. controla e observa .-> DCS
+```
+
+A arquitetura separa **preparação**, **inteligência de acesso** e **decisão**. Airflow e observabilidade atravessam o fluxo inteiro para garantir ordem, qualidade, versões, snapshots e reconciliação.
 
 ## O que está implementado
 
@@ -108,7 +123,7 @@ Policy responde **o que o acesso é**. Risk responde **o que tratar primeiro**. 
 
 <div class="sod-grid">
   <div class="sod-card sod-card--wide"><span class="sod-kicker">01 · Negócio</span><h3>Comece pelo problema</h3><p>Entenda as duas fases, as regras explícitas do case, as hipóteses da POC e os nove desafios antes de entrar em componentes.</p></div>
-  <div class="sod-card sod-card--wide"><span class="sod-kicker">02 · Arquitetura</span><h3>Veja como a solução evoluiu</h3><p>A arquitetura inicial é confrontada com problemas reais de contexto, temporalidade, grupos pequenos, leakage e explicabilidade até chegar à V2.</p></div>
+  <div class="sod-card sod-card--wide"><span class="sod-kicker">02 · Arquitetura</span><h3>Veja como a solução evoluiu</h3><p>A arquitetura inicial já nasce com baseline, análise por grupos, detecção de desvios, regras e observabilidade; a V2 formaliza essas ideias em contratos independentes e auditáveis.</p></div>
   <div class="sod-card sod-card--wide"><span class="sod-kicker">03 · Técnica</span><h3>Entre nos contratos</h3><p>Grain, inputs, outputs, baseline, regras, score, gates, observabilidade, testes e operação são explicados com exemplos.</p></div>
   <div class="sod-card sod-card--wide"><span class="sod-kicker">04 · Decisões</span><h3>Entenda trade-offs</h3><p>Experimentos shadow, limitações, premissas de produção e o papel da IA são tratados sem esconder incertezas.</p></div>
 </div>

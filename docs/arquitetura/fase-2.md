@@ -20,6 +20,10 @@ Para isso, a evolução prevista adiciona:
 !!! important "Princípio da Fase 2"
     **ML, Graph e LLM + RAG ampliam descoberta e contexto; eles não substituem a política governada nem decidem sozinhos que um acesso é indevido.**
 
+<div class="sod-summary" markdown>
+<p><strong>Em resumo:</strong> a Fase 2 mantém Bronze, Silver, contexto, evidência, Policy, Risk, Gold, Airflow e observabilidade. O que adicionamos é <strong>semântica transacional</strong>, descoberta de padrões com <strong>ML/Graph</strong> e interpretação assistida de conhecimento com <strong>LLM + RAG</strong>. Esses componentes geram sinais e candidatos; a decisão continua dependente de regras SoD aprovadas, exceções e controles compensatórios.</p>
+</div>
+
 ## 1. O que muda em relação à Fase 1
 
 A Fase 1 responde:
@@ -214,25 +218,15 @@ A plataforma distingue:
 
 ## 9. Como a decisão final continua governada
 
-~~~text
-sinais de ML / Graph
-+
-sugestões de LLM / RAG
-+
-contexto transacional
-+
-regra SoD aprovada
-+
-exceções / controles
-        ↓
-Unified Evidence
-        ↓
-Policy
-        ↓
-Risk
-        ↓
-Gold
-~~~
+<div class="sod-arch-grid">
+  <div class="sod-arch-stage sod-arch-stage--future"><span class="sod-step">1</span><h3>ML / Graph</h3><p>Descobre peers, padrões raros e combinações incomuns.</p></div>
+  <div class="sod-arch-stage sod-arch-stage--future"><span class="sod-step">2</span><h3>LLM + RAG</h3><p>Interpreta catálogos, políticas e documentação com fontes recuperadas.</p></div>
+  <div class="sod-arch-stage"><span class="sod-step">3</span><h3>Transaction Context</h3><p>Função, transação, ação, objeto, escopo e vigência.</p></div>
+  <div class="sod-arch-stage sod-arch-stage--accent"><span class="sod-step">4</span><h3>SoD Catalog</h3><p>Regras formais, versionadas e aprovadas.</p></div>
+  <div class="sod-arch-stage sod-arch-stage--wide"><span class="sod-step">5</span><h3>Unified Evidence + Exception Check</h3><p>Corrobora sinais, verifica confiabilidade, exceções e controles compensatórios.</p></div>
+  <div class="sod-arch-stage sod-arch-stage--wide sod-arch-stage--accent"><span class="sod-step">6</span><h3>Policy → Risk → Gold</h3><p>Decisão governada, prioridade e publicação usando a mesma fundação da Fase 1.</p></div>
+  <div class="sod-arch-band"><strong>Princípio</strong><span>IA amplia descoberta; regras aprovadas continuam controlando a decisão.</span></div>
+</div>
 
 O resultado final pode reutilizar a filosofia da Fase 1:
 
@@ -243,22 +237,47 @@ O resultado final pode reutilizar a filosofia da Fase 1:
 
 ## 10. Arquitetura combinada
 
-<div class="sod-phase-architecture">
-  <div class="sod-phase">
-    <span class="sod-kicker">Fase 1 · implementada</span>
-    <h3>Access Governance</h3>
-    <p>Contexto → Baseline → Expected Access → Evidence → Policy → Risk.</p>
-  </div>
-  <div class="sod-phase-bridge">
-    <strong>Fundação compartilhada</strong>
-    <span>Bronze · Silver · Evidence · Policy · Risk · Gold · Airflow · Observabilidade</span>
-  </div>
-  <div class="sod-phase sod-phase--future">
-    <span class="sod-kicker">Fase 2 · evolução</span>
-    <h3>SoD Transacional</h3>
-    <p>Transaction Context + ML/Graph + LLM/RAG + SoD Catalog + Conflict Engine.</p>
-  </div>
-</div>
+```mermaid
+flowchart LR
+    subgraph F1["FASE 1 · FUNDAÇÃO IMPLEMENTADA"]
+        A["Bronze + Silver"] --> B["Access Context"]
+        B --> C["Baseline + Expected Access"]
+        C --> D["Evidence"]
+        D --> E["Policy"]
+        E --> F["Risk"]
+        F --> G["Gold"]
+    end
+
+    subgraph F2["FASE 2 · EVOLUÇÃO"]
+        H["Transaction Context<br/>função · transação · ação · escopo"]
+        I["ML + Graph<br/>peers · padrões · anomalias"]
+        J["LLM + RAG<br/>catálogos · políticas · manuais"]
+        K["Semantic Access Catalog"]
+        L["SoD Policy Catalog"]
+        M["Unified Evidence"]
+        N["Conflict Engine"]
+        O["Exception Check"]
+        P["Policy → Risk → Gold"]
+
+        H --> I
+        H --> J
+        J --> K
+        I --> M
+        K --> M
+        L --> N
+        M --> N
+        N --> O
+        O --> P
+    end
+
+    B --> H
+    D -. disciplina de evidência .-> M
+    E -. disciplina de decisão .-> P
+    CTRL["Airflow · Observabilidade · Lineage · versões"] -. atravessa .-> F1
+    CTRL -. atravessa .-> F2
+```
+
+A Fase 2 **não cria uma segunda plataforma**. Ela reutiliza a fundação da Fase 1 e acrescenta contexto transacional, descoberta assistida e um catálogo governado de conflitos.
 
 ## 11. O que pretendemos fazer
 
@@ -276,7 +295,22 @@ Em uma implementação futura, a sequência proposta é:
 10. alimentar o mesmo fluxo de Evidence → Policy → Risk → Gold;
 11. medir falsos positivos, taxa de revisão e estabilidade antes de qualquer automação ampla.
 
-## 12. Por que essa evolução é coerente
+## 12. Feedback e redução contínua de falsos positivos
+
+Casos enviados para **REVISÃO** viram uma fonte de aprendizado operacional, sem permitir que o feedback humano altere silenciosamente a Policy.
+
+<div class="sod-mini-flow">
+  <div><strong>1</strong><span>candidato gerado</span></div>
+  <div><strong>2</strong><span>revisão humana</span></div>
+  <div><strong>3</strong><span>true/false positive registrado</span></div>
+  <div><strong>4</strong><span>recalibração governada</span></div>
+</div>
+
+Esse feedback pode melhorar peer groups, thresholds, mapeamentos semânticos e prompts/RAG, mas mudanças no **SoD Policy Catalog** continuam exigindo aprovação e versionamento.
+
+Métricas propostas para essa fase incluem **precision, false-positive rate, review rate, automation rate e false-safe rate**. O objetivo não é maximizar automação; é automatizar somente onde a evidência é suficientemente forte.
+
+## 13. Por que essa evolução é coerente
 
 A Fase 1 já construiu as disciplinas difíceis:
 
