@@ -1,0 +1,20 @@
+{
+  "automated_decision_accuracy": 0.9586184687223251,
+  "automation_rate": 0.9872977228521905,
+  "critical_false_safe_count": 0,
+  "cross_legitimo_authorization_coverage": 1.0,
+  "false_indevido_count": 0,
+  "indevido_critical_risk_rate": 1.0,
+  "indevido_precision": 1.0,
+  "indevido_recall": 1.0,
+  "labeled_grants": 75485,
+  "legitimo_precision": 1.0,
+  "legitimo_recall": 0.4555498014845503,
+  "normal_identifiability_90": 0.9996971583357168,
+  "overall_exact_accuracy": 0.9464396900046367,
+  "padrao_precision": 0.9569363960064232,
+  "padrao_recall": 0.987193892250072,
+  "review_rate": 0.01270227714780952,
+  "runtime_grants": 75577,
+  "unlabeled_grants": 92
+}

@@ -14,13 +14,27 @@ A regra usada no restante da documentação é:
 | **IAM — Identity and Access Management** | disciplina e conjunto de controles para administrar identidades e acessos |
 | **IGA — Identity Governance and Administration** | governança dos acessos: solicitações, aprovações, certificações, políticas e ciclo de vida |
 | **SoD — Segregation of Duties** | segregação de funções; evita que a mesma pessoa concentre capacidades incompatíveis |
+| **RC — Risco de Conglomerado** | termo do case para os apontamentos de risco que precisam de análise e tratativa |
 | **runtime** | caminho que realmente executa a decisão da solução |
 | **DAG** | fluxo de tarefas e dependências executado pelo Airflow |
 | **DQ — Data Quality** | verificações de qualidade e integridade dos dados |
 | **ground truth / gabarito** | resposta esperada conhecida e usada somente para avaliar a POC depois do runtime |
 | **data leakage** | vazamento da resposta esperada para o processo que deveria ser avaliado |
 | **threshold** | limite numérico usado por uma regra técnica, por exemplo 0,80 para considerar alta prevalência |
-| **assessment date** | data de referência da avaliação; impede que informações futuras influenciem uma decisão histórica |
+| **data de ingestão (`data_ingestao`)** | data associada ao carregamento/processamento dos dados |
+| **assessment date** | data de referência da avaliação; diz em qual momento queremos avaliar o acesso e impede informação futura de influenciar uma decisão histórica |
+
+### Métricas que aparecem nos resultados
+
+| Termo | Significado em linguagem simples |
+|---|---|
+| **accuracy / acurácia** | percentual de casos em que a decisão foi exatamente igual à resposta esperada |
+| **precision** | quando a solução usa uma classe, com que frequência essa classificação está correta |
+| **recall** | de todos os casos que realmente pertencem a uma classe, quantos a solução conseguiu encontrar |
+| **false-safe crítico** | acesso realmente indevido que foi tratado como PADRÃO ou LEGÍTIMO |
+| **false-indevido** | acesso realmente válido que foi classificado como INDEVIDO |
+| **automation rate** | parcela dos casos em que a solução tomou decisão automática |
+| **review rate** | parcela dos casos encaminhados para revisão humana |
 
 ### Bronze, Silver e Gold
 

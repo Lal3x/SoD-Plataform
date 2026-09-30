@@ -138,6 +138,21 @@ Se não existe registro de uso, mas a cobertura da telemetria é desconhecida, a
 
 Policy responde **o que o acesso é**. Risk responde **o que tratar primeiro**. Um acesso pode ser legítimo e ainda assim possuir alto impacto. Alto impacto não reclassifica automaticamente um acesso legítimo como indevido.
 
+## O que o run validado mostrou
+
+A execução completa de referência processou **75.577 acessos canônicos** e só consultou o gabarito depois que as decisões já estavam produzidas.
+
+| Resultado | Leitura simples |
+|---|---|
+| **94,64%** de acurácia exata | decisão exatamente igual ao gabarito |
+| **95,86%** de acurácia nas decisões automatizadas | qualidade quando a solução decidiu sem mandar para revisão |
+| **98,73%** de automação | quase todos os casos receberam PADRÃO, LEGÍTIMO ou INDEVIDO |
+| **1,27%** de revisão | pequena parcela foi preservada para análise humana |
+| **0 false-safe crítico** | nenhum indevido rotulado foi tratado como seguro |
+| **0 false-indevido** | nenhum acesso válido rotulado foi classificado como indevido |
+
+A interpretação completa — incluindo a principal oportunidade de calibração entre **PADRÃO e LEGÍTIMO** — está em **[Resultados da POC](resultados.md)**.
+
 ## Como ler esta documentação
 
 A documentação foi organizada para responder perguntas em uma sequência lógica: **qual é o problema → quais princípios orientam a solução → como a arquitetura funciona → o que foi implementado → quais resultados apareceram → quais são os limites e próximos passos**.
@@ -151,6 +166,9 @@ A documentação foi organizada para responder perguntas em uma sequência lógi
 
 !!! tip "Se você tiver apenas 10 minutos"
     Leia **O problema e as duas fases → Arquitetura V2 atual → Anatomia de uma decisão → Resultados da POC**. Esse percurso mostra problema, solução, funcionamento e resultado sem exigir leitura de todas as páginas.
+
+!!! tip "Se você estiver preparando a apresentação de 30 minutos"
+    Use a documentação como apoio, não como roteiro de leitura integral: **problema (3 min) → arquitetura inicial (4 min) → evolução/V2 (6 min) → uma decisão ponta a ponta (5 min) → resultados validados (5 min) → Fase 2 (3 min) → limites para produção (2 min) → perguntas (2 min)**.
 
 ### Sequência completa
 
