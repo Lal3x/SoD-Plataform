@@ -1,6 +1,13 @@
-name: Publicar documentação
+name: Documentação
 
 on:
+  pull_request:
+    paths:
+      - "docs/**"
+      - "mkdocs.yml"
+      - "pyproject.toml"
+      - "poetry.lock"
+      - ".github/workflows/docs.yml"
   push:
     branches: [main]
     paths:
@@ -13,15 +20,14 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: pages
+  group: docs-\${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   build:
+    name: Validar MkDocs
     runs-on: ubuntu-latest
     steps:
       - name: Baixar código
@@ -35,33 +41,33 @@ jobs:
       - name: Instalar Poetry
         run: pipx install poetry
 
-      - name: Configurar cache do Poetry
-        run: poetry config virtualenvs.in-project true
-
-      - name: Instalar dependências do projeto
-        run: poetry install --no-interaction --no-root
-
-      # O pacote deve estar declarado no grupo "docs" do pyproject.toml.
       - name: Instalar dependências da documentação
-        run: poetry install --with docs --no-interaction
+        run: poetry install --only docs --no-interaction --no-root
 
-      - name: Construir documentação
+      - name: Validar documentação
         run: poetry run mkdocs build --strict
 
       - name: Configurar GitHub Pages
+        if: github.event_name != 'pull_request'
         uses: actions/configure-pages@v5
 
-      - name: Preparar artefato
+      - name: Preparar artefato do Pages
+        if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3
         with:
           path: site
 
   deploy:
+    name: Publicar GitHub Pages
+    if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: \${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Publicar no GitHub Pages
         id: deployment
