@@ -4,6 +4,9 @@ Esta página mostra **o que a implementação V2 produziu no cenário sintético
 
 Os números abaixo servem para demonstrar comportamento do pipeline, cobertura dos contratos, capacidade de classificação, tratamento de incerteza e rastreabilidade. Eles **não devem ser interpretados como estimativa de performance em produção**, porque o case não fornece dados reais.
 
+!!! tip "Como ler esta página"
+    Primeiro observe **se a população foi preservada e reconciliada**; depois veja **como o comportamento foi classificado**; em seguida, **quais decisões e revisões a Policy produziu**; por fim, leia **o que esses números provam — e o que ainda não provam**.
+
 ## Visão executiva
 
 | Indicador | Resultado | O que demonstra |
@@ -16,6 +19,11 @@ Os números abaixo servem para demonstrar comportamento do pipeline, cobertura d
 | certificações | **18.894** | sinais de revisão de acesso |
 | grants com ground truth disponível | **75.485** | população rotulada para validação offline |
 | grants sem rótulo | **92** | casos preservados sem forçar validação inexistente |
+
+!!! note "Fonte, relatório do gerador e runtime não são a mesma contagem"
+    O arquivo-fonte de assignments contém **75.585 registros**. Um relatório auxiliar do gerador V2 também registra `grant_count = 75.583`. O runtime, porém, define como população canônica **75.577 grants Silver** e exige essa mesma cardinalidade nos estágios críticos.
+
+    A documentação não inventa uma causa registro a registro para essas diferenças intermediárias. O requisito arquitetural é que a passagem **fonte → canônico** seja reconciliável; em produção, qualquer diferença precisa estar explicada por DQ, duplicidade, integridade ou outra transformação conhecida.
 
 ## 1. O pipeline preservou a população canônica ponta a ponta
 

@@ -4,6 +4,15 @@
 
 Nesta POC, cada camada possui uma responsabilidade específica e um contrato de entrada/saída. Isso evita que uma regra de negócio apareça escondida em uma etapa de ingestão ou que um problema de qualidade seja confundido com evidência de risco.
 
+!!! tip "Em linguagem simples"
+    O pipeline faz sete coisas em ordem: **recebe os dados → padroniza → entende o contexto → mede o comportamento esperado → organiza evidências → aplica regras → prioriza e publica o resultado**.
+
+Antes da tabela, três termos técnicos:
+
+- **grain:** nível de detalhe representado por uma linha;
+- **canônico:** formato padronizado em que o restante da plataforma pode confiar;
+- **lineage:** trilha que permite descobrir de qual fonte, arquivo e execução um dado veio.
+
 | Etapa | Grain principal | Input | Output | Papel |
 |---|---|---|---|---|
 | Bronze | registro da fonte | arquivos/source extracts | tabelas Bronze | preservar ingestão e lineage |

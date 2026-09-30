@@ -2,7 +2,10 @@
 
 Esta página documenta o **modelo de dados usado pela POC V2**, desde as fontes sintéticas até a representação canônica consumida pelo pipeline.
 
-O objetivo não é apenas mostrar tabelas. O modelo explicita **grain, chaves, tipos, relações, formatos físicos, domínios e regras de canonicalização**.
+O objetivo não é apenas mostrar tabelas. O modelo explicita **nível de detalhe (grain), chaves, tipos, relações, formatos físicos, domínios e regras de padronização (canonicalização)**.
+
+!!! tip "Do negócio para o modelo"
+    Pense nas tabelas como respostas para perguntas simples: **quem é a pessoa? quais contas ela possui? qual é a aplicação? qual permissão existe? quem recebeu a permissão? houve solicitação/aprovação? o acesso foi certificado?**
 
 !!! info "Fonte de verdade"
     Os campos e tipos abaixo refletem o contrato implementado em `src/sod_platform/silver/contract.py`. Quando o contrato e um arquivo de origem divergirem, a execução deve falhar ou encaminhar o problema para qualidade de dados; a documentação não substitui o contrato executável.
@@ -20,6 +23,15 @@ O objetivo não é apenas mostrar tabelas. O modelo explicita **grain, chaves, t
 | `access_certifications` | ACCESS_GOVERNANCE | Parquet | **18.894** | uma decisão de campanha sobre identidade × entitlement |
 
 Os formatos heterogêneos são intencionais: a POC exercita ingestão de CSV, JSON e Parquet antes da canonicalização.
+
+!!! note "Por que aparecem contagens diferentes de grants?"
+    Existem três números que representam **estágios diferentes**, e não devem ser tratados como a mesma métrica:
+
+    - `access_assignments` na fonte: **75.585** registros;
+    - o relatório auxiliar `generation_report_v2.json` registra `grant_count = 75.583`;
+    - o contrato canônico do runtime trabalha com **75.577 grants**.
+
+    A documentação **não atribui uma causa específica a cada diferença intermediária sem um artefato de reconciliação por registro**. Para o runtime, a população de referência é a Silver canônica com 75.577 grants; em produção, toda diferença fonte → canônico deve ser explicada por DQ, duplicidade, integridade ou outra regra de canonicalização.
 
 ## 2. Modelo lógico
 

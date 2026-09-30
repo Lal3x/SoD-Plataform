@@ -6,6 +6,9 @@ Seria possível criar uma única função que recebesse todos os dados e devolve
 
 A V2 separa quatro perguntas:
 
+!!! tip "Modelo mental"
+    Pense assim: **Evidence junta os fatos → Policy aplica a regra → Risk define a prioridade → Gold publica o resultado**. Separar essas responsabilidades evita que uma única função esconda inferências, decisão e impacto no mesmo lugar.
+
 | Camada | Pergunta |
 |---|---|
 | Evidence | Quais fatos existem e quão confiáveis são? |

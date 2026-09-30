@@ -8,19 +8,25 @@ Bronze e Silver conseguem responder “quais dados recebemos?” e “qual é a 
 
 Access Intelligence existe para construir **contexto e evidência comportamental** sem misturar essa análise com autorização.
 
-~~~text
-Access Context
-      │
-      ├───────────────┐
-      ▼               ▼
-Hard Trusted Set   Observed Baseline
-      │               │
-      │        Hierarchical Fallback
-      │               │
-      └───────┬───────┘
-              ▼
-        Expected Access
-~~~
+!!! tip "Em linguagem de negócio"
+    Esta camada não responde **“o acesso é permitido?”**. Ela responde perguntas anteriores: **quem possui o acesso? em qual contexto? existe alguma referência explícita confiável? esse acesso é comum entre pessoas comparáveis? há dados suficientes para afirmar isso?**
+
+| Pergunta de negócio | Nome técnico no projeto |
+|---|---|
+| qual é o contexto deste acesso? | Access Context |
+| existe uma referência explícita forte? | Hard Trusted Set (HTS) |
+| o que é comum para pessoas comparáveis? | Observed Baseline |
+| o grupo é pequeno demais? | Hierarchical Fallback |
+| o acesso parece esperado ou inesperado? | Expected Access |
+
+```mermaid
+flowchart TB
+    A["Access Context<br/>contextualiza o grant"] --> B["Hard Trusted Set<br/>âncoras explícitas"]
+    A --> C["Observed Baseline<br/>padrão observado"]
+    C --> D["Hierarchical Fallback<br/>trata grupos pequenos"]
+    B --> E["Expected Access"]
+    D --> E
+```
 
 ## 2. Access Context — dar significado ao grant
 

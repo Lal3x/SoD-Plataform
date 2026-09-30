@@ -120,14 +120,29 @@ Se não existe registro de uso, mas a cobertura da telemetria é desconhecida, a
 
 Policy responde **o que o acesso é**. Risk responde **o que tratar primeiro**. Um acesso pode ser legítimo e ainda assim possuir alto impacto. Alto impacto não reclassifica automaticamente um acesso legítimo como indevido.
 
-## Como ler
+## Como ler esta documentação
 
-<div class="sod-grid">
-  <div class="sod-card sod-card--wide"><span class="sod-kicker">01 · Negócio</span><h3>Comece pelo problema</h3><p>Entenda as duas fases, as regras explícitas do case, as hipóteses da POC e os nove desafios antes de entrar em componentes.</p></div>
-  <div class="sod-card sod-card--wide"><span class="sod-kicker">02 · Arquitetura</span><h3>Veja como a solução evoluiu</h3><p>A arquitetura inicial já nasce com baseline, análise por grupos, detecção de desvios, regras e observabilidade; a V2 formaliza essas ideias em contratos independentes e auditáveis.</p></div>
-  <div class="sod-card sod-card--wide"><span class="sod-kicker">03 · Técnica</span><h3>Entre nos contratos</h3><p>Grain, inputs, outputs, baseline, regras, score, gates, observabilidade, testes e operação são explicados com exemplos.</p></div>
-  <div class="sod-card sod-card--wide"><span class="sod-kicker">04 · Decisões</span><h3>Entenda trade-offs</h3><p>Experimentos shadow, limitações, premissas de produção e o papel da IA são tratados sem esconder incertezas.</p></div>
-</div>
+A documentação foi organizada para responder perguntas em uma sequência lógica: **qual é o problema → quais princípios orientam a solução → como a arquitetura funciona → o que foi implementado → quais resultados apareceram → quais são os limites e próximos passos**.
+
+| Perfil | Caminho recomendado |
+|---|---|
+| **Negócio / gestão** | Problema e duas fases → Regras de negócio → Resultados da POC |
+| **Segurança / auditoria** | Fundamentos de Segurança → Anatomia de uma decisão → Premissas e gates de produção |
+| **Engenharia de Dados** | Arquitetura V2 → Pipeline → Modelo de dados → Orquestração e observabilidade |
+| **Avaliador técnico** | Arquitetura inicial → Evolução → Anatomia de uma decisão → Rastreabilidade técnica → Resultados |
+
+!!! tip "Se você tiver apenas 10 minutos"
+    Leia **O problema e as duas fases → Arquitetura V2 atual → Anatomia de uma decisão → Resultados da POC**. Esse percurso mostra problema, solução, funcionamento e resultado sem exigir leitura de todas as páginas.
+
+### Sequência completa
+
+1. **Negócio:** entenda o problema, as duas fases e as regras.
+2. **Arquitetura:** veja de onde o desenho partiu e por que ele evoluiu.
+3. **Técnica:** entre nos contratos, dados, algoritmos, decisões e operação.
+4. **Resultados:** confira o que a implementação produziu no cenário sintético.
+5. **Decisões:** revise trade-offs, premissas, experimentos e uso de IA.
+6. **Referência:** use execução local e estrutura do repositório como material de consulta.
+
 
 ## Estado da solução
 
