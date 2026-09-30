@@ -4,36 +4,23 @@
 
 O runtime V2 não é definido apenas pela existência dos módulos no repositório. A fonte operacional de verdade é o DAG Airflow sod_runtime_v2.
 
-~~~text
-                         ORQUESTRAÇÃO
-                              │
-      ┌───────────────────────┼───────────────────────┐
-      │                       │                       │
-      ▼                       ▼                       ▼
-   PREPARAÇÃO              CURADORIA          INTELIGÊNCIA/DECISÃO
-      │                       │                       │
-   Bronze                  Silver                Baseline
-      │                       │                  Fallback
- Bronze Gate             Silver Gate                │
-                              │                 Expected Access
-                        Context + HTS               │
-                                                  Evidence
-                                                    │
-                                                   Policy
-                                                    │
-                                                    Risk
-                                                    │
-                                                    Gold
-                                                    │
-                                                 Gold Gate
-                                                    │
-                                              Register Run
-                                                    │
-                                           Validation Offline
-
-OBSERVABILIDADE:
-métricas · journal · DQ · quarentena · versions · snapshots · lineage · reconciliação
-~~~
+<div class="sod-diagram" markdown>
+  <div class="sod-diagram-title">Fluxo de dados e decisão</div>
+  <div class="sod-diagram-row">
+    <div class="sod-node"><span>01</span><strong>Bronze</strong><small>dados recebidos + metadados</small></div>
+    <div class="sod-arrow">→</div>
+    <div class="sod-node"><span>02</span><strong>Silver</strong><small>contratos + DQ + quarentena</small></div>
+    <div class="sod-arrow">→</div>
+    <div class="sod-node"><span>03</span><strong>Context + HTS</strong><small>contexto factual + âncoras</small></div>
+    <div class="sod-arrow">→</div>
+    <div class="sod-node sod-node--accent"><span>04</span><strong>Baseline + EA</strong><small>comportamento esperado</small></div>
+    <div class="sod-arrow">→</div>
+    <div class="sod-node"><span>05</span><strong>Evidence + Policy</strong><small>evidências + decisão</small></div>
+    <div class="sod-arrow">→</div>
+    <div class="sod-node"><span>06</span><strong>Risk + Gold</strong><small>prioridade + publicação</small></div>
+  </div>
+  <div class="sod-diagram-band"><strong>Control path</strong><span>Airflow · gates · run registry · observabilidade · validação offline</span></div>
+</div>
 
 A arquitetura técnica possui, portanto, dois eixos:
 

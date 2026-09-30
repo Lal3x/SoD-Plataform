@@ -7,8 +7,8 @@ site_author: Lucas Alexandre
 theme:
   name: material
   language: pt-BR
-  logo: material/shield-check
-  favicon: material/shield-check
+  logo: assets/logo.svg
+  favicon: assets/logo.svg
   font:
     text: Inter
     code: JetBrains Mono
@@ -29,6 +29,7 @@ theme:
         name: Usar tema claro
   features:
     - navigation.tabs
+    - navigation.tabs.sticky
     - navigation.sections
     - navigation.top
     - navigation.indexes
@@ -64,7 +65,7 @@ nav:
       - Dashboard e operação: tecnica/dashboard-operacao.md
   - Parte IV — Decisões:
       - Experimentos e shadow mode: decisoes/experimentos.md
-      - Limitações e premissas: decisoes/limitacoes.md
+      - Premissas, controles e evolução: decisoes/limitacoes.md
       - Uso de IA no desenvolvimento: decisoes/uso-ia.md
   - Referência:
       - Execução local: referencia/execucao-local.md

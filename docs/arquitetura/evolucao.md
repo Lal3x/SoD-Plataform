@@ -52,8 +52,8 @@ Durante o refinamento ficou claro que havia dois conceitos distintos.
 
 Eles são complementares, mas não equivalentes.
 
-!!! warning "Limitação importante da V2"
-    O Observed Baseline atual é construído sobre uma população filtrada por qualidade, identidade ativa, temporalidade e same-community. Ele **não é restrito apenas ao Hard Trusted Set**. Portanto, contaminação residual do baseline continua sendo um risco conhecido e deve ser monitorada.
+!!! info "Controle importante da V2"
+    O Observed Baseline atual é construído sobre uma população filtrada por qualidade, identidade ativa, temporalidade e same-community. Ele **não é restrito apenas ao Hard Trusted Set**. Por isso, a baseline é tratada como **evidência comportamental**, nunca como autorização. Policy, certificações, aprovações e força da evidência funcionam como controles independentes.
 
 ## 4. Hierarchical Fallback
 
@@ -133,17 +133,18 @@ Depois que o runtime é congelado, a validação offline pode comparar a saída 
 
 ## 10. Resultado do refinamento
 
-~~~text
-V0
-Dados → Bronze → Silver → hipóteses analíticas → Gold
-                         │
-                         ▼
-          perguntas de domínio e confiabilidade
-                         │
-                         ▼
-V2
-Context → HTS + Baseline/Fallback → Expected Access
-        → Evidence → Policy → Risk → Gold
-~~~
+<div class="sod-evolution">
+  <div class="sod-evolution-col">
+    <span class="sod-kicker">V0</span>
+    <h3>Capacidades agrupadas</h3>
+    <p>Dados → Bronze → Silver → baseline, grupos, experimentos analíticos e regras → Gold.</p>
+  </div>
+  <div class="sod-evolution-arrow">→</div>
+  <div class="sod-evolution-col sod-evolution-col--highlight">
+    <span class="sod-kicker">V2</span>
+    <h3>Responsabilidades formalizadas</h3>
+    <p>Context → HTS + Baseline/Fallback → Expected Access → Evidence → Policy → Risk → Gold.</p>
+  </div>
+</div>
 
 A evolução não foi adicionar complexidade por estética. Cada separação reduz uma ambiguidade específica do problema.

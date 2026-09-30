@@ -37,67 +37,45 @@ Hoje, descobrir se um acesso é realmente inadequado pode exigir entrevistas, co
 
 A solução foi desenhada para resolver o problema imediato sem criar uma arquitetura descartável.
 
-~~~text
-FASE 1 — AGORA
-sanitizar acessos por comunidade
-        │
-        ├─ contexto organizacional
-        ├─ padrão observado
-        ├─ exceções legítimas
-        ├─ evidências de autorização
-        ├─ decisão explicável
-        └─ priorização por risco
-        │
-        ▼
-FUNDAÇÃO DE GOVERNANÇA
-        │
-        ▼
-FASE 2 — EVOLUÇÃO
-entitlement → função → transação → ação
-        │
-        ├─ conflitos SoD
-        ├─ escopo
-        ├─ vigência
-        ├─ exceções
-        └─ controles compensatórios
-~~~
+<div class="sod-phase-architecture">
+  <div class="sod-phase">
+    <span class="sod-kicker">Fase 1 · implementada</span>
+    <h3>Access Governance</h3>
+    <p>Contextualizar acessos, estabelecer baseline, organizar evidências, classificar e priorizar.</p>
+  </div>
+  <div class="sod-phase-bridge">
+    <strong>Fundação reutilizável</strong>
+    <span>Evidence · Policy · Risk · Gold · Airflow · Observabilidade</span>
+  </div>
+  <div class="sod-phase sod-phase--future">
+    <span class="sod-kicker">Fase 2 · evolução</span>
+    <h3>SoD Transacional + IA assistida</h3>
+    <p>Transaction Context + ML/Graph + LLM/RAG + catálogo SoD + Conflict Engine.</p>
+  </div>
+</div>
 
 !!! important "Escopo correto"
     A POC implementa a **Fase 1**. Ela não chama a sanitização top-down de “SoD plena”. A **Fase 2** é uma arquitetura evolutiva que reutiliza contexto, evidência, política, risco, lineage, observabilidade e operação.
 
 ## A arquitetura em uma visão
 
-~~~text
-                    ┌──────────────────────────────┐
-                    │      ORQUESTRAÇÃO AIRFLOW    │
-                    │ ordem · gates · retry · run  │
-                    └──────────────┬───────────────┘
-                                   │
-Sources → Bronze → Silver → Access Context
-                              │
-                  ┌───────────┴───────────┐
-                  ▼                       ▼
-          Hard Trusted Set       Observed Baseline
-                                          │
-                                  Hierarchical Fallback
-                  └───────────┬───────────┘
-                              ▼
-                       Expected Access
-                              ▼
-                           Evidence
-                              ▼
-                        Policy PD002
-                              ▼
-                         Risk RISK001
-                              ▼
-                         Gold GOLD001
-                              ▼
-                 Dashboard / Review / Action
-
-       OBSERVABILIDADE atravessa todo o fluxo:
-       métricas · DQ · quarentena · snapshots · lineage
-       reconciliação · versões · saúde da decisão
-~~~
+<div class="sod-diagram" markdown>
+  <div class="sod-diagram-title">Runtime V2</div>
+  <div class="sod-diagram-row">
+    <div class="sod-node"><strong>Bronze</strong><small>ingestão e rastreabilidade</small></div>
+    <div class="sod-arrow">→</div>
+    <div class="sod-node"><strong>Silver</strong><small>contratos, DQ e canonicalização</small></div>
+    <div class="sod-arrow">→</div>
+    <div class="sod-node"><strong>Context + Baseline</strong><small>contexto, âncoras e grupos comparáveis</small></div>
+    <div class="sod-arrow">→</div>
+    <div class="sod-node sod-node--accent"><strong>Expected Access</strong><small>comportamento esperado sem decidir autorização</small></div>
+    <div class="sod-arrow">→</div>
+    <div class="sod-node"><strong>Evidence + Policy</strong><small>fatos, regras e classificação</small></div>
+    <div class="sod-arrow">→</div>
+    <div class="sod-node"><strong>Risk + Gold</strong><small>prioridade e consumo</small></div>
+  </div>
+  <div class="sod-diagram-band"><strong>Airflow + Observabilidade</strong><span>ordem · gates · retry · DQ · snapshots · lineage · reconciliação</span></div>
+</div>
 
 A escolha de colocar **orquestração e observabilidade ao redor do fluxo**, e não no final, é deliberada: uma decisão de acesso só é confiável se for possível provar **qual dado entrou, em que ordem foi processado, qual versão decidiu e se o resultado final reconciliou com os componentes upstream**.
 
