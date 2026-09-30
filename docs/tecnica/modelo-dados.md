@@ -2,7 +2,7 @@
 
 Esta página documenta o **modelo de dados usado pela POC V2**, desde as fontes sintéticas até a representação canônica consumida pelo pipeline.
 
-O objetivo não é apenas mostrar tabelas. O modelo explicita **nível de detalhe (grain), chaves, tipos, relações, formatos físicos, domínios e regras de padronização (canonicalização)**.
+O objetivo não é apenas mostrar tabelas. O modelo explicita **o que cada linha representa, chaves, tipos, relações, formatos físicos, domínios e regras de padronização (canonicalização)**.
 
 !!! tip "Do negócio para o modelo"
     Pense nas tabelas como respostas para perguntas simples: **quem é a pessoa? quais contas ela possui? qual é a aplicação? qual permissão existe? quem recebeu a permissão? houve solicitação/aprovação? o acesso foi certificado?**
@@ -12,7 +12,7 @@ O objetivo não é apenas mostrar tabelas. O modelo explicita **nível de detalh
 
 ## 1. Fontes sintéticas V2
 
-| Fonte canônica | Sistema sintético | Formato | Volume gerado | Grain principal |
+| Fonte canônica | Sistema sintético | Formato | Volume gerado | Nível de detalhe principal |
 |---|---|---|---:|---|
 | `identity_master` | HR_SYSTEM | CSV | **9.932** | uma identidade |
 | `identity_directory` | IDENTITY_PROVIDER | JSON | **9.937** | uma conta |
@@ -28,10 +28,20 @@ Os formatos heterogêneos são intencionais: a POC exercita ingestão de CSV, JS
     Existem três números que representam **estágios diferentes**, e não devem ser tratados como a mesma métrica:
 
     - `access_assignments` na fonte: **75.585** registros;
-    - o relatório auxiliar `generation_report_v2.json` registra `grant_count = 75.583`;
-    - o contrato canônico do runtime trabalha com **75.577 grants**.
+    - o relatório auxiliar `generation_report_v2.json` registra `grant_count = 75.583`, após considerar as **2 duplicatas**;
+    - a Silver canônica trabalha com **75.577 grants**, após retirar também **3 referências de identidade inválidas** e **3 referências de entitlement inválidas**.
 
-    A documentação **não atribui uma causa específica a cada diferença intermediária sem um artefato de reconciliação por registro**. Para o runtime, a população de referência é a Silver canônica com 75.577 grants; em produção, toda diferença fonte → canônico deve ser explicada por DQ, duplicidade, integridade ou outra regra de canonicalização.
+    A reconciliação comprovada no run final é:
+
+    ```text
+    75.585
+      - 2 duplicados
+      - 3 referências de identidade inválidas
+      - 3 referências de entitlement inválidas
+    = 75.577 grants canônicos
+    ```
+
+    Assim, a diferença fonte → canônico está associada a controles conhecidos de qualidade e integridade, e não a perda silenciosa de registros.
 
 ## 2. Modelo lógico
 

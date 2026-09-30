@@ -7,13 +7,13 @@ Nesta POC, cada camada possui uma responsabilidade específica e um contrato de 
 !!! tip "Em linguagem simples"
     O pipeline faz sete coisas em ordem: **recebe os dados → padroniza → entende o contexto → mede o comportamento esperado → organiza evidências → aplica regras → prioriza e publica o resultado**.
 
-Antes da tabela, três termos técnicos:
+Antes da tabela, duas definições ajudam na leitura:
 
-- **grain:** nível de detalhe representado por uma linha;
+- **nível de detalhe:** indica o que cada linha representa;
 - **canônico:** formato padronizado em que o restante da plataforma pode confiar;
 - **lineage:** trilha que permite descobrir de qual fonte, arquivo e execução um dado veio.
 
-| Etapa | Grain principal | Input | Output | Papel |
+| Etapa | Nível de detalhe principal | Input | Output | Papel |
 |---|---|---|---|---|
 | Bronze | registro da fonte | arquivos/source extracts | tabelas Bronze | preservar ingestão e lineage |
 | Silver | entidade/grant canônico | Bronze | tabelas canônicas | normalizar e validar |
@@ -97,15 +97,17 @@ INDEVIDO
 
 Esse detalhe evita falsos positivos causados por dados quebrados.
 
-## 5. Grain: a diferença entre visão de negócio e decisão técnica
+## 5. Do nível de negócio ao nível de cada decisão
 
 O case trabalha com comunidade e Entitlement × Sigla.
 
-A implementação precisa de grain mais específico:
+Para decidir e explicar um caso individual, a implementação trabalha em um nível mais específico:
 
 ~~~text
 grant_id + assessment_date
 ~~~
+
+Em linguagem simples, isso significa **um acesso específico de uma identidade avaliado em uma determinada data**.
 
 Por quê?
 
@@ -180,13 +182,20 @@ Se Policy possui 75.577 decisões e Gold publica 75.570, isso é falha de reconc
 
 ## 9. Exemplo de reconciliação da POC
 
-Os fixtures V2 foram gerados com aproximadamente 75,5 mil access assignments e o runtime congelado trabalha com 75.577 grants canônicos.
+O run final recebeu **75.585 access assignments** e publicou **75.577 grants canônicos** na Silver.
 
-A documentação não interpreta essa diferença como detalhe irrelevante.
+A diferença foi explicada pelos controles de qualidade:
 
-Ela deve ser explicada pelo caminho de canonicalização/DQ.
+```text
+75.585 registros recebidos
+    - 2 duplicados
+    - 3 referências de identidade inválidas
+    - 3 referências de entitlement inválidas
+-------------------------------------------
+75.577 grants canônicos
+```
 
-Essa postura é importante porque em produção pequenas diferenças podem representar perda silenciosa de população.
+Isso demonstra por que reconciliação faz parte do pipeline: uma diferença de volume só é aceitável quando existe uma causa conhecida e observável. Em produção, diferenças não explicadas devem ser tratadas como falha de controle.
 
 ## 10. Idempotência e retry
 

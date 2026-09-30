@@ -167,9 +167,6 @@ A documentação foi organizada para responder perguntas em uma sequência lógi
 !!! tip "Se você tiver apenas 10 minutos"
     Leia **O problema e as duas fases → Arquitetura V2 atual → Anatomia de uma decisão → Resultados da POC**. Esse percurso mostra problema, solução, funcionamento e resultado sem exigir leitura de todas as páginas.
 
-!!! tip "Se você estiver preparando a apresentação de 30 minutos"
-    Use a documentação como apoio, não como roteiro de leitura integral: **problema (3 min) → arquitetura inicial (4 min) → evolução/V2 (6 min) → uma decisão ponta a ponta (5 min) → resultados validados (5 min) → Fase 2 (3 min) → limites para produção (2 min) → perguntas (2 min)**.
-
 ### Sequência completa
 
 1. **Negócio:** entenda o problema, as duas fases e as regras.
