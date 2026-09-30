@@ -186,11 +186,11 @@ Antes de olhar as métricas, vale entender o que cada resposta significa:
 | Resposta | Em linguagem simples |
 |---|---|
 | **PADRÃO** | acesso que as regras conseguem aceitar como parte do funcionamento esperado |
-| **LEGÍTIMO** | acesso aceito porque existe uma justificativa ou autorização específica; é uma exceção válida, não um erro |
+| **LEGÍTIMO** | acesso aceito por uma condição explícita de legitimidade, como uma autorização válida para acesso cross-community ou uma sigla disponibilizada para todo o banco; não representa irregularidade |
 | **INDEVIDO** | acesso em que as regras encontraram condição suficiente para indicar remediação |
 | **REVISÃO** | caso em que os dados ainda não permitem uma conclusão segura e, por isso, precisa de análise humana |
 
-Essa diferença é importante porque **PADRÃO e LEGÍTIMO são duas formas diferentes de um acesso ser aceito**. PADRÃO representa algo esperado para aquele contexto. LEGÍTIMO representa uma exceção autorizada que precisa de evidência para ser explicada.
+Essa diferença é importante porque **PADRÃO e LEGÍTIMO são duas formas diferentes de um acesso ser aceito**. PADRÃO representa algo esperado para aquele contexto. LEGÍTIMO representa um acesso válido sustentado por uma condição explícita de legitimidade — por exemplo, uma autorização específica ou uma regra do próprio contexto, como uma sigla pública.
 
 A matriz abaixo mostra o que o gabarito dizia e o que a Policy respondeu.
 
@@ -202,13 +202,13 @@ A matriz abaixo mostra o que o gabarito dizia e o que a Policy respondeu.
 
 ### O que aconteceu com os acessos LEGÍTIMOS?
 
-O gabarito contém **5.793 acessos LEGÍTIMOS**. Eles representam acessos válidos que exigem uma justificativa ou autorização específica.
+O gabarito contém **5.793 acessos LEGÍTIMOS**. Eles representam acessos válidos sustentados por uma justificativa, autorização ou outra condição explícita de legitimidade.
 
 A solução tratou esses casos da seguinte forma:
 
 | Resultado da solução | Quantidade | O que isso significa |
 |---|---:|---|
-| **LEGÍTIMO** | **2.639** | reconheceu corretamente a exceção autorizada |
+| **LEGÍTIMO** | **2.639** | reconheceu corretamente a condição que tornava o acesso legítimo |
 | **PADRÃO** | **3.084** | aceitou o acesso, mas o interpretou como parte do comportamento esperado |
 | **REVISÃO** | **70** | não encontrou evidência suficiente para concluir automaticamente |
 | **INDEVIDO** | **0** | nenhum acesso legítimo foi tratado como acesso indevido |
@@ -224,8 +224,8 @@ acesso comum e esperado
         ↓
       PADRÃO
 
-acesso válido, mas que depende
-de justificativa ou autorização
+acesso válido sustentado por
+condição explícita de legitimidade
         ↓
      LEGÍTIMO
 ```
@@ -284,7 +284,7 @@ Para quem não conhece essas métricas:
 
 No cenário sintético validado, essa oportunidade de calibração ocorreu mantendo dois controles importantes: **nenhum INDEVIDO foi tratado como seguro (*critical false-safe* = 0)** e **nenhum acesso PADRÃO ou LEGÍTIMO foi classificado como INDEVIDO (*false-indevido* = 0)**.
 
-> **A principal evolução futura é melhorar a capacidade de diferenciar acessos comuns de exceções autorizadas, sem perder os controles de segurança que já funcionaram neste cenário de validação.**
+> **A principal evolução futura é melhorar a capacidade de diferenciar acessos comuns de acessos válidos por uma condição explícita de legitimidade, sem perder os controles de segurança que já funcionaram neste cenário de validação.**
 
 ## 9. O que aconteceu com os casos mais sensíveis?
 
