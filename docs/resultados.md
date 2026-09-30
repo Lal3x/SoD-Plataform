@@ -1,234 +1,282 @@
 # Resultados da POC
 
-Esta página mostra **o que a implementação V2 produziu no cenário sintético controlado**.
+Esta página responde, em linguagem direta, três perguntas:
 
-Os números abaixo mostram **o que a solução conseguiu processar, classificar, preservar e explicar** no cenário sintético. Eles **não devem ser interpretados como estimativa de desempenho em produção**, porque o case não fornece dados reais.
+1. **os dados chegaram ao final sem perda ou duplicação indevida?**
+2. **a solução tomou decisões sem consultar o gabarito?**
+3. **quando comparamos as decisões com a resposta esperada, qual foi o resultado?**
 
-!!! tip "Como ler esta página"
-    Primeiro veja **quantos acessos entraram e chegaram ao final sem perda ou duplicação**; depois observe **quais pareceram comuns ou incomuns**; em seguida, **quais decisões as regras produziram**; por fim, leia **o que esses números provam — e o que ainda não provam**.
+Os números abaixo vêm do **run validado de 30/09/2026**, executado sobre o cenário sintético V2. Eles demonstram o comportamento da POC nesse ambiente controlado e **não são uma estimativa de desempenho em produção**.
 
-## Visão executiva
+## O resultado em uma visão
 
-| Indicador | Resultado | O que demonstra |
+| Pergunta | Resultado | Leitura simples |
 |---|---:|---|
-| identidades sintéticas | **9.932** | volume organizacional suficiente para testar grupos e contexto |
-| entitlements | **1.906** | variedade de permissões e aplicações |
-| grants recebidos na fonte | **75.585** | volume bruto do cenário |
-| acessos canônicos (`grants`) processados | **75.577** | população final após padronização e controles de qualidade |
-| requests | **2.671** | evidências de autorização |
-| certificações | **18.894** | sinais de revisão de acesso |
-| acessos com gabarito (`ground truth`) disponível | **75.485** | casos cuja resposta esperada é conhecida para avaliação posterior |
-| acessos sem resposta esperada | **92** | casos preservados sem inventar um gabarito que não existe |
+| registros de acesso recebidos | **75.585** | volume bruto recebido |
+| acessos canônicos processados | **75.577** | 8 registros foram tratados por qualidade de dados |
+| acessos com resposta esperada conhecida | **75.485** | população usada para medir acerto |
+| taxa de acerto exata | **94,64%** | decisão exatamente igual ao gabarito |
+| taxa de acerto das decisões automáticas | **95,86%** | acerto quando a solução decidiu sem mandar para revisão |
+| casos decididos automaticamente | **98,73%** | PADRÃO, LEGÍTIMO ou INDEVIDO |
+| casos enviados para revisão humana | **1,27%** | incerteza ou contradição preservada |
+| indevidos tratados como seguros | **0** | zero *critical false-safe* |
+| acessos válidos classificados como indevidos | **0** | zero *false-indevido* |
 
-!!! note "Por que aparecem três contagens diferentes?"
-    O arquivo de origem contém **75.585 registros de acesso**. Um relatório auxiliar do gerador V2 registra **75.583**. Depois da padronização e dos controles de qualidade, a população usada pela solução é de **75.577 acessos canônicos (`grants`)**.
+!!! success "A leitura mais importante"
+    No cenário sintético validado, **nenhum acesso realmente INDEVIDO foi classificado como PADRÃO ou LEGÍTIMO e nenhum acesso PADRÃO/LEGÍTIMO foi classificado como INDEVIDO**.
 
-    A documentação não inventa uma causa registro a registro para essas diferenças intermediárias. O importante é que a passagem **dados recebidos → dados padronizados** seja explicável. Em produção, qualquer diferença precisa estar justificada por qualidade de dados (`DQ`), duplicidade, integridade ou outra transformação conhecida.
+    Isso não prova que o mesmo desempenho ocorrerá com dados reais. Prova que, no universo controlado usado para testar a POC, o mecanismo se comportou dessa forma.
 
-## 1. Os acessos foram preservados ponta a ponta
+## 1. Identificação do run
+
+| Item | Valor |
+|---|---|
+| Run ID | `manual__2026-09-30T16:28:00` |
+| Git SHA | `205bde89b06633d49403fea953d627bf0281aee8` |
+| dataset | V2 |
+| data de ingestão | `2025-02-01` |
+| data de referência da avaliação | `2025-02-01` |
+| Gold snapshot | `3052553428006043189` |
+| Policy | `PD002/1.0.1` |
+| Evidence | `EV001/1.3.1` |
+| Expected Access | `EA001/1.0.0` |
+| Risk | `RISK001/1.0.0` |
+| Gold | `GOLD001/1.0.0` |
+
+Neste run, a data de ingestão e a data de avaliação possuem o mesmo valor. Conceitualmente são datas diferentes; essa simplificação da POC é explicada em [Premissas, controles e gates de produção](decisoes/limitacoes.md).
+
+## 2. O que aconteceu com os 75.585 registros recebidos?
+
+A execução permitiu fechar a reconciliação da fonte até a população canônica:
+
+```text
+75.585 registros de acesso recebidos
+    - 2 registros duplicados
+    - 3 referências de identidade inválidas
+    - 3 referências de entitlement inválidas
+-------------------------------------------
+75.577 acessos canônicos processados
+```
+
+Em outras palavras, **nenhum registro simplesmente “sumiu”**: os 8 registros retirados da população canônica possuem motivo de qualidade de dados conhecido.
+
+| Controle de qualidade | Quantidade |
+|---|---:|
+| `DUPLICATE_RECORD` | **2** |
+| `INVALID_IDENTITY_REFERENCE` | **3** |
+| `INVALID_ENTITLEMENT_REFERENCE` | **3** |
+| **Total retirado dos assignments** | **8** |
+
+Um relatório auxiliar do gerador V2 registra **75.583** grants, número coerente com a retirada das 2 duplicatas. A reconciliação operacional que determina a população Silver é **75.585 − 2 − 3 − 3 = 75.577**.
+
+!!! note "E o MISSING_APPROVAL_EVIDENCE?"
+    A execução também encontrou **1 request** com `MISSING_APPROVAL_EVIDENCE`. Esse problema pertence à fonte de solicitações de acesso, não aos 75.585 assignments; por isso ele **não entra** na conta que leva a 75.577 grants.
+
+## 3. Os 75.577 acessos chegaram ao final?
+
+Sim. Depois da Silver, todos os principais estágios trabalharam com os mesmos **75.577 acessos distintos**.
+
+| Etapa | Linhas | Acessos distintos |
+|---|---:|---:|
+| Silver | **75.577** | **75.577** |
+| Access Context | **75.577** | **75.577** |
+| Hard Trusted Set | **75.577** | **75.577** |
+| Expected Access | **75.577** | **75.577** |
+| Evidence Summary | **75.577** | **75.577** |
+| Policy | **75.577** | **75.577** |
+| Risk | **75.577** | **75.577** |
+| Gold | **75.577** | **75.577** |
+
+A Gold apresentou **zero divergências** em relação a Policy, Risk, Expected Access e Evidence.
 
 ```mermaid
 flowchart LR
-    A["Fonte<br/>75.585 registros de acesso"] --> B["Silver<br/>75.577 acessos canônicos"]
-    B --> C["Access Context<br/>75.577"]
-    C --> D["Comportamento esperado<br/>Expected Access · 75.577"]
-    D --> E["Evidências<br/>75.577 casos"]
-    E --> F["Regras de decisão<br/>Policy · 75.577"]
-    F --> G["Prioridade de risco<br/>Risk · 75.577"]
-    G --> H["Resultado publicado<br/>Gold · 75.577 acessos"]
+    A["Fonte<br/>75.585"] -->|"8 tratados por DQ"| B["Silver<br/>75.577"]
+    B --> C["Contexto<br/>75.577"]
+    C --> D["Comportamento<br/>75.577"]
+    D --> E["Evidências<br/>75.577"]
+    E --> F["Decisão<br/>75.577"]
+    F --> G["Risco<br/>75.577"]
+    G --> H["Gold<br/>75.577"]
 ```
 
-Depois da padronização, os principais estágios trabalham com os mesmos **75.577 acessos distintos**, sem perda ou duplicação entre contexto, análise comportamental, evidências, regras, risco e publicação.
+## 4. O acesso parece comum ou incomum?
 
-A camada final (`Gold`) confere se o que foi publicado é exatamente o que as etapas anteriores produziram e exige **zero divergências** entre comportamento esperado, evidências, decisão e risco.
+Antes de decidir se um acesso é permitido, a solução pergunta se ele parece comum para pessoas comparáveis.
 
-## 2. O acesso parece comum ou incomum? (Expected Access)
-
-A análise de comportamento produziu a seguinte distribuição:
-
-| Resultado | Grants | Participação aproximada |
+| Resultado comportamental | Acessos | Participação |
 |---|---:|---:|
-| **EXPECTED** | **72.575** | **96,03%** |
-| **UNEXPECTED** | **674** | **0,89%** |
-| **INSUFFICIENT_EVIDENCE** | **2.328** | **3,08%** |
+| **EXPECTED** — parece esperado | **72.575** | **96,03%** |
+| **UNEXPECTED** — parece incomum | **674** | **0,89%** |
+| **INSUFFICIENT_EVIDENCE** — faltam elementos | **2.328** | **3,08%** |
 | **Total** | **75.577** | **100%** |
 
-Além disso, **12.886 grants** foram reconhecidos como esperados por **âncora explícita de birthright**. Esse valor é um subconjunto dos casos `EXPECTED`.
+Além disso, **12.886 acessos** foram reconhecidos como esperados por uma âncora explícita de *birthright*.
 
-!!! info "Como interpretar"
-    `EXPECTED` significa que o acesso parece coerente com uma referência conhecida ou com o comportamento do grupo. **Isso não significa automaticamente que ele esteja autorizado.** A autorização só é concluída depois de analisar evidências e aplicar as regras de decisão.
+!!! info "Comum não significa autorizado"
+    `EXPECTED` significa que o acesso parece coerente com uma referência conhecida ou com o comportamento do grupo. A autorização só é concluída depois, quando evidências e regras são avaliadas.
 
-## 3. Que evidências existem para justificar o acesso?
+## 5. Que evidências foram encontradas?
 
-A etapa de evidências (`Evidence`) organiza os fatos disponíveis e registra quão confiável é cada um, sem decidir sozinha se o acesso é correto ou incorreto.
+A etapa de Evidence organiza fatos e registra a confiabilidade de cada um antes da decisão.
 
-Entre os resultados materializados:
+Entre os resultados:
 
-- **2.670 acessos** possuem uma aprovação associada com vínculo forte inferido (`STRONG_INFERRED`);
-- uma associação inferida não é apresentada como prova direta (`DIRECT` ou `CONFIRMED`) sem uma chave causal real;
-- certificações e aprovação permanecem sinais independentes;
-- a parte que toma a decisão não lê o gabarito nem campos que revelam a resposta esperada.
+- **2.670 acessos** tiveram uma aprovação associada por vínculo forte inferido (`STRONG_INFERRED`);
+- a solução não transforma uma associação inferida em prova direta;
+- certificação e aprovação permanecem fatos independentes;
+- a parte que toma a decisão não lê o gabarito.
 
-Isso permite reaplicar novas versões das regras sobre os mesmos fatos sem reconstruir todo o contexto do acesso.
+Foram materializados **1.889.425 fatos de evidência** para os 75.577 acessos.
 
-## 4. O que as regras decidiram? (Policy)
+## 6. O que as regras decidiram?
 
-O conjunto versionado de regras (`Policy PD002/1.0.1`) avalia os **75.577 acessos** em uma ordem explícita, para que a mesma combinação de fatos sempre produza a mesma decisão.
+A Policy produziu quatro possíveis resultados:
 
-Dois resultados merecem destaque:
+| Decisão | Quantidade | Participação | Significado |
+|---|---:|---:|---|
+| **PADRÃO** | **71.703** | **94,87%** | acesso tratado como padrão pelas regras |
+| **LEGÍTIMO** | **2.641** | **3,49%** | exceção sustentada por evidência |
+| **INDEVIDO** | **273** | **0,36%** | condição suficiente para remediação |
+| **REVISÃO** | **960** | **1,27%** | dados pedem análise humana |
+| **Total** | **75.577** | **100%** | |
 
-| Resultado observado | Contagem | Interpretação |
-|---|---:|---|
-| `INDEVIDO` | **273** | casos em que as regras encontraram uma condição suficiente para classificar o acesso como inadequado |
-| `REVISÃO` com aprovação inferida forte + certificação `REVOKE` | **29** | havia sinais conflitantes; a solução preferiu encaminhar para análise humana em vez de decidir automaticamente |
+Há **273 decisões INDEVIDO no runtime**, mas o gabarito cobre 75.485 dos 75.577 casos. Entre os 273, **272 possuem resposta esperada conhecida** e aparecem na validação; o caso restante está entre os 92 sem rótulo.
 
-O segundo caso é particularmente importante: uma aprovação inferida não “vence” uma certificação de revogação. A arquitetura reconhece a contradição e interrompe a automação.
+## 7. A solução acertou?
 
-## 5. Depois de decidir, a solução define a prioridade (Risk)
+Para responder isso, a solução primeiro termina e congela sua decisão. **Só depois** o Validation Mart consulta o gabarito.
 
-A etapa de priorização (`Risk`) recebe os mesmos **75.577 acessos** e calcula quais casos merecem atenção primeiro com base em fatores como:
-
-- decisão da Policy;
-- privilégio;
-- criticidade da aplicação;
-- escopo regulatório;
-- classificação dos dados;
-- evidências e sinais temporais.
-
-A implementação verifica que a prioridade de risco **não pode mudar a decisão já tomada pelas regras**. Assim, um caso sensível pode subir na fila sem ser reclassificado artificialmente.
-
-## 6. O resultado final publicado (Gold)
-
-A camada final (`Gold`) publica uma linha por acesso contendo:
-
-- contexto de identidade e acesso;
-- Expected Access e força da evidência;
-- aprovação e certificação;
-- decisão das regras e motivo da decisão (`reason code`);
-- prioridade de risco e fatores que contribuíram para ela;
-- versões e rastreabilidade (`lineage`);
-- indicadores de revisão e remediação;
-- fila operacional.
-
-```mermaid
-flowchart LR
-    A["Context"] --> G["Gold"]
-    B["Expected Access"] --> G
-    C["Evidence"] --> G
-    D["Policy"] --> G
-    E["Risk"] --> G
-
-    G --> H["MONITOR"]
-    G --> I["REVIEW"]
-    G --> J["REMEDIATION"]
-    G --> K["CRITICAL queues"]
+```text
+dados
+  ↓
+solução toma a decisão
+  ↓
+Gold é congelada
+  ↓
+só então o gabarito é consultado
+  ↓
+decisão é comparada com a resposta esperada
 ```
 
-A Gold não toma uma nova decisão. Ela apenas reúne e publica, de forma consistente, o que as etapas anteriores já concluíram.
+Isso evita que a solução “veja a resposta da prova antes de responder”. Tecnicamente, significa evitar **ground-truth leakage no runtime**.
 
-## 7. A pergunta mais direta: a solução acertou?
+### Resultado geral
 
-A POC **sabe medir essa resposta**, mas o repositório não guarda na `main` um resultado final de validação associado a uma execução específica.
+Dos **75.485 acessos com gabarito**, a decisão foi exatamente igual à resposta esperada em **94,64%** dos casos.
 
-Por isso, esta documentação **não publica uma taxa de acerto (`accuracy`) sem conseguir apontar exatamente de qual execução ela veio**.
+Entre as decisões que a solução efetivamente automatizou — PADRÃO, LEGÍTIMO ou INDEVIDO — a taxa de acerto foi **95,86%**.
 
-Quando a validação é executada sobre um resultado final já congelado, o dashboard mostra:
+Ao mesmo tempo:
 
-- accuracy exata;
-- accuracy das decisões automatizadas;
-- precision, recall e F1 por classe;
-- taxa de automação;
-- taxa de revisão;
-- false-safe crítico;
-- false-indevido;
-- matriz de confusão;
-- métricas por cenário.
+- **98,73%** dos 75.577 acessos receberam decisão automática;
+- **1,27%** foram enviados para revisão humana.
 
-!!! success "O que já podemos afirmar com evidência versionada"
-    A solução preserva **75.577 acessos** nos estágios críticos, **toma suas decisões sem consultar o gabarito usado para avaliá-la**, envia casos incertos ou contraditórios para `REVISÃO` e possui o mecanismo necessário para medir qualidade depois. Tecnicamente, manter o gabarito fora da decisão significa evitar **ground-truth leakage no runtime**.
+!!! info "Por que existem duas taxas de acerto?"
+    **94,64% de acurácia exata** pergunta: “a resposta final foi exatamente igual ao gabarito?”.
 
-Para apresentar uma taxa de acerto formalmente, o correto é executar a validação, identificar e congelar aquela execução e guardar o conjunto de métricas correspondente.
+    **95,86% de acurácia automatizada** pergunta: “quando a solução decidiu automaticamente, sem usar REVISÃO, quantas decisões estavam corretas?”.
 
-## 8. Como a solução é avaliada depois da decisão
+    Um caso enviado para REVISÃO não é considerado um acerto exato quando o gabarito possui uma classe final.
 
-A avaliação (`Validation Mart`) acontece **somente depois que o resultado final está congelado**. Nesse momento, e só nesse momento, as decisões são comparadas com o gabarito sintético.
+## 8. Onde a solução acertou e onde ainda pode melhorar?
 
-| População | Quantidade |
+A matriz abaixo mostra o que o gabarito dizia e o que a Policy respondeu.
+
+| Resposta esperada | PADRÃO | LEGÍTIMO | INDEVIDO | REVISÃO | Total |
+|---|---:|---:|---:|---:|---:|
+| **PADRÃO** | **68.531** | 0 | 0 | 889 | **69.420** |
+| **LEGÍTIMO** | 3.084 | **2.639** | 0 | 70 | **5.793** |
+| **INDEVIDO** | 0 | 0 | **272** | 0 | **272** |
+
+A principal oportunidade de calibração aparece na fronteira entre **PADRÃO e LEGÍTIMO**.
+
+Dos 5.793 casos que o gabarito considera LEGÍTIMO:
+
+```text
+2.639 → LEGÍTIMO
+3.084 → PADRÃO
+   70 → REVISÃO
+    0 → INDEVIDO
+```
+
+Por isso o **recall de LEGÍTIMO é 45,55%**. Isso não significa que 54,45% dos legítimos foram tratados como indevidos: **nenhum foi classificado como INDEVIDO**. A maior parte foi absorvida pela classe PADRÃO.
+
+### Métricas por classe
+
+| Classe | Precision | Recall | Leitura simples |
+|---|---:|---:|---|
+| **PADRÃO** | **95,69%** | **98,72%** | identifica quase todos os padrões, com alguma absorção de legítimos |
+| **LEGÍTIMO** | **100%** | **45,55%** | quando chama de legítimo, acerta; ainda perde muitos legítimos para PADRÃO |
+| **INDEVIDO** | **100%** | **100%** | encontrou todos os indevidos rotulados e não gerou falso indevido |
+
+Para quem não conhece essas métricas:
+
+- **precision** pergunta: “quando a solução usa esta classe, com que frequência ela está certa?”;
+- **recall** pergunta: “de todos os casos que realmente pertencem a esta classe, quantos a solução conseguiu encontrar?”.
+
+## 9. O que aconteceu com os casos mais sensíveis?
+
+No cenário sintético validado:
+
+- **0 critical false-safe:** nenhum INDEVIDO foi classificado como PADRÃO ou LEGÍTIMO;
+- **0 false-indevido:** nenhum PADRÃO ou LEGÍTIMO foi classificado como INDEVIDO;
+- **100% dos INDEVIDOS rotulados** foram encontrados;
+- **100% dos INDEVIDOS rotulados** receberam faixa de risco CRITICAL;
+- **100% dos cenários cross legítimos** tiveram a evidência de autorização esperada identificada;
+- **99,97% dos cenários normais elegíveis** apresentaram prevalência de pelo menos 90%.
+
+Esses números ajudam a entender o comportamento da POC, mas continuam sendo resultados de um **dataset sintético desenhado para testar cenários conhecidos**.
+
+## 10. Risk priorizou sem alterar a decisão
+
+Depois da Policy, o Risk adicionou prioridade operacional.
+
+| Faixa de risco | Quantidade |
 |---|---:|
-| acessos avaliados | **75.577** |
-| com resposta esperada conhecida | **75.485** |
-| sem resposta esperada | **92** |
+| LOW | **4.166** |
+| MEDIUM | **70.238** |
+| HIGH | **900** |
+| CRITICAL | **273** |
 
-A validação materializa:
+A verificação encontrou **zero divergências** entre a decisão da Policy antes e depois do Risk. Ou seja: impacto e urgência alteram a prioridade, não a classificação.
 
-- matriz de confusão;
-- precision, recall e F1 por classe;
-- métricas por cenário;
-- accuracy exata;
-- accuracy das decisões automatizadas;
-- automation rate;
-- review rate;
-- critical false-safe;
-- false-indevido;
-- cobertura de autorização cross legítimo.
+## 11. A implementação também foi testada depois do run
 
-!!! note "Por que não há uma taxa de acerto fixa nesta página?"
-    A taxa de acerto (`accuracy`) é calculada para cada execução validada. O repositório guarda o método de cálculo, mas não publica aqui um número sem associá-lo a uma execução específica.
+Depois da execução completa:
 
-## 9. Cenários exercitados
+```text
+pytest tests/access_intelligence tests/gold tests/observability -q
+→ 75 passed
+```
 
-O gerador sintético inclui situações desenhadas para testar decisões diferentes:
+E a documentação foi validada com:
 
-| Cenário | Volume gerado | Papel no teste |
-|---|---:|---|
-| normal | **59.500** | comportamento funcional recorrente |
-| birthright | **9.920** | âncora explícita |
-| entitlement público | **3.125** | fronteira pública |
-| opcional aprovado | **2.465** | exceção interna autorizada |
-| cross sem aprovação | **136** | violação de fronteira |
-| cross legítimo | **135** | exceção cross autorizada |
-| acesso herdado | **68** | temporalidade e mudança organizacional |
-| contractor fora de escopo | **68** | contexto de identidade externa |
-| tecnologia → negócio | **68** | acesso cross sensível |
-| comunidade pequena | **9** | teste de suporte/fallback |
+```text
+mkdocs build --strict
+→ passou
+```
 
-Alguns cenários funcionam como modificadores ou condições de teste; portanto, essa tabela representa cobertura do gerador e não deve ser lida como classes mutuamente exclusivas em todos os casos.
+Isso não substitui validação de negócio, mas demonstra que o run validado também passou pelos controles automatizados diretamente relacionados ao caminho V2.
 
-## 10. Controles que a implementação demonstrou
+## 12. O que estes números provam — e o que não provam
 
-A execução também comprova propriedades arquiteturais importantes:
+### O que o run demonstra
 
-- **a solução toma suas decisões sem consultar o gabarito usado para avaliá-la** — tecnicamente, zero `ground-truth leakage` no runtime;
-- cada acesso canônico possui uma única linha por `grant_id` nos principais estágios;
-- versões e estados dos dados (`snapshots`) são verificados entre etapas;
-- a regra que classifica o acesso (`Policy`) fica separada da etapa que define prioridade (`Risk`);
-- o resultado final (`Gold`) é conferido contra as etapas que o produziram;
-- a avaliação posterior (`Validation Mart`) fica isolada da parte que toma a decisão;
-- casos ambíguos podem terminar em `REVISÃO` em vez de decisão forçada.
+- os 75.585 registros de acesso foram reconciliados até 75.577 grants canônicos;
+- os mesmos 75.577 grants atravessaram os estágios principais sem perda ou duplicação;
+- o gabarito ficou fora do caminho de decisão;
+- a Policy, o Risk e a Gold permaneceram reconciliados;
+- a validação mediu a qualidade sobre 75.485 casos rotulados;
+- casos ambíguos puderam terminar em REVISÃO em vez de uma conclusão forçada.
 
-## 11. O que esses resultados demonstram
+### O que ainda precisa ser comprovado antes de produção
 
-Os resultados sintéticos mostram que a implementação consegue:
+- precisão sobre dados reais do banco;
+- cobertura real das fontes de aprovação e telemetria;
+- calibração dos thresholds e pesos com amostras reais;
+- desempenho, custo e SLA em escala produtiva;
+- histórico temporal corporativo completo;
+- regras institucionais formalmente aprovadas.
 
-1. processar dezenas de milhares de acessos mantendo o detalhe individual e a rastreabilidade;
-2. estimar o comportamento esperado (`baseline` / `expectedness`) sem consultar o gabarito;
-3. separar comportamento observado de autorização;
-4. preservar contradições e insuficiência de evidência;
-5. aplicar regras versionadas e reproduzíveis de classificação;
-6. priorizar risco sem modificar a decisão;
-7. publicar um resultado final (`Gold`) conferido e auditável;
-8. avaliar a solução posteriormente em uma camada de validação isolada (`Validation Mart`).
-
-## 12. O que esses resultados ainda não provam
-
-Eles não demonstram, por si só:
-
-- precisão em dados reais do banco;
-- cobertura real de requests e telemetria;
-- SLA produtivo;
-- custo em escala corporativa;
-- estabilidade dos limites numéricos (`thresholds`) fora do cenário sintético.
-
-Esses pontos são **condições que precisam ser atendidas antes de produção** (`gates de produção`), não falhas ocultas da POC.
-
-> **O objetivo do cenário sintético é provar método, contratos e comportamento da arquitetura antes de expor a solução a dados produtivos.**
+> **A POC demonstra método, arquitetura e comportamento controlado. Produção exige validação com dados e regras institucionais reais.**

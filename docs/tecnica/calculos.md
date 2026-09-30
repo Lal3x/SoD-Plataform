@@ -38,6 +38,11 @@ grant_id =
 
 O prefixo de comprimento evita ambiguidades de concatenação. O mesmo par identidade × entitlement produz a mesma chave.
 
+!!! note "Limitação conhecida da chave"
+    No snapshot da POC existe um grant canônico por par identidade × entitlement, então essa chave é suficiente.
+
+    Em um histórico produtivo, a mesma pessoa pode receber, perder e depois receber novamente o mesmo entitlement. Nesse cenário, as concessões são eventos diferentes e devem usar um **ID nativo de concessão** ou uma chave que represente também a temporalidade.
+
 ## 2. Observed Baseline — cálculo de prevalência
 
 O baseline mede **quão comum é um entitlement dentro de uma população comparável**.
@@ -78,6 +83,18 @@ O runtime atual considera grants com:
 - concessão ocorrida até a `assessment_date`.
 
 `assessment_date` é a data de referência da avaliação. Ela impede que informação futura participe de uma análise histórica.
+
+Ela não é, conceitualmente, a mesma coisa que `data_ingestao`:
+
+```text
+data_ingestao
+= quando os dados foram carregados
+
+assessment_date
+= a data em que queremos avaliar a situação
+```
+
+No run validado da POC, as duas valem `2025-02-01` porque o DAG atual passa `data_ingestao` para `--assessment-date`. Em produção, a separação é importante para permitir reprocessamento histórico sem alterar a data em que os dados foram fisicamente carregados.
 
 ## 3. Hierarchical Fallback — escolha do grupo comparável
 

@@ -11,6 +11,8 @@ Em Segurança e Governança de Acessos, explicitar essas condições é parte do
 | dados de avaliação | cenários sintéticos conhecidos + ground truth isolado | profiling e validação com amostra real |
 | requests | cobertura declarada no contrato V2 | medir completude por canal de concessão |
 | request → acesso | qualidade do vínculo explicitada | usar chave transacional quando disponível |
+| ciclo de vida do grant | chave técnica identidade × entitlement no snapshot atual | usar identificador nativo ou chave temporal para concessões repetidas |
+| data de avaliação | `assessment_date` reutiliza `data_ingestao` na POC | separar as duas datas para reprocessamento histórico |
 | histórico organizacional | incerteza reduz força da evidência | integrar histórico temporal corporativo |
 | telemetria de uso | UNKNOWN quando a cobertura não é conhecida | medir cobertura e retenção por aplicação |
 | baseline | mede comportamento, não autorização | calibrar e monitorar por população |
@@ -49,6 +51,24 @@ A arquitetura não transforma uma inferência em evidência direta.
 
 Em produção, quando a origem disponibilizar um identificador transacional de concessão, ele deve substituir a inferência e elevar a confiabilidade do vínculo.
 
+### Chave técnica do grant e ciclo de vida
+
+A fonte sintética não fornece um identificador nativo de concessão. Por isso a Silver gera `grant_id` de forma determinística a partir de **identidade × entitlement**.
+
+Isso é suficiente para o contrato atual, que trabalha com um assignment canônico por par no snapshot.
+
+Existe, porém, uma limitação importante para histórico produtivo:
+
+```text
+Pessoa recebe ENT_X
+→ perde ENT_X
+→ meses depois recebe ENT_X novamente
+```
+
+Essas são duas concessões diferentes no tempo, mas o par identidade × entitlement é o mesmo. Em produção, o ideal é usar **um ID nativo da concessão** ou incorporar a temporalidade/effective date à identidade técnica do evento.
+
+A POC não esconde essa hipótese: a chave atual identifica o grant canônico do snapshot, não todo o ciclo de vida histórico de uma concessão.
+
 ## 4. Histórico organizacional
 
 A solução diferencia um **sinal de acesso possivelmente herdado** de uma confirmação histórica.
@@ -56,6 +76,21 @@ A solução diferencia um **sinal de acesso possivelmente herdado** de uma confi
 Se o histórico organizacional estiver incompleto, a confiabilidade é reduzida e a incerteza permanece visível.
 
 O gate produtivo é integrar histórico temporal suficiente para reconstruir movimentações relevantes da identidade.
+
+### Data de ingestão versus data de avaliação
+
+São conceitos diferentes:
+
+| Data | Pergunta que responde |
+|---|---|
+| `data_ingestao` | quando os dados foram carregados/processados? |
+| `assessment_date` | em qual data a situação de acesso está sendo avaliada? |
+
+No run validado da POC, ambas são `2025-02-01`, porque o DAG atual reutiliza `data_ingestao` como `assessment_date`.
+
+Isso é uma simplificação conhecida. Em produção, elas devem ser independentes para permitir, por exemplo, **carregar dados hoje e reproduzir como a decisão deveria ter sido em uma data histórica**.
+
+Mudar apenas a separação dos parâmetros, mantendo os mesmos valores, não deveria alterar o resultado. Mudar efetivamente a `assessment_date` pode mudar concessões elegíveis, aprovações, certificações, baseline e a decisão final.
 
 ## 5. Telemetria de uso
 
@@ -80,6 +115,26 @@ Os thresholds de prevalência e suporte mínimo são **parâmetros técnicos ver
 Eles existem para tornar o comportamento reproduzível e calibrável, não para representar uma política institucional universal.
 
 O gate produtivo é calibrá-los com amostras reais, métricas por cenário, impacto operacional e monitoramento de drift.
+
+A calibração não deve ser feita escolhendo números que “fazem o gabarito passar”. O processo esperado é governado:
+
+```text
+parâmetro candidato
+      ↓
+amostra real revisada
+      ↓
+precision / recall / taxa de revisão
+      ↓
+impacto operacional e risco
+      ↓
+comparação entre configurações
+      ↓
+aprovação e versionamento
+      ↓
+monitoramento de drift
+```
+
+O mesmo princípio vale para os pesos do Risk: o número final deve refletir apetite a risco e prioridade institucional, não apenas o desempenho do cenário sintético.
 
 ## 8. Semântica de função e transação
 

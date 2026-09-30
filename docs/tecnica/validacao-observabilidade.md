@@ -1,199 +1,176 @@
 # Validação e testes
 
-## 1. Validação mede a solução; não controla a solução
+## 1. A ideia central: primeiro decidir, depois conferir
 
-A validação V2 roda em DAG separado.
+A validação V2 roda separada do caminho que produz a decisão.
 
 !!! tip "Em linguagem simples"
-    **Runtime** é a parte que produz a decisão. **Ground truth (gabarito)** é a resposta esperada usada depois para conferir o resultado. **Leakage** seria deixar esse gabarito influenciar a decisão antes da avaliação. O desenho separa essas etapas justamente para evitar isso.
+    Pense em uma prova: **a solução responde primeiro e o gabarito só é aberto depois**.
 
-    O **Validation Mart** é o conjunto de tabelas de avaliação produzido depois da execução, com matriz de confusão e métricas de qualidade.
+    **Runtime** é a parte que produz a decisão. **Ground truth (gabarito)** é a resposta esperada usada para conferir o resultado. **Leakage** seria deixar o gabarito influenciar a resposta antes da avaliação.
 
-A sequência correta é:
+A sequência é:
 
-~~~text
+```text
 runtime
   ↓
 Gold congelada
   ↓
 registro do run
   ↓
-validation DAG
+Validation DAG
   ↓
-ground truth
+gabarito
   ↓
 Validation Mart
-~~~
+```
 
-Isso é uma escolha arquitetural para evitar leakage.
+No run validado, a auditoria encontrou **zero campos de gabarito** em Expected Access, Evidence, Policy, Risk e Gold.
 
 ## 2. Dataset sintético como ambiente controlado
 
-O case não fornece uma base de dados.
+O case não fornece uma base real. A POC criou um universo sintético com seed fixa e cenários conhecidos para testar:
 
-A POC criou um universo sintético com seed fixa e cenários conhecidos.
-
-Os relatórios versionados descrevem uma ordem de grandeza de:
-
-- cerca de 9,9 mil identidades;
-- cerca de 75,5 mil grants;
-- 1,9 mil entitlements;
-- 2,6 mil requests;
-- 18,8 mil certificações.
-
-Os cenários incluem:
-
+- acessos normais;
 - birthright;
-- normal;
-- sigla pública;
-- acesso opcional aprovado;
-- cross legítimo;
-- cross sem aprovação;
+- siglas públicas;
+- exceções aprovadas;
+- cross-community legítimo;
+- cross-community sem aprovação;
 - acesso herdado;
-- contractor fora de escopo;
-- comunidade pequena;
+- terceiros;
+- comunidades pequenas;
 - tecnologia com acesso a negócio.
 
-O objetivo desses dados não é provar performance produtiva. É garantir que o pipeline seja testado contra situações conhecidas.
+O objetivo é testar método, regras, rastreabilidade e comportamento. **Não é estimar a performance em produção.**
 
 ## 3. Ground truth é contrato de teste
 
-O ground truth V2 possui semântica explícita.
+O gabarito descreve a resposta esperada para os casos rotulados.
 
 Exemplo:
 
-~~~text
+```text
 cross_legitimo
-  expected_class = LEGITIMO
-  evidência necessária = request aprovada antes da concessão
+→ resposta esperada: LEGÍTIMO
+→ deve existir autorização anterior à concessão
 
 cross_sem_aprovacao
-  expected_class = INDEVIDO
-  premissa = fonte de requests completa/autoritativa
-~~~
+→ resposta esperada: INDEVIDO
+→ premissa: fonte de requests completa para o universo da POC
+```
 
-Isso permite saber exatamente o que está sendo validado.
+O runtime é proibido de usar campos como:
 
-## 4. O que o runtime é proibido de ler
+```text
+scenario
+cenario
+classificacao_esperada
+ground_truth
+expected_class
+offline_label
+```
 
-Scripts runtime verificam ausência de colunas como:
+Isso protege a independência da avaliação.
 
-- scenario;
-- cenario;
-- classificacao_esperada;
-- ground_truth;
-- expected_class;
-- offline_label.
+## 4. Run de validação registrado
 
-Esse controle aparece em Expected Access, Policy, Risk e Gold.
+A documentação usa como referência o run completo executado em **30/09/2026**:
 
-A ideia é simples:
+| Item | Valor |
+|---|---|
+| Run ID | `manual__2026-09-30T16:28:00` |
+| Git SHA | `205bde89b06633d49403fea953d627bf0281aee8` |
+| runtime grants | **75.577** |
+| grants com gabarito | **75.485** |
+| grants sem gabarito | **92** |
+| Gold snapshot | `3052553428006043189` |
 
-> o gabarito não pode ensinar a resposta para o pipeline que será avaliado.
+O snapshot bruto das métricas fica versionado em `artifacts/validation/v2-validation-mart-metrics.json`.
 
-## 5. O que a validação calcula
+## 5. Métricas executivas observadas
 
-O código de validação gera um arquivo por execução em `artifacts/validation/v2-validation-mart-metrics.json` e também materializa tabelas consumidas pelo dashboard.
+| Métrica | Valor | Pergunta respondida |
+|---|---:|---|
+| accuracy exata | **94,64%** | quantos casos receberam exatamente a classe do gabarito? |
+| accuracy das decisões automatizadas | **95,86%** | quando a solução decidiu automaticamente, quantas decisões estavam corretas? |
+| automation rate | **98,73%** | quantos casos receberam PADRÃO, LEGÍTIMO ou INDEVIDO? |
+| review rate | **1,27%** | quantos foram preservados para revisão humana? |
+| critical false-safe | **0** | quantos indevidos foram tratados como PADRÃO/LEGÍTIMO? |
+| false-indevido | **0** | quantos acessos válidos foram tratados como INDEVIDO? |
 
-!!! note "Importante para interpretar a documentação"
-    O **método de cálculo está versionado no repositório**, mas o snapshot final desse arquivo de métricas **não está versionado na `main`**. Por isso a documentação não publica uma accuracy fixa sem associá-la a uma execução concreta.
+Accuracy sozinha não basta. Em um problema de segurança, é essencial saber **que tipo de erro ocorreu**.
 
-O Validation Mart produz:
+## 6. Matriz de confusão
 
-### Matriz de confusão
+| Gabarito | PADRÃO | LEGÍTIMO | INDEVIDO | REVISÃO | Total |
+|---|---:|---:|---:|---:|---:|
+| PADRÃO | **68.531** | 0 | 0 | 889 | **69.420** |
+| LEGÍTIMO | 3.084 | **2.639** | 0 | 70 | **5.793** |
+| INDEVIDO | 0 | 0 | **272** | 0 | **272** |
 
-Ground truth × decisão de Policy.
+A principal confusão ocorre entre **LEGÍTIMO e PADRÃO**, e não entre LEGÍTIMO e INDEVIDO.
 
-### Métricas por classe
+## 7. Métricas por classe
 
-- precision;
-- recall;
-- F1;
-- support.
+| Classe | Precision | Recall | F1 |
+|---|---:|---:|---:|
+| PADRÃO | **95,69%** | **98,72%** | **97,18%** |
+| LEGÍTIMO | **100%** | **45,55%** | **62,59%** |
+| INDEVIDO | **100%** | **100%** | **100%** |
 
-### Métricas por cenário
+**Precision** responde: entre os casos classificados nessa classe, quantos realmente pertenciam a ela?
 
-- total;
-- PADRÃO;
-- LEGÍTIMO;
-- INDEVIDO;
-- REVISÃO;
-- accuracy;
-- automation rate;
-- review rate.
+**Recall** responde: entre todos os casos que realmente pertenciam à classe, quantos foram encontrados?
 
-### Métricas executivas
+O recall de LEGÍTIMO é o principal ponto de calibração do run: 3.084 casos legítimos foram classificados como PADRÃO e 70 foram enviados para REVISÃO; **zero foram classificados como INDEVIDO**.
 
-- grants runtime;
-- grants rotulados;
-- grants sem rótulo;
-- accuracy exata;
-- accuracy das decisões automatizadas;
-- taxa de automação;
-- taxa de revisão;
-- false-safe crítico;
-- false-indevido;
-- cobertura de autorização cross legítimo.
+## 8. Métricas adicionais
 
-## 6. Por que accuracy sozinha seria insuficiente
+O run também registrou:
 
-Imagine uma base dominada por casos normais.
+- `cross_legitimo_authorization_coverage = 100%`;
+- `indevido_critical_risk_rate = 100%`;
+- `normal_identifiability_90 = 99,97%`;
+- `critical_false_safe_count = 0`;
+- `false_indevido_count = 0`.
 
-Um classificador que marque quase tudo como PADRÃO poderia obter accuracy alta e ainda falhar justamente nos casos mais importantes.
+Essas métricas foram desenhadas para verificar propriedades específicas do cenário sintético. Elas não substituem validação sobre dados reais.
 
-Por isso a validação olha classe, cenário e tipo de erro.
+## 9. Testes pós-run
 
-Em segurança, dois erros merecem atenção especial:
+Depois da execução completa:
 
-**False-safe crítico:** ground truth INDEVIDO classificado como PADRÃO/LEGÍTIMO.
+```text
+pytest tests/access_intelligence tests/gold tests/observability -q
+75 passed
+```
 
-**False-indevido:** ground truth PADRÃO/LEGÍTIMO classificado como INDEVIDO.
+Foi observado apenas um `FutureWarning` de scikit-learn, sem falha de teste.
 
-Eles representam riscos diferentes.
+A documentação também foi validada com:
 
-## 7. Testes automatizados
+```text
+mkdocs build --strict
+passou
+```
 
-O projeto separa:
+O aviso informativo do Material for MkDocs sobre MkDocs 2.0 não impediu o build.
 
-- unit;
-- integration;
-- e2e.
+## 10. O que seria necessário antes de produção
 
-Existem testes específicos de:
+Uma promoção segura exigiria:
 
-- Bronze;
-- Silver;
-- Access Intelligence;
-- Gold;
-- Observability;
-- Streamlit.
-
-Os testes de observabilidade, por exemplo, verificam se componentes registram métricas usando o mesmo run_id da Silver e se o funil do fallback é persistido.
-
-## 8. CI
-
-A pipeline de CI executa testes e build das imagens de Streamlit e Airflow.
-
-A documentação também passa a ser validada com build estrito do MkDocs.
-
-Isso reduz o risco de publicar navegação quebrada ou referência inválida.
-
-## 9. O que seria necessário antes de produção
-
-Uma sequência segura seria:
-
-1. profiling de fontes reais;
-2. shadow run;
+1. profiling das fontes reais;
+2. shadow run com dados reais;
 3. amostra revisada por especialistas;
-4. comparação com RC/achados confirmados;
-5. calibração de thresholds;
+4. comparação com achados confirmados;
+5. calibração de thresholds e pesos;
 6. aprovação formal das regras;
 7. rollout gradual;
-8. monitoramento de drift e distribuição;
-9. revisão periódica da política.
+8. monitoramento de drift, qualidade e revisão humana.
 
-A POC demonstra método. Produção exige evidência operacional.
-
+A POC agora possui **evidência de execução completa no cenário sintético**. Produção exige evidência equivalente sobre o ambiente real.
 
 ---
 
