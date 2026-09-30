@@ -83,6 +83,7 @@ A estrutura foi propositalmente separada entre:
 - negócio;
 - arquitetura;
 - técnica;
+- resultados;
 - decisões;
 - referência.
 

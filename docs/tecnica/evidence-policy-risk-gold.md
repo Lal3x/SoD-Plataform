@@ -44,6 +44,9 @@ Ela prepara um bundle de fatos para que Policy tome a decisão sem precisar reco
 
 ## 3. Policy PD002 — transformar evidência em decisão
 
+!!! note "O que significa PD002?"
+    `PD002` é apenas o **identificador interno da política de decisão da POC**. Da mesma forma, `EV001`, `RISK001`, `GOLD001` e códigos como `R020` servem para versionar e rastrear a implementação. **Não são normas externas nem referências regulatórias.**
+
 A Policy atual é determinística e versionada.
 
 A precedência faz parte da própria política:
@@ -67,7 +70,7 @@ R999 não resolvido                         → REVISÃO
 
 A ordem é intencional. Contradições e DQ são avaliadas antes de regras permissivas.
 
-## 4. Walkthrough 1 — cross legítimo
+## 4. Exemplo passo a passo 1 — cross legítimo
 
 Considere:
 
@@ -106,7 +109,7 @@ policy_rule_id = R020
 
 O fato de o acesso ser raro ou inesperado não invalida uma autorização forte.
 
-## 5. Walkthrough 2 — cross sem autorização
+## 5. Exemplo passo a passo 2 — cross sem autorização
 
 Agora considere o mesmo contexto, mas sem request válida.
 
@@ -133,7 +136,7 @@ Sem essa premissa:
 R130 → REVISÃO
 ~~~
 
-## 6. Walkthrough 3 — contradição
+## 6. Exemplo passo a passo 3 — contradição
 
 Considere um cross com approval forte, porém certificação REVOKE.
 

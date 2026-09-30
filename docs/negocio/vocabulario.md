@@ -6,6 +6,37 @@ A regra usada no restante da documentação é:
 
 > **primeiro explicamos o conceito em linguagem de negócio; depois mostramos o nome técnico usado no código.**
 
+## Termos gerais do projeto
+
+| Termo | Significado em linguagem simples |
+|---|---|
+| **POC — Proof of Concept** | prova de conceito construída para demonstrar que a abordagem funciona antes de uma implantação produtiva |
+| **IAM — Identity and Access Management** | disciplina e conjunto de controles para administrar identidades e acessos |
+| **IGA — Identity Governance and Administration** | governança dos acessos: solicitações, aprovações, certificações, políticas e ciclo de vida |
+| **SoD — Segregation of Duties** | segregação de funções; evita que a mesma pessoa concentre capacidades incompatíveis |
+| **runtime** | caminho que realmente executa a decisão da solução |
+| **DAG** | fluxo de tarefas e dependências executado pelo Airflow |
+| **DQ — Data Quality** | verificações de qualidade e integridade dos dados |
+| **ground truth / gabarito** | resposta esperada conhecida e usada somente para avaliar a POC depois do runtime |
+| **data leakage** | vazamento da resposta esperada para o processo que deveria ser avaliado |
+| **threshold** | limite numérico usado por uma regra técnica, por exemplo 0,80 para considerar alta prevalência |
+| **assessment date** | data de referência da avaliação; impede que informações futuras influenciem uma decisão histórica |
+
+### Bronze, Silver e Gold
+
+São nomes de camadas de dados:
+
+- **Bronze:** preserva o que chegou das fontes, com metadados de ingestão;
+- **Silver:** padroniza, valida e cria a representação canônica;
+- **Gold:** publica a decisão final para consumo, operação e dashboard.
+
+### Spark, Iceberg, Airflow e Streamlit
+
+- **Spark / PySpark:** processamento dos dados;
+- **Iceberg:** tabelas com snapshots e versionamento;
+- **Airflow:** orquestra a ordem das etapas;
+- **Streamlit:** interface de consumo e explicabilidade.
+
 ## Acesso concedido — grant
 
 Um **acesso concedido** representa uma autorização concreta que uma identidade possui em determinado entitlement/sistema.
@@ -183,6 +214,9 @@ Por isso ele pode servir de “ponto de referência” mesmo que a frequência o
 O **Hard Trusted Set (HTS)** é o conjunto de acessos que atendem critérios explícitos de alta confiança.
 
 Na V2, ele é usado principalmente para identificar acessos natos confiáveis.
+
+!!! important "O que HTS não significa"
+    HTS **não é uma lista de pessoas confiáveis**, não concede privilégio especial e não ignora a Policy. Ele marca **grants com uma âncora explícita forte** para ajudar a construir a expectativa analítica.
 
 O HTS não significa que todo o comportamento esperado seja definido apenas por ele.
 

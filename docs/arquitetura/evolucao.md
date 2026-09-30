@@ -2,6 +2,9 @@
 
 A arquitetura V2 é resultado de refinamentos sucessivos. Cada componente existe para resolver uma pergunta concreta.
 
+!!! info "A ideia não foi descartada"
+    A arquitetura inicial **não estava “errada” e depois foi substituída**. A tese permaneceu: entender contexto, estabelecer uma referência, localizar desvios, usar evidências e aplicar regras. A V2 separou essas capacidades em componentes com responsabilidades, contratos e testes próprios.
+
 ## 1. Da ideia para responsabilidades explícitas
 
 | Problema encontrado | Risco de uma solução simples | Decisão | Consequência arquitetural |
@@ -112,6 +115,9 @@ Nenhuma regra de prioridade deveria estar aqui.
 Policy é o local em que fatos se tornam uma decisão.
 
 A V2 canônica usa PD002/1.0.1 e uma precedência explícita de regras. Isso torna a classificação reproduzível e auditável.
+
+!!! note "Códigos internos da POC"
+    Identificadores como `PD002`, `GOLD001`, `EV001`, `RISK001` e regras `R010`, `R020` etc. são **nomes internos usados para versionar contratos e lógica deste projeto**. Eles não representam normas externas, regulamentações ou códigos oficiais do banco.
 
 ## 8. Risk
 
