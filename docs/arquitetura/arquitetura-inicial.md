@@ -1,90 +1,355 @@
-# Arquitetura inicial
+# Arquitetura inicial e hipóteses de solução
 
-## 1. O primeiro desenho
+## 1. O desenho inicial já partia de uma decomposição do problema
 
-A primeira arquitetura não nasceu com todos os componentes que hoje existem na V2. Ela nasceu de uma pergunta mais simples:
+A arquitetura inicial não foi um desenho “incompleto” que depois precisou ser substituído.
 
-> Como transformar um inventário de acessos em uma análise escalável que encontre padrões, desvios e possíveis violações?
+Ela já partia de uma hipótese arquitetural importante:
 
-O desenho inicial pode ser resumido assim:
+> **separar preparação dos dados, entendimento do comportamento de acesso, identificação de desvios, regras de decisão, publicação e observabilidade.**
+
+O primeiro desenho organizava essas responsabilidades em blocos mais amplos:
 
 ~~~text
-Fontes
+FONTES DE DADOS
+      │
+      ▼
+INGESTÃO
+      │
+      ▼
+BRONZE
+dados recebidos e rastreáveis
+      │
+      ▼
+SILVER
+padronização + qualidade
+      │
+      ▼
+CAMADA ANALÍTICA / CLASSIFICAÇÃO
+      │
+      ├─ análise por grupos
+      ├─ descoberta de agrupamentos naturais de acesso
+      ├─ identificação de comportamento esperado
+      ├─ identificação de desvios/anomalias
+      └─ regras / hipótese de matriz SoD
+      │
+      ▼
+GOLD
+resultado consumível
+      │
+      ▼
+VISUALIZAÇÃO + OBSERVABILIDADE
+~~~
+
+Esse desenho já continha as principais preocupações que orientaram a implementação posterior.
+
+A V2 não abandona essa arquitetura. Ela **especializa os blocos que inicialmente estavam agrupados**.
+
+## 2. O que já estava pensado desde o início
+
+### Engenharia de dados antes da classificação
+
+Bronze e Silver já apareciam para separar ingestão, padronização e qualidade da análise de acesso.
+
+Isso evitava construir uma solução em que regra de negócio estivesse acoplada diretamente aos arquivos de origem.
+
+### Análise em escala por grupos
+
+A ideia de analisar pessoas em grupos semelhantes já existia porque entrevistar comunidade por comunidade não escalaria.
+
+O objetivo era descobrir:
+
+- quais acessos formam o núcleo de um grupo;
+- quais combinações aparecem naturalmente;
+- quais acessos destoam desse comportamento.
+
+Esse raciocínio é a origem do que posteriormente foi formalizado como **Observed Baseline, grupos comparáveis e Expected Access**.
+
+### Descoberta de agrupamentos naturais
+
+A arquitetura inicial já considerava clustering e análise de similaridade para descobrir agrupamentos de acesso que não dependessem exclusivamente da estrutura organizacional declarada.
+
+Isso levou aos experimentos posteriores com Peer Discovery.
+
+Esses experimentos permaneceram em shadow mode porque a V2 priorizou explicabilidade no caminho de decisão, não porque a hipótese inicial estivesse errada.
+
+### Identificação de desvios
+
+A detecção de anomalias também estava presente desde o desenho inicial.
+
+Durante a implementação, a pergunta foi refinada.
+
+Em vez de manter um bloco genérico chamado “Anomaly Detection”, a V2 passou a responder de forma mais específica:
+
+> “Este acesso é esperado ou inesperado quando comparado com uma população defensável?”
+
+Essa responsabilidade passou para Expected Access.
+
+### Regras e horizonte SoD
+
+A hipótese de regras/matriz SoD também já estava no desenho inicial.
+
+O refinamento posterior mostrou que havia dois problemas diferentes:
+
+1. sanitizar os acessos atuais por comunidade;
+2. detectar combinações transacionais conflitantes.
+
+Por isso a Policy da Fase 1 foi implementada agora, enquanto a matriz SoD transacional foi posicionada como evolução da Fase 2.
+
+### Gold e visualização
+
+Desde o começo havia a preocupação de publicar um resultado consumível, e não apenas produzir um notebook ou relatório analítico isolado.
+
+Essa ideia evoluiu para a Gold versionada consumida pelo Streamlit.
+
+### Observabilidade
+
+Observabilidade já fazia parte da arquitetura como necessidade transversal.
+
+Na V2 ela foi aprofundada em mecanismos concretos:
+
+- métricas de ingestão;
+- qualidade e quarentena;
+- journal de componentes;
+- snapshots;
+- lineage;
+- versões;
+- reconciliação;
+- saúde da decisão.
+
+Portanto, observabilidade não surgiu depois como acabamento operacional. A implementação materializou uma preocupação que já estava presente no desenho.
+
+## 3. O que mudou da arquitetura inicial para a V2
+
+O principal refinamento foi perceber que **“Classificação” era um bloco amplo demais**.
+
+Dentro dele existiam perguntas diferentes:
+
+~~~text
+Qual é o contexto do acesso?
+        ↓
+Access Context
+
+Existe alguma referência explícita confiável?
+        ↓
+Hard Trusted Set
+
+O que pessoas comparáveis normalmente possuem?
+        ↓
+Observed Baseline
+
+E se o grupo for pequeno?
+        ↓
+Hierarchical Fallback
+
+Este acesso parece esperado?
+        ↓
+Expected Access
+
+Quais fatos sustentam a análise?
+        ↓
+Evidence
+
+O que as regras dizem sobre esses fatos?
+        ↓
+Policy
+
+Qual caso deve ser tratado primeiro?
+        ↓
+Risk
+~~~
+
+A arquitetura inicial já percebia a necessidade de **entender padrão, encontrar desvio e aplicar regras**.
+
+A V2 transformou essas intenções em contratos independentes e testáveis.
+
+## 4. A evolução não foi “pensar depois”; foi reduzir ambiguidade
+
+Um exemplo importante é comportamento esperado.
+
+No desenho inicial:
+
+~~~text
+analisar grupos
+      ↓
+identificar padrões
+      ↓
+detectar anomalias
+~~~
+
+Durante a implementação apareceu uma questão crítica:
+
+> “Se um acesso é comum, isso significa que ele é autorizado?”
+
+A resposta é não.
+
+Por isso o conceito inicial foi decomposto:
+
+~~~text
+comportamento observado
+        ↓
+Expected Access
+        ↓
+é apenas evidência
+
+autorização
+        ↓
+Policy
+        ↓
+decisão
+~~~
+
+Esse refinamento não invalida a hipótese inicial. Ele a torna mais segura.
+
+## 5. Outro refinamento: grupos pequenos
+
+A arquitetura inicial já previa análise por grupos e agrupamentos naturais.
+
+Quando isso foi transformado em código, apareceu um problema estatístico concreto:
+
+> “O que fazer quando o grupo de comparação possui poucas pessoas?”
+
+A resposta virou um componente explícito:
+
+~~~text
+grupo mais específico
+       ↓ insuficiente
+grupo um pouco mais amplo
+       ↓ insuficiente
+grupo mais amplo
+       ↓
+Hierarchical Fallback
+~~~
+
+Ou seja, a necessidade já existia na estratégia de comparação por pares; a V2 formalizou o tratamento do edge case.
+
+## 6. Outro refinamento: contexto organizacional e temporal
+
+A arquitetura inicial buscava desvios por comunidade e grupos de acesso.
+
+Para fazer isso de maneira confiável, a implementação precisou formalizar informações que estavam implícitas na própria ideia de contexto:
+
+- comunidade da pessoa;
+- comunidade dona da sigla;
+- tipo de identidade;
+- cargo;
+- squad;
+- data de concessão;
+- data de entrada na comunidade;
+- acesso público;
+- aprovação;
+- certificação.
+
+Esses elementos foram consolidados em **Access Context**.
+
+A necessidade de contexto não surgiu na V2; a V2 deu a ela um contrato próprio.
+
+## 7. Do desenho inicial à arquitetura implementada
+
+A evolução pode ser resumida assim:
+
+~~~text
+ARQUITETURA INICIAL
+
+Dados
   ↓
 Bronze
   ↓
 Silver
   ↓
-Camada analítica
-  ├── análise por grupos
-  ├── descoberta de agrupamentos naturais
-  ├── identificação de desvios
-  └── hipótese de regras / matriz SoD
+Classificação / Analytics
+  ├─ grupos
+  ├─ clustering
+  ├─ padrões
+  ├─ anomalias
+  └─ regras / SoD
   ↓
 Gold
   ↓
-Observabilidade e visualização
+Observabilidade
+
+
+             REFINAMENTO
+
+
+ARQUITETURA V2
+
+Bronze
+  ↓
+Silver
+  ↓
+Access Context
+  ↓
+HTS + Observed Baseline
+  ↓
+Hierarchical Fallback
+  ↓
+Expected Access
+  ↓
+Evidence
+  ↓
+Policy
+  ↓
+Risk
+  ↓
+Gold
+
+Airflow + Observabilidade atravessando o pipeline
 ~~~
 
-Naquele estágio, clustering, agrupamentos por comunidade, detecção de anomalias e regras SoD eram **hipóteses de solução**, não componentes já formalizados.
+A ideia central foi preservada.
 
-## 2. O que estava correto nessa arquitetura
+O que mudou foi o grau de formalização.
 
-Mesmo antes dos nomes atuais, quatro ideias importantes já estavam presentes.
+## 8. O que ficou experimental e por quê
 
-### Separar ingestão de análise
+Clustering, LDA, NMF-HDBSCAN, FP-Growth e grafos continuaram sendo explorados.
 
-Bronze e Silver impedem que lógica analítica fique acoplada à forma original de cada fonte.
+Eles não entraram no caminho crítico da decisão porque a Fase 1 exigia alto grau de:
 
-### Procurar comportamento coletivo
+- explicabilidade;
+- previsibilidade;
+- rastreabilidade;
+- testabilidade.
 
-A ideia de descobrir agrupamentos e padrões surgia da necessidade de reduzir entrevistas e inferir comportamento esperado em escala.
+Por isso foram mantidos em **modo experimental (shadow mode)**.
 
-### Detectar desvios
+Isso permite comparar valor sem tornar a decisão dependente de um método ainda não validado operacionalmente.
 
-A POC precisava identificar acessos que não combinavam com o contexto dos pares.
+## 9. O que foi deslocado para a Fase 2
 
-### Publicar uma saída consumível
+A matriz SoD completa precisa de semântica que não existe apenas no inventário de acessos:
 
-Gold e observabilidade já apareciam como necessidades de entrega, e não como parte da inteligência em si.
+~~~text
+entitlement
+   ↓
+função
+   ↓
+transação
+   ↓
+ação
+   ↓
+objeto / escopo
+~~~
 
-## 3. O que ainda faltava
+Por isso a intenção inicial de chegar à SoD não foi abandonada.
 
-Ao transformar a ideia em um pipeline executável, surgiram perguntas que a arquitetura inicial não respondia bem:
+Ela foi dividida em uma sequência mais racional:
 
-- O que significa um grant sem contexto organizacional?
-- Frequência alta significa autorização?
-- Como lidar com uma comunidade pequena?
-- Como impedir que acessos indevidos contaminem o padrão observado?
-- Como tratar birthright de forma diferente de frequência?
-- Como provar que uma aprovação corresponde ao grant?
-- Como distinguir ausência de uso de ausência de telemetria?
-- Quem classifica: o modelo estatístico ou uma política explícita?
-- Como separar a classe do acesso da prioridade operacional?
-- Como validar sem deixar o gabarito influenciar a decisão?
+~~~text
+Fase 1
+sanitizar e contextualizar os acessos
+        ↓
+construir evidências e governança
+        ↓
+Fase 2
+avaliar acumulações transacionais conflitantes
+~~~
 
-Essas perguntas levaram à especialização dos componentes.
+## 10. Leitura correta da evolução
 
-## 4. O que aconteceu com as hipóteses analíticas
+A interpretação que esta documentação pretende transmitir é:
 
-Clustering, LDA, NMF-HDBSCAN, FP-Growth e grafos não foram descartados. Eles foram deslocados para um espaço experimental, em **shadow mode**, porque ainda não eram necessários para controlar a decisão operacional da Fase 1.
+> **A arquitetura inicial já identificava as capacidades essenciais: preparação de dados, análise por grupos, descoberta de padrões, identificação de desvios, aplicação de regras, publicação e observabilidade. A implementação V2 refinou essas capacidades em componentes independentes à medida que questões de contexto, temporalidade, confiabilidade e explicabilidade foram formalizadas.**
 
-Já a “detecção de anomalias” deixou de ser um engine isolado. Na V2, o conceito foi refinado para uma pergunta mais controlável:
-
-> O acesso é esperado ou inesperado em uma população comparável?
-
-Essa resposta é dada por Expected Access usando prevalência e fallback, sem transformar “anomalia” diretamente em irregularidade.
-
-A matriz SoD, por sua vez, foi corretamente movida para a **Fase 2**, onde haverá semântica de funções e transações.
-
-## 5. Como contar essa evolução
-
-A narrativa correta não é:
-
-> “Todos os componentes V2 já existiam desde o primeiro desenho.”
-
-A narrativa correta é:
-
-> **As necessidades de contextualização e de estabelecer comportamento esperado já estavam presentes nas hipóteses iniciais. Durante o refinamento, essas responsabilidades foram formalizadas em componentes independentes, testáveis e auditáveis.**
-
-Essa evolução é um resultado de engenharia: a arquitetura ficou mais específica à medida que perguntas de domínio, dados e risco foram sendo respondidas.
+Isso mostra evolução arquitetural sem reescrever a história do projeto.
