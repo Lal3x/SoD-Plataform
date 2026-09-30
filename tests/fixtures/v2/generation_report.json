@@ -1,0 +1,129 @@
+{
+  "config": {
+    "escala": 68,
+    "seed": 42,
+    "batch_size": 1000,
+    "referencia": "2025-01-31",
+    "extract_timestamp": "2025-02-01T00:00:00+00:00",
+    "comunidades": {
+      "Credito": [
+        60,
+        8,
+        true
+      ],
+      "Cobranca": [
+        40,
+        6,
+        true
+      ],
+      "Tecnologia": [
+        30,
+        10,
+        true
+      ],
+      "Inovacao": [
+        4,
+        2,
+        false
+      ],
+      "Compliance": [
+        16,
+        4,
+        true
+      ]
+    },
+    "cenarios": {
+      "cross_legitimo": 2,
+      "cross_sem_aprovacao": 2,
+      "contractor_fora_escopo": 1,
+      "tecnologia_acesso_negocio": 1,
+      "acesso_herdado": 1,
+      "never_used": 1
+    },
+    "dq": {
+      "identidade_sem_data": 5,
+      "acesso_orfao_identidade": 3,
+      "acesso_orfao_entitlement": 3,
+      "acesso_duplicado": 2,
+      "data_inconsistente": 4,
+      "comunidade_inconsistente": 2,
+      "aprovador_nulo": 1,
+      "lifecycle_divergente": 2
+    },
+    "contractor_ratio": 0.1,
+    "inactive_ratio": 0.04,
+    "terminated_ratio": 0.02,
+    "request_ratio": 0.2,
+    "certification_ratio": 0.25,
+    "open_request_ratio": 0.05,
+    "own_accesses": 6,
+    "profile_pool": 12,
+    "service_accounts": 5,
+    "cargos": [
+      "analista",
+      "especialista",
+      "coordenador",
+      "assistente"
+    ],
+    "cargo_weights": [
+      0.5,
+      0.25,
+      0.1,
+      0.15
+    ],
+    "squads": [
+      "nucleo_alfa",
+      "nucleo_beta",
+      "nucleo_gama"
+    ],
+    "squad_weights": [
+      0.55,
+      0.3,
+      0.15
+    ]
+  },
+  "seed": 42,
+  "escala": 68,
+  "volumes": {
+    "identity_master": 9932,
+    "identity_directory": 9937,
+    "application_catalog": 1906,
+    "entitlements": 1906,
+    "access_assignments": 75585,
+    "access_requests": 2671,
+    "access_certifications": 18894
+  },
+  "cenarios": {
+    "birthright": 9920,
+    "normal": 59500,
+    "entitlement_publico": 3125,
+    "optional_approved": 2465,
+    "cross_sem_aprovacao": 136,
+    "acesso_herdado": 68,
+    "contractor_fora_escopo": 68,
+    "cross_legitimo": 135,
+    "never_used": 68,
+    "small_community": 9,
+    "tecnologia_acesso_negocio": 68
+  },
+  "dq": {
+    "identidade_sem_data": 5,
+    "acesso_orfao_identidade": 3,
+    "acesso_orfao_entitlement": 3,
+    "acesso_duplicado": 2,
+    "data_inconsistente": 4,
+    "comunidade_inconsistente": 2,
+    "aprovador_nulo": 1,
+    "lifecycle_divergente": 2
+  },
+  "gabarito": 75485,
+  "batches": {
+    "identity_master": 10,
+    "identity_directory": 10,
+    "application_catalog": 2,
+    "entitlements": 2,
+    "access_assignments": 76,
+    "access_requests": 3,
+    "access_certifications": 19
+  }
+}

@@ -1,0 +1,68 @@
+name: Publicar documentação
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "mkdocs.yml"
+      - "pyproject.toml"
+      - "poetry.lock"
+      - ".github/workflows/docs.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar Poetry
+        run: pipx install poetry
+
+      - name: Configurar cache do Poetry
+        run: poetry config virtualenvs.in-project true
+
+      - name: Instalar dependências do projeto
+        run: poetry install --no-interaction --no-root
+
+      # O pacote deve estar declarado no grupo "docs" do pyproject.toml.
+      - name: Instalar dependências da documentação
+        run: poetry install --with docs --no-interaction
+
+      - name: Construir documentação
+        run: poetry run mkdocs build --strict
+
+      - name: Configurar GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Preparar artefato
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publicar no GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

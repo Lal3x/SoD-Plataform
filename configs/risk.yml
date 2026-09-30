@@ -1,0 +1,50 @@
+id: RISK001
+version: 1.0.0
+dataset_version: V2
+policy_version: PD002/1.0.1
+evidence_method_id: EV001
+evidence_version: 1.3.1
+score_max: 100
+policy:
+  INDEVIDO: 50
+  REVISAO: 30
+  LEGITIMO: 5
+  PADRAO: 0
+privileged:
+  true: 15
+  false: 0
+criticality:
+  CRITICAL: 15
+  HIGH: 10
+  LOW: 0
+regulatory_scope:
+  BACEN: 10
+  SOX: 10
+  NONE: 0
+data_classification:
+  RESTRICTED: 5
+  CONFIDENTIAL: 3
+  INTERNAL: 1
+  PUBLIC: 0
+evidence:
+  revoke_contradiction: 5
+  blocking_data_quality: 5
+  ambiguous_authorization: 5
+temporal:
+  default: 0
+bands:
+  LOW: [0, 19]
+  MEDIUM: [20, 39]
+  HIGH: [40, 69]
+  CRITICAL: [70, 100]
+monitor_impact_min: 20
+driver_codes:
+  policy:
+    INDEVIDO: RD001_POLICY_INDEVIDO
+    REVISAO: RD002_POLICY_REVIEW
+    LEGITIMO: RD003_POLICY_LEGITIMO
+  privileged: RD010_PRIVILEGED
+  criticality: RD020_APPLICATION_CRITICALITY
+  regulatory: RD030_REGULATORY_SCOPE
+  data_classification: RD040_SENSITIVE_DATA
+  evidence: RD050_EVIDENCE_CONTRADICTION

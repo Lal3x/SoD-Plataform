@@ -1,0 +1,48 @@
+# Version-control and local tooling
+.git/
+.gitignore
+.codex/
+.agents/
+.vscode/
+.idea/
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+
+# Local Python environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Generated analytical state and operational output
+data/warehouse/
+data/warehouse.pre-docker-sync/
+data/warehouse*/
+data/raw/
+logs/
+airflow_logs/
+application_logs/
+.airflow/
+artifacts/
+spark-warehouse/
+*.log
+*.tmp
+*.temp
+
+# Documentation/development-only files not needed in images
+tests/
+notebooks/
+
+# The Airflow image is executable without bind mounts: it needs the controlled
+# POC source batches. Runtime state remains excluded and is created at startup.
+!data/
+!data/raw/
+!data/raw/**

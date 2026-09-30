@@ -1,0 +1,75 @@
+sources:
+  identity_master:
+    path: data/raw/v2/hr/identity_master/*.csv
+    format: csv
+    target_table: sod.bronze.identity_master
+    strategy: append
+    schema_behavior: additive
+    options:
+      header: 'true'
+    required_columns:
+    - identidade_id
+  identity_directory:
+    path: data/raw/v2/identity_provider/identity_directory/*.json
+    format: json
+    target_table: sod.bronze.identity_directory
+    strategy: append
+    schema_behavior: additive
+    options:
+      multiLine: 'true'
+    required_columns:
+    - account_id
+    - identidade_id
+  entitlements:
+    path: data/raw/v2/iga/entitlements/*.json
+    format: json
+    target_table: sod.bronze.entitlements
+    strategy: append
+    schema_behavior: additive
+    options:
+      multiLine: 'true'
+    required_columns:
+    - entitlement_id
+    - sigla_id
+  access_assignments:
+    path: data/raw/v2/iga/access_assignments/*.parquet
+    format: parquet
+    target_table: sod.bronze.access_assignments
+    strategy: append
+    schema_behavior: additive
+    options: {}
+    required_columns:
+    - identidade_id
+    - entitlement_id
+  access_requests:
+    path: data/raw/v2/iga/access_requests/*.parquet
+    format: parquet
+    target_table: sod.bronze.access_requests
+    strategy: append
+    schema_behavior: additive
+    options: {}
+    required_columns:
+    - request_id
+    - identidade_id
+    - entitlement_id
+  access_certifications:
+    path: data/raw/v2/iga/access_certifications/*.parquet
+    format: parquet
+    target_table: sod.bronze.access_certifications
+    strategy: append
+    schema_behavior: additive
+    options: {}
+    required_columns:
+    - campaign_id
+    - identidade_id
+    - entitlement_id
+  application_catalog:
+    path: data/raw/v2/application_catalog/*.csv
+    format: csv
+    target_table: sod.bronze.application_catalog
+    strategy: append
+    schema_behavior: additive
+    options:
+      header: 'true'
+    required_columns:
+    - sigla_id

@@ -1,0 +1,53 @@
+logs/
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+.idea/
+.vscode/
+.DS_Store
+spark-warehouse/
+data/warehouse/
+data/raw/
+# Version synthetic V2 source bundle only; keep V1 out of Git.
+!data/
+!data/raw/
+!data/raw/v2/
+!data/raw/v2/**
+data/raw/v1/
+poetry.toml
+.codex/
+.agents/
+AGENTS.md
+HANDOFF.md
+.env
+.env.*
+!.env.example
+
+# Local generated state and backups
+data/warehouse.pre-docker-sync/
+data/warehouse*/
+artifacts/
+.airflow/
+
+# Local Spark / Airflow / application logs
+logs/
+airflow_logs/
+application_logs/
+*.log
+
+# Temporary and OS files
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# Windows Zone Identifier
+*:Zone.Identifier
+*Zone.Identifier
+coverage.xml

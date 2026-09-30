@@ -1,0 +1,23 @@
+# PD001 is a deterministic policy contract. Disabled institutional rules remain
+# in the catalog for traceability, but cannot classify a grant until approved.
+policy_decision:
+  policy_id: "PD001"
+  version: "1.0.0"
+  supported_evidence_method_id: "EV001"
+  supported_evidence_version: "1.1.0"
+  rules:
+    - {rule_id: R001, rule_version: "1.0.0", rule_type: TERMINAL, priority: 10, policy_source: POC_METHODOLOGY, reason_code: BLOCKING_DATA_QUALITY, classification: REVISAO_DADOS, enabled: true}
+    - {rule_id: R010, rule_version: "1.0.0", rule_type: TERMINAL, priority: 20, policy_source: INSTITUTIONAL_POLICY, reason_code: APPLICABLE_EXPLICIT_PROHIBITION, classification: POTENCIALMENTE_INDEVIDO, enabled: false}
+    - {rule_id: R015, rule_version: "1.0.0", rule_type: TERMINAL, priority: 30, policy_source: POC_METHODOLOGY, reason_code: DATED_REVOKE_REQUIRES_REVIEW, classification: REVISAO, enabled: true}
+    - {rule_id: R020, rule_version: "1.0.0", rule_type: TERMINAL, priority: 40, policy_source: CASE_EXPLICIT, reason_code: EXPLICIT_BIRTHRIGHT_STANDARD, classification: PADRAO, enabled: true}
+    - {rule_id: R030, rule_version: "1.0.0", rule_type: TERMINAL, priority: 50, policy_source: POC_METHODOLOGY, reason_code: ANALYTICALLY_EXPECTED_HIGH, classification: PADRAO, enabled: true}
+    - {rule_id: R040, rule_version: "1.0.0", rule_type: TERMINAL, priority: 60, policy_source: CASE_EXPLICIT, reason_code: CONFIRMED_APPROVED_ACCESS, classification: LEGITIMO, enabled: true}
+    - {rule_id: R041, rule_version: "1.0.0", rule_type: EVIDENCE, priority: 70, policy_source: POC_METHODOLOGY, reason_code: INFERRED_APPROVAL_NOT_CONFIRMED, enabled: true}
+    - {rule_id: R060, rule_version: "1.0.0", rule_type: MODIFIER, priority: 80, policy_source: CASE_EXPLICIT, reason_code: PUBLIC_RELAXES_COMMUNITY_ONLY, enabled: true}
+    - {rule_id: R065, rule_version: "1.0.0", rule_type: EVIDENCE, priority: 90, policy_source: POC_METHODOLOGY, reason_code: DATED_MAINTAIN_WITHOUT_VALIDITY_POLICY, enabled: true}
+    - {rule_id: R066, rule_version: "1.0.0", rule_type: EVIDENCE, priority: 91, policy_source: POC_METHODOLOGY, reason_code: PENDING_CERTIFICATION_NO_DECISION, enabled: true}
+    - {rule_id: R070, rule_version: "1.0.0", rule_type: EVIDENCE, priority: 100, policy_source: CASE_EXPLICIT, reason_code: INHERITED_HISTORY_INCOMPLETE, enabled: true}
+    - {rule_id: R080, rule_version: "1.0.0", rule_type: EVIDENCE, priority: 110, policy_source: CASE_EXPLICIT, reason_code: USAGE_COVERAGE_UNKNOWN, enabled: true}
+    - {rule_id: R090, rule_version: "1.0.0", rule_type: EVIDENCE, priority: 120, policy_source: POC_METHODOLOGY, reason_code: UNEXPECTED_IS_ANALYTICAL_ONLY, enabled: true}
+    - {rule_id: R100, rule_version: "1.0.0", rule_type: FALLBACK, priority: 130, policy_source: POC_METHODOLOGY, reason_code: ANALYTICAL_EVIDENCE_INSUFFICIENT, enabled: true}
+    - {rule_id: R110, rule_version: "1.0.0", rule_type: TERMINAL, priority: 999, policy_source: POC_METHODOLOGY, reason_code: INSUFFICIENT_POLICY_EVIDENCE, classification: REVISAO, enabled: true}

@@ -1,0 +1,156 @@
+[
+  {
+    "tipo": "identidade_sem_data",
+    "fonte": "identity_master",
+    "row_index": 0,
+    "identidade_id": "ID-CRE-0001",
+    "entitlement_id": null
+  },
+  {
+    "tipo": "identidade_sem_data",
+    "fonte": "identity_master",
+    "row_index": 1,
+    "identidade_id": "ID-CRE-0002",
+    "entitlement_id": null
+  },
+  {
+    "tipo": "identidade_sem_data",
+    "fonte": "identity_master",
+    "row_index": 2,
+    "identidade_id": "ID-CRE-0003",
+    "entitlement_id": null
+  },
+  {
+    "tipo": "identidade_sem_data",
+    "fonte": "identity_master",
+    "row_index": 3,
+    "identidade_id": "ID-CRE-0004",
+    "entitlement_id": null
+  },
+  {
+    "tipo": "identidade_sem_data",
+    "fonte": "identity_master",
+    "row_index": 4,
+    "identidade_id": "ID-CRE-0005",
+    "entitlement_id": null
+  },
+  {
+    "tipo": "data_inconsistente",
+    "fonte": "identity_master",
+    "row_index": 5,
+    "identidade_id": "ID-CRE-0006",
+    "entitlement_id": null
+  },
+  {
+    "tipo": "data_inconsistente",
+    "fonte": "identity_master",
+    "row_index": 6,
+    "identidade_id": "ID-CRE-0007",
+    "entitlement_id": null
+  },
+  {
+    "tipo": "data_inconsistente",
+    "fonte": "identity_master",
+    "row_index": 7,
+    "identidade_id": "ID-CRE-0008",
+    "entitlement_id": null
+  },
+  {
+    "tipo": "data_inconsistente",
+    "fonte": "identity_master",
+    "row_index": 8,
+    "identidade_id": "ID-CRE-0009",
+    "entitlement_id": null
+  },
+  {
+    "tipo": "comunidade_inconsistente",
+    "fonte": "identity_master",
+    "row_index": 9,
+    "identidade_id": "ID-CRE-0010",
+    "entitlement_id": null
+  },
+  {
+    "tipo": "comunidade_inconsistente",
+    "fonte": "identity_master",
+    "row_index": 10,
+    "identidade_id": "ID-CRE-0011",
+    "entitlement_id": null
+  },
+  {
+    "tipo": "acesso_orfao_identidade",
+    "fonte": "access_assignments",
+    "row_index": 75577,
+    "identidade_id": "ID-ORFAO-0000",
+    "entitlement_id": "ENT-CRE-001"
+  },
+  {
+    "tipo": "acesso_orfao_identidade",
+    "fonte": "access_assignments",
+    "row_index": 75578,
+    "identidade_id": "ID-ORFAO-0001",
+    "entitlement_id": "ENT-CRE-022"
+  },
+  {
+    "tipo": "acesso_orfao_identidade",
+    "fonte": "access_assignments",
+    "row_index": 75579,
+    "identidade_id": "ID-ORFAO-0002",
+    "entitlement_id": "ENT-CRE-023"
+  },
+  {
+    "tipo": "acesso_orfao_entitlement",
+    "fonte": "access_assignments",
+    "row_index": 75580,
+    "identidade_id": "ID-CRE-0001",
+    "entitlement_id": "ENT-ORFAO-0000"
+  },
+  {
+    "tipo": "acesso_orfao_entitlement",
+    "fonte": "access_assignments",
+    "row_index": 75581,
+    "identidade_id": "ID-CRE-0001",
+    "entitlement_id": "ENT-ORFAO-0001"
+  },
+  {
+    "tipo": "acesso_orfao_entitlement",
+    "fonte": "access_assignments",
+    "row_index": 75582,
+    "identidade_id": "ID-CRE-0001",
+    "entitlement_id": "ENT-ORFAO-0002"
+  },
+  {
+    "tipo": "acesso_duplicado",
+    "fonte": "access_assignments",
+    "row_index": 75583,
+    "identidade_id": "ID-CRE-0001",
+    "entitlement_id": "ENT-CRE-001"
+  },
+  {
+    "tipo": "acesso_duplicado",
+    "fonte": "access_assignments",
+    "row_index": 75584,
+    "identidade_id": "ID-CRE-0001",
+    "entitlement_id": "ENT-CRE-022"
+  },
+  {
+    "tipo": "aprovador_nulo",
+    "fonte": "access_requests",
+    "row_index": 2602,
+    "identidade_id": "ID-COB-0401",
+    "entitlement_id": "ENT-CRE-002"
+  },
+  {
+    "tipo": "lifecycle_divergente",
+    "fonte": "identity_directory",
+    "row_index": 8,
+    "identidade_id": "ID-CRE-0009",
+    "entitlement_id": null
+  },
+  {
+    "tipo": "lifecycle_divergente",
+    "fonte": "identity_directory",
+    "row_index": 19,
+    "identidade_id": "ID-CRE-0020",
+    "entitlement_id": null
+  }
+]
