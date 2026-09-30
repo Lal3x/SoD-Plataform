@@ -40,3 +40,9 @@ spark-warehouse/
 # Documentation/development-only files not needed in images
 tests/
 notebooks/
+
+# The Airflow image is executable without bind mounts: it needs the controlled
+# POC source batches. Runtime state remains excluded and is created at startup.
+!data/
+!data/raw/
+!data/raw/**

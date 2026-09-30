@@ -1,0 +1,5 @@
+[
+  {"grant_id":"grant-standard","ground_truth_class":"PADRAO","policy_decision":"PADRAO","is_automated":true,"is_review":false},
+  {"grant_id":"grant-review","ground_truth_class":null,"policy_decision":"REVISAO","is_automated":false,"is_review":true},
+  {"grant_id":"grant-remediate","ground_truth_class":"INDEVIDO","policy_decision":"INDEVIDO","is_automated":true,"is_review":true}
+]

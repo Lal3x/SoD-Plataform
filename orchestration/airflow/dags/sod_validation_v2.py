@@ -17,10 +17,10 @@ with DAG(
 ) as dag:
     validation = BashOperator(
         task_id="materializar_validation_mart",
-        bash_command="cd /opt/sod-platform && python scripts/run_v2_validation_mart.py",
+        bash_command="cd /opt/sod-platform && python scripts/validation/run_v2_validation_mart.py",
     )
     descriptive = BashOperator(
         task_id="metricas_descritivas",
-        bash_command="cd /opt/sod-platform && python scripts/complete_v2_validation_mart.py",
+        bash_command="cd /opt/sod-platform && python scripts/validation/complete_v2_validation_mart.py",
     )
     validation >> descriptive

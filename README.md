@@ -43,7 +43,7 @@ poetry run sod-policy-decision --help
 poetry run pytest
 ```
 
-O pipeline V2 congelado usa os scripts `scripts/run_v2_*.py`. Esses scripts escrevem snapshots e freezes: execute-os somente em um warehouse isolado. O estado de validação e as limitações atuais estão em `artifacts/validation/repository-refactor-validation.md`.
+O pipeline V2 congelado usa os scripts em `scripts/runtime/`. Esses scripts escrevem snapshots e freezes: execute-os somente em um warehouse isolado. O estado de validação e as limitações atuais estão em `artifacts/validation/repository-refactor-validation.md`.
 
 Peer Discovery permanece experimental e tem CLI próprio: `python -m sod_platform.access_intelligence.experimental.peer_discovery.cli --help`.
 

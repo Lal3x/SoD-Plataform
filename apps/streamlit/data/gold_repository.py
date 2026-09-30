@@ -128,7 +128,6 @@ class GoldRepository:
             )
         return frame
 
-    @cached_gold_query(ttl=120)
     def search_assessments(
         self,
         filters: dict | None = None,
@@ -140,6 +139,20 @@ class GoldRepository:
     ):
         if not 1 <= limit <= 500 or offset < 0 or offset > 100000:
             raise ValueError("Paginação fora dos limites")
+        return self._search_assessments(
+            filters, search, limit=limit, offset=offset, sort_risk=sort_risk
+        )
+
+    @cached_gold_query(ttl=120)
+    def _search_assessments(
+        self,
+        filters: dict | None = None,
+        search: str = "",
+        *,
+        limit: int = 50,
+        offset: int = 0,
+        sort_risk: bool = False,
+    ):
         frame = self._filtered(filters, search)
         order = (
             [F.desc("risk_score"), F.asc("grant_id")]

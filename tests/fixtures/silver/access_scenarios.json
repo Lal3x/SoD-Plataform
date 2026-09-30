@@ -1,0 +1,9 @@
+[
+  {"scenario":"expected_access","identity_type":"employee","birthright":false,"cross_community":false,"approval_relevance":"NOT_FOUND","privileged":false,"expected":"PADRAO"},
+  {"scenario":"unexpected_access","identity_type":"employee","birthright":false,"cross_community":true,"approval_relevance":"NOT_FOUND","privileged":false,"expected":"REVISAO"},
+  {"scenario":"birthright","identity_type":"employee","birthright":true,"cross_community":false,"approval_relevance":"NOT_FOUND","privileged":false,"expected":"PADRAO"},
+  {"scenario":"service_account","identity_type":"service","birthright":false,"cross_community":false,"approval_relevance":"NOT_FOUND","privileged":true,"expected":"REVISAO"},
+  {"scenario":"approved_exception","identity_type":"employee","birthright":false,"cross_community":true,"approval_relevance":"UNIQUE_MATCH","privileged":false,"expected":"LEGITIMO"},
+  {"scenario":"sensitive_unapproved","identity_type":"employee","birthright":false,"cross_community":true,"approval_relevance":"NOT_FOUND","privileged":true,"expected":"POTENCIALMENTE_INDEVIDO"},
+  {"scenario":"review_unknown_telemetry","identity_type":"employee","birthright":false,"cross_community":false,"approval_relevance":"UNCERTAIN","privileged":false,"expected":"REVISAO"}
+]

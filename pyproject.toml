@@ -57,17 +57,28 @@ docs = [
 [tool.taskipy.tasks]
 lint = "ruff check --select I . && ruff format --check . && black --check ."
 format = "ruff format . && ruff check --select I --fix . && black ."
-tests = "pytest tests -v --cov=sod_platform  --cov-fail-under=70"
+tests = "pytest tests -v --cov=sod_platform --cov-fail-under=70"
+tests-unit = "pytest tests/unit -q"
+tests-integration = "pytest tests/integration tests/bronze tests/silver tests/access_intelligence tests/gold tests/streamlit tests/observability -q"
+tests-e2e = "pytest tests/e2e -q"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "unit: isolated unit test with no persisted runtime dependency",
+    "integration: component integration test using the isolated Spark fixture",
+    "e2e: small end-to-end architecture smoke test",
+]
 
 [tool.black]
 force-exclude = '''
 (
     apps/streamlit/components/charts\.py
-    | scripts/validate_silver\.py
-    | scripts/validate_v2_risk_offline\.py
+    | scripts/maintenance/validate_silver\.py
+    | scripts/validation/validate_v2_risk_offline\.py
     | src/sod_platform/silver/quality/quarantine\.py
 )
 '''
 
 [tool.ruff.lint.per-file-ignores]
-"scripts/*.py" = ["BLE001"]
+"scripts/**/*.py" = ["BLE001"]

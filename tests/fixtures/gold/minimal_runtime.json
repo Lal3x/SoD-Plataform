@@ -1,0 +1,5 @@
+[
+  {"grant_id":"grant-standard","assessment_date":"2025-02-01","identidade_id":"identity-1","entitlement_id":"entitlement-birthright","sigla_id":"app-credit","identity_community":"Credito","policy_decision":"PADRAO","policy_rule_id":"R020","risk_score":10,"risk_band":"LOW","expected_access_state":"EXPECTED","dataset_version":"V2","review_required":false,"remediation_candidate":false},
+  {"grant_id":"grant-review","assessment_date":"2025-02-01","identidade_id":"identity-2","entitlement_id":"entitlement-cross","sigla_id":"app-risk","identity_community":"Risco","policy_decision":"REVISAO","policy_rule_id":"R041","risk_score":70,"risk_band":"CRITICAL","expected_access_state":"UNKNOWN","dataset_version":"V2","review_required":true,"remediation_candidate":false},
+  {"grant_id":"grant-remediate","assessment_date":"2025-02-01","identidade_id":"identity-3","entitlement_id":"entitlement-sensitive","sigla_id":"app-payments","identity_community":"Pagamentos","policy_decision":"INDEVIDO","policy_rule_id":"R120","risk_score":90,"risk_band":"CRITICAL","expected_access_state":"NOT_EXPECTED","dataset_version":"V2","review_required":true,"remediation_candidate":true}
+]
