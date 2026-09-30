@@ -1,7 +1,8 @@
 # yaml-language-server: $schema=https://squidfunk.github.io/mkdocs-material/schema.json
 
 site_name: SoD Platform
-site_description: Plataforma de Analytics para Segregação de Funções
+site_description: Access Governance e evolução para Segregação de Funções transacional
+site_author: Lucas Alexandre
 
 theme:
   name: material
@@ -9,7 +10,6 @@ theme:
   logo: material/shield-account
   favicon: material/shield-account
   palette:
-    # Paleta inspirada na identidade visual do Itaú: laranja e azul-escuro.
     - media: "(prefers-color-scheme: light)"
       scheme: default
       primary: custom
@@ -35,6 +35,33 @@ theme:
     - search.highlight
     - search.share
 
+nav:
+  - Início: index.md
+  - Parte I — Negócio:
+      - O problema e as duas fases: negocio/problema-e-fases.md
+      - Regras de negócio: negocio/regras-de-negocio.md
+      - Hipóteses e dados sintéticos: negocio/hipoteses-e-dados-sinteticos.md
+      - Resposta aos 9 desafios: negocio/resposta-ao-case.md
+  - Parte II — Arquitetura:
+      - Arquitetura inicial: arquitetura/arquitetura-inicial.md
+      - Evolução da solução: arquitetura/evolucao.md
+      - Arquitetura V2 atual: arquitetura/arquitetura-v2.md
+      - Arquitetura alvo AWS: arquitetura/aws.md
+      - Evolução para Fase 2: arquitetura/fase-2.md
+  - Parte III — Técnica:
+      - Pipeline e dados: tecnica/pipeline.md
+      - Access Intelligence: tecnica/access-intelligence.md
+      - Evidence, Policy, Risk e Gold: tecnica/evidence-policy-risk-gold.md
+      - Validação, observabilidade e testes: tecnica/validacao-observabilidade.md
+      - Dashboard e operação: tecnica/dashboard-operacao.md
+  - Parte IV — Decisões:
+      - Experimentos e shadow mode: decisoes/experimentos.md
+      - Limitações e premissas: decisoes/limitacoes.md
+      - Uso de IA no desenvolvimento: decisoes/uso-ia.md
+  - Referência:
+      - Execução local: referencia/execucao-local.md
+      - Estrutura do repositório: referencia/estrutura-repositorio.md
+
 plugins:
   - search:
       lang: pt
@@ -43,6 +70,9 @@ markdown_extensions:
   - admonition
   - attr_list
   - md_in_html
+  - tables
+  - toc:
+      permalink: true
   - pymdownx.details
   - pymdownx.highlight:
       anchor_linenums: true
