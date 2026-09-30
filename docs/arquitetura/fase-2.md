@@ -1,5 +1,7 @@
 # Evolução para a Fase 2 — SoD transacional + inteligência assistida
 
+<div class="sod-page-wide sod-page-architecture"></div>
+
 ## Resumo executivo
 
 A Fase 2 não substitui a Fase 1. Ela **reutiliza sua fundação** e adiciona profundidade semântica para responder uma pergunta mais difícil:

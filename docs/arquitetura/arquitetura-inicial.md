@@ -1,5 +1,7 @@
 # Arquitetura inicial e fundamentos de Segurança da Informação
 
+<div class="sod-page-wide sod-page-architecture"></div>
+
 ## 1. A arquitetura inicial já tinha uma tese
 
 O desenho inicial não partiu apenas de ferramentas de Engenharia de Dados. Ele partiu de uma combinação de **princípios de Segurança da Informação** com uma arquitetura capaz de executá-los em escala.

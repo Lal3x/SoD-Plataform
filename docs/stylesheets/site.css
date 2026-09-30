@@ -138,3 +138,92 @@
   .sod-brand, .sod-brand-lockup { align-items:flex-start; }
   .sod-metric-strip, .sod-mini-flow, .sod-mini-flow--2, .sod-mini-flow--3, .sod-mini-flow--5 { grid-template-columns:1fr; }
 }
+
+/* Architecture readability and Mermaid zoom */
+.md-content__inner:has(.sod-page-wide) { max-width: 76rem; }
+.md-main:has(.sod-page-architecture) .md-sidebar--secondary { display: none; }
+.md-main:has(.sod-page-architecture) .md-content { min-width: 0; }
+
+.md-typeset .mermaid {
+  position: relative;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: thin;
+  cursor: zoom-in;
+}
+.md-typeset .mermaid svg {
+  display: block;
+  width: auto !important;
+  min-width: 68rem;
+  max-width: none !important;
+  height: auto !important;
+  margin-inline: auto;
+}
+.md-typeset .mermaid.sod-mermaid-zoomable::after {
+  content: "Clique para ampliar";
+  position: sticky;
+  left: calc(100% - 8.5rem);
+  bottom: .4rem;
+  display: inline-block;
+  padding: .22rem .48rem;
+  border: 1px solid var(--sod-border);
+  border-radius: 999px;
+  background: var(--md-default-bg-color);
+  color: var(--sod-muted);
+  font-size: .58rem;
+  font-weight: 700;
+  pointer-events: none;
+}
+
+.sod-mermaid-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+  flex-direction: column;
+  background: rgba(5, 14, 24, .94);
+  backdrop-filter: blur(5px);
+}
+.sod-mermaid-modal.is-open { display: flex; }
+.sod-mermaid-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: .45rem;
+  padding: .7rem .85rem;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+}
+.sod-mermaid-toolbar button {
+  min-width: 2.2rem;
+  padding: .42rem .65rem;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 7px;
+  background: rgba(255,255,255,.08);
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+.sod-mermaid-toolbar button:hover { background: rgba(255,255,255,.15); }
+.sod-mermaid-zoom-label { min-width: 3.8rem; text-align: center; color: #fff; font-size: .72rem; }
+.sod-mermaid-stage {
+  flex: 1;
+  overflow: auto;
+  padding: 2rem;
+  display: grid;
+  place-items: center;
+}
+.sod-mermaid-stage svg {
+  max-width: none !important;
+  height: auto !important;
+  transform-origin: center center;
+  transition: transform .12s ease;
+  background: #fff;
+  border-radius: 10px;
+  padding: 1rem;
+}
+body.sod-no-scroll { overflow: hidden; }
+
+@media screen and (max-width: 900px) {
+  .md-content__inner:has(.sod-page-wide) { max-width: none; }
+  .md-typeset .mermaid svg { min-width: 54rem; }
+}
