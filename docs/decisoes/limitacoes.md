@@ -1,112 +1,165 @@
-# Limitações e premissas
+# Premissas, controles e evolução para produção
 
-Uma POC confiável precisa documentar não apenas o que funciona, mas também **sob quais condições funciona**.
+Esta página registra **condições de validade da POC** e como cada uma é tratada pela arquitetura.
 
-## 1. Dados sintéticos
+O objetivo não é listar fraquezas. É deixar claro o que já está controlado, o que depende de dados corporativos reais e quais validações seriam necessárias antes de produção.
 
-O case não fornece dados reais.
+## Visão rápida
 
-Consequências:
+| Tema | Controle na POC | Evolução para produção |
+|---|---|---|
+| dados sintéticos | cenários conhecidos + ground truth isolado | profiling e amostras reais |
+| requests | cobertura declarada no contrato V2 | medir completude por canal |
+| request → acesso | qualidade do vínculo explícita | chave transacional quando disponível |
+| histórico organizacional | incerteza preservada | histórico temporal completo |
+| uso | UNKNOWN quando cobertura não é conhecida | telemetria por aplicação |
+| baseline | separado de autorização | calibração + monitoramento |
+| thresholds | parâmetros versionados, fora do gabarito | calibração governada |
+| função de negócio | não inferida como verdade | Semantic/Transaction Context |
+| política | PD002 versionada para a POC | regras institucionais aprovadas |
+| escala | Spark/Iceberg + arquitetura distribuída | benchmark e sizing |
+| SoD transacional | fronteira explícita de escopo | Fase 2 |
 
-- distribuições não provam comportamento produtivo;
-- métricas de validação demonstram consistência da POC, não performance do banco;
-- SLAs e volumes reais precisam de teste próprio.
+## 1. Dataset da POC
+
+O case não fornece uma base real, então a implementação usa dados sintéticos controlados.
+
+Isso permite testar contratos, cenários conhecidos, comportamento das regras, separação entre runtime e ground truth e reprodutibilidade.
+
+O que **não** fazemos é usar essas métricas como prova de comportamento produtivo.
+
+Antes de produção seriam necessários profiling, amostragem real e validação com especialistas.
 
 ## 2. Cobertura de requests
 
-PD002 considera a fonte de requests autoritativa na V2.
+Na V2 sintética, a cobertura de solicitações é tratada como autoritativa para o universo definido pelo contrato da POC.
 
-Essa premissa permite R030.
+Essa premissa é proposital e permite testar a diferença entre:
 
-Em produção, é obrigatório verificar se todos os mecanismos de concessão relevante realmente aparecem nessa fonte. Caso contrário, ausência de request deve resultar em REVISÃO, não em INDEVIDO.
+~~~text
+aprovação ausente em fonte completa
+≠
+aprovação não encontrada em fonte de cobertura desconhecida
+~~~
 
-## 3. Vínculo request → grant
+Em produção, a cobertura deve ser medida por canal de concessão.
 
-A POC pode inferir vínculo por identidade, entitlement e temporalidade.
+Se a fonte não for autoritativa, a arquitetura deve preservar a incerteza e direcionar o caso para **REVISÃO**, não para uma conclusão automática.
 
-Sem uma chave direta, o match não possui a mesma força de um relacionamento transacional explícito.
+## 3. Vínculo entre request e acesso concedido
+
+A POC pode relacionar uma solicitação ao acesso usando identidade, entitlement e coerência temporal.
+
+Esse relacionamento é classificado explicitamente quanto à qualidade e não é apresentado como chave causal direta.
+
+Uma implantação real pode fortalecer esse contrato com identificadores transacionais de concessão quando a origem disponibilizar essa informação.
 
 ## 4. Histórico organizacional
 
-A POC consegue identificar quando a data de concessão antecede a entrada na comunidade atual, mas marca identity_history_complete como falso.
+A arquitetura diferencia:
 
-Logo, inherited_access_candidate é sinal, não conclusão.
+> “há sinal de que o acesso pode ter sido herdado”
+
+de:
+
+> “temos histórico suficiente para confirmar a origem”.
+
+Quando o histórico não é completo, a confiabilidade do sinal é reduzida e a incerteza permanece visível.
+
+Uma fonte temporal de movimentações organizacionais aumentaria a capacidade de confirmar esses casos.
 
 ## 5. Telemetria de uso
 
-ultimo_uso nulo é interpretado como “sem uso registrado”.
+Um valor nulo em ultimo_uso significa **sem uso registrado**, não “nunca utilizado”.
 
-usage_coverage permanece UNKNOWN.
+A POC registra também a cobertura da telemetria. Se ela é desconhecida, a ausência de uso não recebe força indevida.
 
-Produção precisa conhecer:
+Em produção, o contrato deve registrar cobertura, retenção e confiabilidade por aplicação.
 
-- quais aplicações geram telemetria;
-- período de retenção;
-- cobertura;
-- possíveis falhas de integração.
+## 6. Baseline: comportamento não é autorização
 
-## 6. Contaminação do baseline
+O baseline é uma capacidade central da solução desde o desenho inicial.
 
-Observed Baseline não é calculado apenas com Hard Trusted Set.
+Ao mesmo tempo, a arquitetura assume explicitamente que:
 
-Ele filtra a população, mas ainda pode refletir padrões inadequados historicamente comuns.
+> **um comportamento frequente pode refletir um padrão histórico inadequado.**
 
-Mitigações futuras possíveis:
+Por isso a baseline não decide sozinha.
 
-- anchors mais fortes;
-- excluir populações com achados confirmados;
-- baseline temporal;
-- segmentação por função;
-- peer discovery validado;
-- comparação com política institucional.
+Os controles atuais incluem:
+
+- população filtrada;
+- contexto organizacional;
+- temporalidade;
+- âncoras explícitas;
+- força de evidência;
+- separação entre Expected Access e Policy;
+- certificações e aprovações como evidências independentes.
+
+Evoluções possíveis incluem baseline temporal, funções de negócio, peer discovery validado e exclusão de populações com achados confirmados.
 
 ## 7. Thresholds
 
-Os thresholds de expectedness e mínimos de população são parâmetros técnicos de POC.
+Os thresholds de prevalência e população mínima são parâmetros técnicos, versionados e deliberadamente independentes do gabarito.
 
-Eles não foram calibrados com o gabarito e não são apresentados como política do banco.
+Isso reduz risco de leakage.
 
-Produção exigiria calibração governada e monitoramento de drift.
+Eles não são apresentados como regra institucional.
+
+Em produção, seriam calibrados com amostras revisadas, métricas por cenário e monitoramento de drift.
 
 ## 8. Catálogo de função de negócio
 
-O case menciona tecnologia/engenharia acessando perfis de negócio, mas não fornece uma taxonomia completa de perfis.
+O case não fornece uma taxonomia completa de funções e transações.
 
-A V2 não inventa uma.
+A Fase 1 evita transformar inferência semântica em verdade operacional.
 
-Esse gap é tratado na arquitetura de Fase 2 por Transaction Context e SoD Policy Catalog.
+A Fase 2 trata essa necessidade de forma explícita por meio de Transaction Context, Semantic Access Catalog, LLM + RAG como mecanismo assistido de interpretação, validação humana e SoD Policy Catalog versionado.
 
-## 9. Contractor fora de escopo
+## 9. Escopo de terceiros
 
-Saber que uma identidade é contractor não revela automaticamente qual é seu escopo autorizado.
+Saber que uma identidade é contractor não informa automaticamente qual é seu escopo autorizado.
 
-Produção precisa de dado de escopo, contrato ou assignment de frente.
+A arquitetura preserva o tipo de identidade como contexto, mas uma decisão mais profunda precisa de contrato, assignment ou escopo de atuação.
+
+Esse dado é uma necessidade de integração, não uma regra a ser presumida.
 
 ## 10. Política institucional
 
-PD002 é uma política de POC construída para materializar a semântica do case.
+PD002 é uma política versionada da POC para materializar e testar a semântica do case.
 
-Ela não deve ser confundida com norma institucional aprovada.
+Ela demonstra precedência de regras, tratamento de exceções, contradições, evidência insuficiente e separação entre classificação e risco.
 
-Antes de produção, owners de segurança, IAM/IGA, negócio e risco precisam validar:
+Em produção, o mesmo mecanismo receberia regras aprovadas pelos owners de Segurança, IAM/IGA, Negócio e Risco.
 
-- regras;
-- precedência;
-- exceções;
-- thresholds;
-- evidências mínimas;
-- ações permitidas.
+A arquitetura foi desenhada para que a **Policy possa evoluir sem reescrever as etapas de contexto e evidência**.
 
 ## 11. Escala produtiva
 
-PySpark e Iceberg tornam a solução escalável conceitualmente, mas a POC local não comprova dimensionamento de produção.
+A implementação usa PySpark e Iceberg e já separa processamento, armazenamento, orquestração e consumo.
 
-A arquitetura AWS apresenta um caminho de execução distribuída; benchmarking real ainda é necessário.
+Isso torna a solução compatível com execução distribuída.
 
-## 12. SoD pleno
+Dimensionamento produtivo depende de benchmark real de volume, concorrência, SLA, custo, tamanho das tabelas e frequência de execução.
 
-A Fase 1 não implementa matriz de conflito transacional.
+A arquitetura AWS documenta o caminho proposto para esse sizing.
 
-Isso não é uma lacuna escondida: é a fronteira explicitamente definida pelo próprio case.
+## 12. Fronteira entre Fase 1 e Fase 2
 
-A Fase 2 está desenhada para adicionar essa semântica sem invalidar a arquitetura atual.
+A Fase 1 resolve a sanitização top-down e a governança de acesso propostas para o primeiro estágio do case.
+
+Ela **não tenta simular SoD transacional sem os dados necessários**.
+
+Isso é uma decisão de escopo, não uma lacuna escondida.
+
+A Fase 2 acrescenta função, transação, ação, objeto/escopo, regras de conflito, exceções, controles compensatórios, ML/Graph e LLM + RAG assistido.
+
+## 13. O que estas premissas demonstram
+
+<div class="sod-lane-grid">
+  <div class="sod-lane"><span class="sod-kicker">Implementado</span><h3>O que o código garante</h3><p>Contratos, regras, lineage, isolamento do ground truth, observabilidade e decisão reproduzível.</p></div>
+  <div class="sod-lane"><span class="sod-kicker">Premissa</span><h3>O que depende do dado</h3><p>Cobertura de requests, histórico, telemetria e qualidade das fontes corporativas.</p></div>
+  <div class="sod-lane"><span class="sod-kicker">Produção</span><h3>O que precisa ser validado</h3><p>Calibração, benchmark, regras institucionais e rollout governado.</p></div>
+</div>
+
+Essa separação é intencional: uma plataforma de Segurança confiável deve deixar claro **o que sabe, o que assume e o que ainda precisa validar**.
