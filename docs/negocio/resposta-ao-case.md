@@ -2,6 +2,9 @@
 
 Esta página conecta diretamente o desafio de negócio aos componentes da POC.
 
+!!! info "Como ler esta página"
+    A implementação da POC funciona como **evidência adicional de que a arquitetura é executável**. O núcleo da resposta ao case, porém, continua sendo o **raciocínio**: como o problema foi decomposto, por que cada escolha foi feita, quais trade-offs foram aceitos e como a solução pode evoluir com segurança.
+
 ## 1. Abordagem e técnica
 
 A solução usa uma abordagem híbrida:
