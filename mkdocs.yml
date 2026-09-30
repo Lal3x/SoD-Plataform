@@ -66,6 +66,7 @@ nav:
       - Modelo de dados sintéticos: tecnica/modelo-dados.md
       - Anatomia de uma decisão: tecnica/anatomia-decisao.md
       - Access Intelligence: tecnica/access-intelligence.md
+      - Como os cálculos funcionam: tecnica/calculos.md
       - Evidence, Policy, Risk e Gold: tecnica/evidence-policy-risk-gold.md
       - Orquestração e observabilidade: tecnica/orquestracao-observabilidade.md
       - Validação e testes: tecnica/validacao-observabilidade.md
