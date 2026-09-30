@@ -1,4 +1,4 @@
-# Arquitetura V2 atual
+# Arquitetura atual
 
 <div class="sod-page-wide sod-page-architecture"></div>
 
