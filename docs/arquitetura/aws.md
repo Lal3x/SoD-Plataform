@@ -1,5 +1,7 @@
 # Arquitetura alvo na AWS
 
+<div class="sod-page-wide sod-page-architecture"></div>
+
 ## 1. Princípio
 
 A migração para AWS não deve mudar a semântica da solução. Ela deve mudar **como a plataforma executa, escala, protege e observa** seus componentes.

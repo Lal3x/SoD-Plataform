@@ -54,6 +54,7 @@ nav:
       - Resposta aos 9 desafios: negocio/resposta-ao-case.md
   - Parte II — Arquitetura:
       - Arquitetura inicial: arquitetura/arquitetura-inicial.md
+      - Fundamentos de Segurança: arquitetura/fundamentos-seguranca.md
       - Evolução da solução: arquitetura/evolucao.md
       - Arquitetura V2 atual: arquitetura/arquitetura-v2.md
       - Arquitetura alvo AWS: arquitetura/aws.md
@@ -103,6 +104,9 @@ markdown_extensions:
 
 extra_css:
   - stylesheets/site.css
+
+extra_javascript:
+  - javascripts/mermaid-zoom.js
 
 extra:
   generator: false

@@ -1,50 +1,85 @@
 # Arquitetura V2 atual
 
-## 1. A arquitetura canônica é o DAG
+<div class="sod-page-wide sod-page-architecture"></div>
 
-O runtime V2 não é definido apenas pela existência dos módulos no repositório. A fonte operacional de verdade é o DAG Airflow `sod_runtime_v2`.
+## 1. Arquitetura em duas leituras
+
+O runtime V2 é materializado pelo DAG Airflow `sod_runtime_v2`, mas é mais fácil entendê-lo separando **o caminho que produz a decisão** do **caminho que controla a execução**.
+
+!!! tip "Diagramas interativos"
+    Os diagramas mantêm um tamanho legível. Use o scroll horizontal quando necessário ou **clique no diagrama para abrir em tela cheia e aplicar zoom**.
+
+### 1.1 Data / decision path
+
+```mermaid
+flowchart TB
+    A["Fontes"] --> B["Bronze"]
+    B --> BG{"Bronze Gate"}
+    BG --> C["Silver"]
+    C --> SG{"Silver Gate"}
+    SG --> D["Access Context"]
+
+    D --> E["Hard Trusted Set"]
+    D --> F["Observed Baseline"]
+    F --> G["Hierarchical Fallback"]
+
+    E --> H["Expected Access"]
+    G --> H
+    H --> I["Evidence"]
+    I --> J["Policy"]
+    J --> K["Risk"]
+    K --> L["Gold"]
+    L --> GG{"Gold Gate"}
+```
+
+O fluxo acima responde **como os dados viram uma decisão**. Cada estágio tem uma responsabilidade única; por isso comportamento observado, evidência, classificação e prioridade não ficam misturados.
+
+### 1.2 Control path
 
 ```mermaid
 flowchart LR
-    subgraph PREP["PREPARAÇÃO"]
-        A["Fontes"] --> B["Bronze"]
-        B --> BG{"Bronze Gate"}
-        BG --> C["Silver"]
-        C --> SG{"Silver Gate"}
-    end
+    A["Airflow"] --> B["Ordem e dependências"]
+    B --> C["Gates"]
+    C --> D["Register Run"]
+    D --> E["Validation DAG"]
 
-    subgraph INTEL["INTELIGÊNCIA DE ACESSO"]
-        SG --> D["Access Context"]
-        D --> E["Hard Trusted Set"]
-        D --> F["Observed Baseline"]
-        F --> G["Hierarchical Fallback"]
-        E --> H["Expected Access"]
-        G --> H
-    end
+    O["Observabilidade"] -. acompanha .-> A
+    O -. "DQ · métricas · versões" .-> C
+    O -. "snapshots · lineage · reconciliação" .-> D
 
-    subgraph DEC["DECISÃO"]
-        H --> I["Evidence"]
-        I --> J["Policy"]
-        J --> K["Risk"]
-        K --> L["Gold"]
-        L --> GG{"Gold Gate"}
-    end
-
-    GG --> R["Register Run"]
-    R --> V["Validation DAG"]
-    O["Observabilidade"] -. métricas · DQ · snapshots · lineage .-> B
-    O -. acompanha .-> C
-    O -. acompanha .-> H
-    O -. acompanha .-> J
-    O -. acompanha .-> L
+    V["Ground truth"] -. somente validação .-> E
 ```
 
-A arquitetura possui dois eixos:
+O **control path** não decide o acesso. Ele garante que a execução ocorreu na ordem correta, com dados mínimos, versões conhecidas, rastreabilidade e validação isolada.
 
-**Data/decision path:** transforma dados em decisão.
+### 1.3 A leitura mais importante
 
-**Control path:** garante ordem, qualidade, rastreabilidade e observabilidade.
+| Camada | Pergunta respondida |
+|---|---|
+| Bronze / Silver | os dados chegaram e estão utilizáveis? |
+| Context | o que sabemos sobre identidade, acesso e ambiente? |
+| Baseline / Expected Access | esse acesso é comum para pares comparáveis? |
+| Evidence | quais fatos sustentam ou contradizem o caso? |
+| Policy | como as regras classificam o caso? |
+| Risk | o que deve ser tratado primeiro? |
+| Gold | como publicar a decisão de forma consumível e rastreável? |
 
+
+## Segurança da Informação na arquitetura
+
+A V2 não nasceu apenas de decisões de Engenharia de Dados. Vários componentes materializam princípios de Segurança da Informação que já orientavam o desenho inicial:
+
+| Conceito | Como aparece na arquitetura |
+|---|---|
+| **Baseline comportamental** | Observed Baseline + Expected Access estabelecem uma referência antes da análise de desvios |
+| **Least Privilege** | o objetivo é identificar acessos além do necessário, sem tratar raridade como prova |
+| **Need-to-Know** | Access Context usa comunidade, função e contexto para avaliar necessidade funcional |
+| **Segregation of Duties** | a Fase 2 evolui para conflitos entre funções e transações incompatíveis |
+| **Defense in Depth** | DQ → contexto → baseline → Evidence → Policy → Risk evita depender de um único sinal |
+| **Accountability / Auditabilidade** | reason codes, versões, snapshots, lineage e run registry permitem reconstruir a decisão |
+| **Fail-safe diante de incerteza** | ausência de evidência suficiente produz UNKNOWN/REVISÃO em vez de uma conclusão forçada |
+
+Veja a explicação completa em **[Fundamentos de Segurança da Informação](fundamentos-seguranca.md)**.
 ## 2. Preparação — Bronze
 
 Bronze recebe as fontes e preserva a visão ingerida.
