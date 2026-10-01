@@ -209,17 +209,24 @@
   flex: 1;
   overflow: auto;
   padding: 2rem;
-  display: grid;
-  place-items: center;
+  overscroll-behavior: contain;
 }
-.sod-mermaid-stage svg {
-  max-width: none !important;
-  height: auto !important;
-  transform-origin: center center;
-  transition: transform .12s ease;
+.sod-mermaid-canvas {
+  position: relative;
+  min-width: 1px;
+  min-height: 1px;
+  margin-inline: auto;
   background: #fff;
   border-radius: 10px;
-  padding: 1rem;
+  box-shadow: 0 12px 36px rgba(0,0,0,.28);
+}
+.sod-mermaid-canvas svg {
+  position: absolute;
+  inset: 0 auto auto 0;
+  max-width: none !important;
+  max-height: none !important;
+  transform-origin: top left;
+  transition: transform .12s ease;
 }
 body.sod-no-scroll { overflow: hidden; }
 
