@@ -112,9 +112,10 @@ markdown_extensions:
 
 extra_css:
   - stylesheets/site.css
+  - stylesheets/mermaid-zoom-v3.css
 
 extra_javascript:
-  - javascripts/mermaid-zoom.js
+  - javascripts/mermaid-zoom-v3.js
 
 extra:
   generator: false
