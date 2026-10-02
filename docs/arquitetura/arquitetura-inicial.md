@@ -1,6 +1,11 @@
-# Arquitetura inicial e fundamentos de Segurança da Informação
+# Arquitetura conceitual inicial
 
-## 1. A arquitetura inicial já tinha uma tese
+## 1. De onde a solução partiu
+
+Esta página registra **a proposta conceitual que formulei no início do case, antes da implementação**. Ela representa a minha hipótese arquitetural inicial para decompor o problema, orientar a análise dos dados e testar caminhos de solução.
+
+!!! info "Arquitetura conceitual, não estado implementado"
+    Este desenho não representa uma primeira versão implantada da plataforma. Ele é o **modelo mental de partida**: uma arquitetura conceitual criada durante a leitura do problema para organizar as hipóteses que depois seriam validadas, refinadas e transformadas em componentes implementáveis.
 
 O desenho inicial não partiu apenas de ferramentas de Engenharia de Dados. Ele combinava **princípios de Segurança da Informação** com uma arquitetura capaz de executá-los em escala.
 
@@ -26,7 +31,7 @@ flowchart TB
     O -. acompanha .-> I
 ```
 
-A V2 não substituiu esse raciocínio. Ela **formalizou responsabilidades que inicialmente estavam agrupadas**.
+A arquitetura atual não substituiu esse raciocínio. Ela **formalizou responsabilidades que, na proposta conceitual inicial, ainda estavam agrupadas**.
 
 ## 2. Segurança da Informação já orientava a solução
 
@@ -45,7 +50,7 @@ A V2 não substituiu esse raciocínio. Ela **formalizou responsabilidades que in
 
 Veja também a página dedicada **[Fundamentos de Segurança da Informação](fundamentos-seguranca.md)**.
 
-## 3. A baseline não surgiu na V2
+## 3. A baseline já fazia parte da ideia inicial
 
 Desde o início, a análise por grupos e a detecção de anomalias já pressupunham uma baseline.
 
@@ -56,7 +61,7 @@ flowchart LR
     C --> D["Investigar com contexto e regras"]
 ```
 
-A implementação V2 apenas tornou essa ideia explícita:
+A implementação atual tornou essa ideia explícita em componentes separados:
 
 ```mermaid
 flowchart LR
@@ -83,7 +88,7 @@ Isso é diferente de autorização.
 
 ## 5. O principal refinamento: separar sinal de decisão
 
-Na arquitetura inicial, análise de padrão, desvio e regra estavam concentradas no mesmo bloco. A V2 separou três perguntas diferentes:
+Na arquitetura conceitual inicial, análise de padrão, desvio e regra ainda estavam concentradas no mesmo bloco. A arquitetura atual separa três perguntas diferentes:
 
 | Pergunta | Responsabilidade |
 |---|---|
@@ -102,7 +107,7 @@ Essa separação evita que uma anomalia estatística seja tratada diretamente co
 
 ## 6. O que a implementação acrescentou
 
-A V2 não inventou as preocupações originais; ela resolveu ambiguidades que aparecem quando a ideia vira software:
+A arquitetura atual não inventou as preocupações originais; ela resolveu ambiguidades que aparecem quando a ideia conceitual vira software:
 
 - formalizou contexto organizacional e temporal;
 - criou âncoras explícitas de alta confiança;
@@ -115,18 +120,18 @@ A V2 não inventou as preocupações originais; ela resolveu ambiguidades que ap
 - colocou experimentos de ML/Graph em shadow mode;
 - transformou observabilidade em mecanismo operacional.
 
-## 7. Da arquitetura inicial à V2
+## 7. Da arquitetura conceitual inicial à arquitetura atual
 
 ```mermaid
 flowchart TB
-    subgraph V0["ARQUITETURA INICIAL"]
+    subgraph INICIAL["IDEIA CONCEITUAL INICIAL"]
         A1["Bronze"] --> A2["Silver"]
         A2 --> A3["Baseline + grupos + clustering"]
         A3 --> A4["Anomalias + regras"]
         A4 --> A5["Gold"]
     end
 
-    subgraph V2["ARQUITETURA V2"]
+    subgraph ATUAL["ARQUITETURA ATUAL"]
         B1["Access Context"] --> B2["HTS + Observed Baseline"]
         B2 --> B3["Hierarchical Fallback"]
         B3 --> B4["Expected Access"]
@@ -136,7 +141,7 @@ flowchart TB
         B7 --> B8["Gold"]
     end
 
-    V0 -->|"formalização e separação de responsabilidades"| V2
+    INICIAL -->|"validação, formalização e separação de responsabilidades"| ATUAL
 ```
 
 A ideia central foi preservada. O que mudou foi o nível de formalização, testabilidade e auditabilidade.
@@ -170,4 +175,4 @@ flowchart LR
 
 ## 10. Leitura correta da evolução
 
-> **A arquitetura inicial já identificava baseline, análise por grupos, descoberta de padrões, anomalias, regras, SoD, publicação e observabilidade. A implementação V2 transformou essas capacidades em componentes independentes, seguros e auditáveis.**
+> **A arquitetura conceitual inicial já identificava baseline, análise por grupos, descoberta de padrões, anomalias, regras, SoD, publicação e observabilidade. A implementação atual transformou essas ideias em componentes independentes, testáveis, seguros e auditáveis.**
