@@ -16,7 +16,7 @@ POC para identificar e priorizar acessos **Padrão**, **Legítimos**, **Indevido
 ![Airflow](https://img.shields.io/badge/Apache%20Airflow-Orchestration-017CEE?logo=apacheairflow&logoColor=white)
 
 [Entender o problema](docs/negocio/problema-e-fases.md) ·
-[Ver arquitetura](docs/arquitetura/arquitetura-v2.md) ·
+[Ver arquitetura](docs/arquitetura/arquitetura-atual.md) ·
 [Resultados da POC](docs/resultados.md) ·
 [Documentação completa](docs/index.md)
 
@@ -61,6 +61,8 @@ A POC implementa a **Fase 1** do problema: limpeza, contextualização e governa
 | **Revisão** | evidência insuficiente ou contraditória; exige análise humana |
 
 ## Arquitetura
+
+A documentação distingue deliberadamente **a arquitetura conceitual inicial — a ideia de solução formulada no início do case — da arquitetura atual implementada**. A primeira registra o raciocínio de partida; a segunda mostra como esse raciocínio foi validado, refinado e transformado em componentes executáveis.
 
 ```mermaid
 flowchart LR
@@ -228,7 +230,7 @@ A documentação foi organizada para atender públicos diferentes:
 
 - **Negócio / gestão:** [problema e duas fases](docs/negocio/problema-e-fases.md) → [regras de negócio](docs/negocio/regras-de-negocio.md) → [resultados](docs/resultados.md)
 - **Segurança / auditoria:** [fundamentos de segurança](docs/arquitetura/fundamentos-seguranca.md) → [anatomia de uma decisão](docs/tecnica/anatomia-decisao.md) → [premissas e controles](docs/decisoes/limitacoes.md)
-- **Engenharia de Dados:** [arquitetura](docs/arquitetura/arquitetura-v2.md) → [pipeline](docs/tecnica/pipeline.md) → [orquestração e observabilidade](docs/tecnica/orquestracao-observabilidade.md)
+- **Engenharia de Dados:** [arquitetura](docs/arquitetura/arquitetura-atual.md) → [pipeline](docs/tecnica/pipeline.md) → [orquestração e observabilidade](docs/tecnica/orquestracao-observabilidade.md)
 - **Avaliador técnico:** [arquitetura inicial](docs/arquitetura/arquitetura-inicial.md) → [evolução](docs/arquitetura/evolucao.md) → [rastreabilidade](docs/tecnica/rastreabilidade.md)
 
 ## Escopo e limitações
