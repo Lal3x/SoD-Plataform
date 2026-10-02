@@ -1,9 +1,9 @@
 # Evolução da solução
 
-A arquitetura V2 é resultado de refinamentos sucessivos. Cada componente existe para resolver uma pergunta concreta.
+A arquitetura atual é resultado de refinamentos sucessivos sobre a arquitetura conceitual inicial. Cada componente existe para resolver uma pergunta concreta que apareceu quando a ideia de partida foi confrontada com os dados, as regras do case e as necessidades de implementação.
 
-!!! info "A ideia não foi descartada"
-    A arquitetura inicial **não estava “errada” e depois foi substituída**. A tese permaneceu: entender contexto, estabelecer uma referência, localizar desvios, usar evidências e aplicar regras. A V2 separou essas capacidades em componentes com responsabilidades, contratos e testes próprios.
+!!! info "Da ideia inicial à implementação"
+    A arquitetura inicial é **conceitual**: foi a proposta que formulei no começo do case para organizar o problema e definir uma direção técnica. Ela não representa uma versão anterior implantada. A tese permaneceu: entender contexto, estabelecer uma referência, localizar desvios, usar evidências e aplicar regras. A arquitetura atual refinou essa ideia e separou essas capacidades em componentes com responsabilidades, contratos e testes próprios.
 
 ## 1. Da ideia para responsabilidades explícitas
 
@@ -55,7 +55,7 @@ Durante o refinamento ficou claro que havia dois conceitos distintos.
 
 Eles são complementares, mas não equivalentes.
 
-!!! info "Controle importante da V2"
+!!! info "Controle importante da arquitetura atual"
     O Observed Baseline atual é construído sobre uma população filtrada por qualidade, identidade ativa, temporalidade e same-community. Ele **não é restrito apenas ao Hard Trusted Set**. Por isso, a baseline é tratada como **evidência comportamental**, nunca como autorização. Policy, certificações, aprovações e força da evidência funcionam como controles independentes.
 
 ## 4. Hierarchical Fallback
@@ -114,7 +114,7 @@ Nenhuma regra de prioridade deveria estar aqui.
 
 Policy é o local em que fatos se tornam uma decisão.
 
-A V2 canônica usa PD002/1.0.1 e uma precedência explícita de regras. Isso torna a classificação reproduzível e auditável.
+A implementação atual usa PD002/1.0.1 e uma precedência explícita de regras. Isso torna a classificação reproduzível e auditável.
 
 !!! note "Códigos internos da POC"
     Identificadores como `PD002`, `GOLD001`, `EV001`, `RISK001` e regras `R010`, `R020` etc. são **nomes internos usados para versionar contratos e lógica deste projeto**. Eles não representam normas externas, regulamentações ou códigos oficiais do banco.
@@ -141,9 +141,9 @@ Depois que o runtime é congelado, a validação offline pode comparar a saída 
 
 ```mermaid
 flowchart LR
-    A["V0<br/>Bronze → Silver → baseline / grupos / experimentos / regras → Gold"]
+    A["IDEIA CONCEITUAL INICIAL<br/>Bronze → Silver → baseline / grupos / experimentos / regras → Gold"]
     -->|"formalização"|
-    B["V2<br/>Context → HTS + Baseline/Fallback → Expected Access → Evidence → Policy → Risk → Gold"]
+    B["ARQUITETURA ATUAL<br/>Context → HTS + Baseline/Fallback → Expected Access → Evidence → Policy → Risk → Gold"]
 ```
 
-A evolução não foi adicionar complexidade por estética. Cada separação reduz uma ambiguidade específica do problema.
+A evolução não foi adicionar complexidade por estética. Ela mostra como uma hipótese arquitetural inicial foi validada e transformada em uma solução implementável. Cada separação reduz uma ambiguidade específica do problema.
