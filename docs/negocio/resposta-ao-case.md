@@ -92,7 +92,7 @@ A pergunta que a interface deve responder não é apenas “qual classe?”, mas
 
 A implementação usa PySpark, Apache Iceberg e processamento desacoplado por etapas. O Airflow coordena gates e dependências.
 
-A arquitetura alvo AWS mapeia os mesmos componentes para S3, Glue Data Catalog, execução Spark gerenciada, MWAA, ECS/Fargate, CloudWatch e controles de segurança.
+A arquitetura-alvo AWS mapeia os mesmos componentes para S3 + Iceberg, Glue Data Catalog, EMR Serverless, MWAA, Athena e QuickSight, com CloudWatch/CloudTrail e controles via IAM, Lake Formation, KMS e Secrets Manager.
 
 Escala, portanto, não depende de uma planilha ou de entrevistas por comunidade.
 
