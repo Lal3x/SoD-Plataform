@@ -55,10 +55,10 @@ nav:
       - Hipóteses e dados sintéticos: negocio/hipoteses-e-dados-sinteticos.md
       - Resposta aos 9 desafios: negocio/resposta-ao-case.md
   - Parte II — Arquitetura:
-      - Arquitetura inicial: arquitetura/arquitetura-inicial.md
+      - Arquitetura conceitual inicial: arquitetura/arquitetura-inicial.md
       - Fundamentos de Segurança: arquitetura/fundamentos-seguranca.md
       - Evolução da solução: arquitetura/evolucao.md
-      - Arquitetura atual: arquitetura/arquitetura-v2.md
+      - Arquitetura atual: arquitetura/arquitetura-atual.md
       - Arquitetura alvo AWS: arquitetura/aws.md
       - Evolução para Fase 2: arquitetura/fase-2.md
   - Parte III — Técnica:
