@@ -29,8 +29,7 @@ jobs:
                 ;;
               *)
                 echo "Deleting $branch"
-                encoded_branch=$(python -c 'import os, urllib.parse; print(urllib.parse.quote(os.environ["BRANCH"], safe=""))' BRANCH="$branch")
-                gh api -X DELETE "repos/$REPO/git/refs/heads/$encoded_branch"
+                gh api -X DELETE "repos/$REPO/git/refs/heads/$branch"
                 ;;
             esac
           done
