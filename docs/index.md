@@ -13,7 +13,7 @@ Tecnicamente, é uma **prova de conceito (POC)** de Governança de Acessos que i
 
 <div class="sod-actions">
 <a href="negocio/problema-e-fases/" class="md-button md-button--primary">Entender o problema</a>
-<a href="arquitetura/arquitetura-v2/" class="md-button sod-secondary">Ver arquitetura</a>
+<a href="arquitetura/arquitetura-atual/" class="md-button sod-secondary">Ver arquitetura</a>
 <a href="https://github.com/Lal3x/SoD-Plataform" class="md-button sod-secondary" target="_blank" rel="noopener">Ver repositório</a>
 </div>
 
@@ -119,7 +119,7 @@ Essas ferramentas executam a solução; **as regras de negócio e os princípios
   <div class="sod-card"><span class="sod-kicker">Implementado</span><h3>Pipeline de dados</h3><p>Bronze e Silver com contratos, qualidade, quarentena e persistência Iceberg.</p></div>
   <div class="sod-card"><span class="sod-kicker">Implementado</span><h3>Entendimento do acesso</h3><p>Contexto, referências explícitas confiáveis, padrão observado e comparação por pares. Na parte técnica: Access Context, HTS, Baseline, Fallback e Expected Access.</p></div>
   <div class="sod-card"><span class="sod-kicker">Implementado</span><h3>Decisão e prioridade</h3><p>Fatos são organizados, regras classificam e o risco define o que tratar primeiro. Tecnicamente: Evidence → Policy → Risk → Gold.</p></div>
-  <div class="sod-card"><span class="sod-kicker">Operação</span><h3>Airflow</h3><p>DAG V2 com gates, dependências, retries, registro de execução e validação offline separada.</p></div>
+  <div class="sod-card"><span class="sod-kicker">Operação</span><h3>Airflow</h3><p>DAG de runtime com gates, dependências, retries, registro de execução e validação offline separada.</p></div>
   <div class="sod-card"><span class="sod-kicker">Controle</span><h3>Observabilidade</h3><p>Contagens, DQ, quarentena, journal de componentes, snapshots, lineage, versões e reconciliação.</p></div>
   <div class="sod-card"><span class="sod-kicker">Consumo</span><h3>Streamlit</h3><p>Visões executiva, operacional, explicabilidade, validação e saúde do pipeline.</p></div>
 </div>
@@ -161,11 +161,11 @@ A documentação foi organizada para responder perguntas em uma sequência lógi
 |---|---|
 | **Negócio / gestão** | Problema e duas fases → Regras de negócio → Resultados da POC |
 | **Segurança / auditoria** | Fundamentos de Segurança → Anatomia de uma decisão → Premissas e gates de produção |
-| **Engenharia de Dados** | Arquitetura V2 → Pipeline → Modelo de dados → Orquestração e observabilidade |
+| **Engenharia de Dados** | Arquitetura atual → Pipeline → Modelo de dados → Orquestração e observabilidade |
 | **Avaliador técnico** | Arquitetura inicial → Evolução → Anatomia de uma decisão → Rastreabilidade técnica → Resultados |
 
 !!! tip "Se você tiver apenas 10 minutos"
-    Leia **O problema e as duas fases → Arquitetura V2 atual → Anatomia de uma decisão → Resultados da POC**. Esse percurso mostra problema, solução, funcionamento e resultado sem exigir leitura de todas as páginas.
+    Leia **O problema e as duas fases → Arquitetura atual → Anatomia de uma decisão → Resultados da POC**. Esse percurso mostra problema, solução, funcionamento e resultado sem exigir leitura de todas as páginas.
 
 ### Sequência completa
 
